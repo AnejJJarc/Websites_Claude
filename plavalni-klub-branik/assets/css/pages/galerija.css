@@ -11,6 +11,15 @@
   --gal-frame-shadow: 0 16px 30px -22px rgba(20, 26, 36, .38);
   --gal-shimmer: rgba(255, 255, 255, .6);
 }
+/* This page's background (a bright, high-key butterfly splash) is much lighter than the other pages'
+   photos: in dark theme dim it a little more and lift the soft text tones so small text on the glass
+   stays above 4.5:1. */
+:root[data-theme="dark"] body[data-page="galerija"] {
+  --photo-filter: saturate(.58) brightness(.62) contrast(1.04);
+  --shade: linear-gradient(180deg, rgba(9, 11, 14, .66) 0%, rgba(9, 11, 14, .5) 32%, rgba(9, 11, 14, .6) 68%, rgba(9, 11, 14, .86) 100%);
+}
+:root[data-theme="dark"] .gal { --text-soft: rgba(255, 255, 255, .66); --text-muted: rgba(255, 255, 255, .8); }
+:root[data-theme="dark"] .gal-hero .eyebrow { color: var(--text-muted); }
 
 .gal-container { width: min(1280px, 100% - 2 * var(--gutter)); margin-inline: auto; }
 /* without JavaScript: hide controls that cannot work */

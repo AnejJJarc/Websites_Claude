@@ -1058,6 +1058,9 @@
     if (i < 0) return PKB.escapeHTML(text);
     return PKB.escapeHTML(chars.slice(0, i).join("")) + "<mark>" + PKB.escapeHTML(chars.slice(i, i + q.length).join("")) + "</mark>" + PKB.escapeHTML(chars.slice(i + q.length).join(""));
   }
+  /** Diacritics-insensitive highlighter: returns escaped HTML with the first match of normalized query q in <mark>. */
+  PKB.highlight = function (text, q) { return highlight(String(text == null ? "" : text), PKB.normalize(q || "").trim()); };
+
   function setupSearch() {
     var index = null;
     var dlg = null, input, list, items = [], active = 0;
