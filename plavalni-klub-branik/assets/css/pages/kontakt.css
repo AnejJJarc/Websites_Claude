@@ -4,6 +4,9 @@
    frosted contact strip, form panel, click-to-load map, FAQ.
    ========================================================================== */
 
+/* small meta text on glass over a busy photo: slightly stronger soft tone keeps it ≥ 4.5:1 */
+:root[data-theme="dark"] .contact, :root[data-theme="dark"] .contact-modal { --text-soft: rgba(255, 255, 255, .68); }
+:root[data-theme="light"] .contact, :root[data-theme="light"] .contact-modal { --text-soft: rgba(28, 31, 37, .72); }
 .contact .btn--sm { min-height: 40px; }
 .contact h2 { text-wrap: balance; }
 .contact-req { color: var(--danger); font-weight: 600; }
@@ -219,7 +222,7 @@
 .contact-quick__list a:focus-visible { border-radius: 14px; }
 .contact-quick__text { display: grid; gap: .05rem; min-width: 0; }
 .contact-quick__text strong { font-weight: 600; color: var(--heading); font-size: .95rem; line-height: 1.3; }
-.contact-quick__text span { font-size: .8rem; color: var(--text-soft); line-height: 1.35; }
+.contact-quick__text span { font-size: .8rem; color: var(--text-muted); line-height: 1.35; }
 .contact-quick__chev { color: var(--text-soft); transition: transform .25s var(--ease); }
 .contact-quick__list a:hover .contact-quick__chev { transform: translateX(3px); color: var(--heading); }
 
@@ -345,8 +348,8 @@ html:not(.js) .contact-map__remember, html:not(.js) [data-form-clear] { display:
 /* ---------- Print ---------- */
 @media print {
   .contact-form-section, .contact-mapwrap, .contact-faq__cta, .contact-hero .page-hero__actions, .contact-cell__actions, .contact-week, .contact-office__progress { display: none !important; }
+  .skip-link { display: none !important; }
   [data-reveal] { opacity: 1 !important; transform: none !important; }
-  .accordion-item .accordion-body { display: block !important; }
 }
 
 /* ---------- Reduced motion ---------- */

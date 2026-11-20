@@ -867,6 +867,9 @@
     el.panel.insertBefore(el.draft, el.panel.firstChild);
     el.draft.classList.add("enr-draft--panel");
     if (el.heroActions) el.heroActions.hidden = false;
+    // the restored scroll position means nothing until the user decides (form is back at step 1)
+    var h = window.location.hash;
+    if (!h || /^#(vpis|korak-[1-4])$/.test(h)) el.draft.scrollIntoView({ block: "start", behavior: "auto" });
   }
   function hideDraftBanner() {
     if (el.draft) el.draft.hidden = true;

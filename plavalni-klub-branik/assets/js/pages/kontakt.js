@@ -410,6 +410,8 @@
     var m = PKB.modal.open({
       title: "Počistim obrazec?",
       size: "sm",
+      className: "contact-modal",
+      initialFocus: ".modal__foot [data-modal-close]",
       content: '<p class="muted">Vneseno besedilo in osnutek, shranjen na tej napravi, bosta izbrisana. Tega ni mogoče razveljaviti.</p>',
       footer: '<button type="button" class="btn btn--ghost" data-modal-close>Prekliči</button><button type="button" class="btn btn--danger" data-confirm-clear>' + PKB.icon("refresh") + "Počisti obrazec</button>"
     });
@@ -676,6 +678,17 @@
     if (pulseEl) pulse(pulseEl);
   }
   window.addEventListener("hashchange", function () { handleHash(false); });
+
+  /* print: show every FAQ answer, restore afterwards */
+  var printOpened = [];
+  window.addEventListener("beforeprint", function () {
+    printOpened = qsa("[data-faq] details:not([open])");
+    printOpened.forEach(function (d) { d.open = true; });
+  });
+  window.addEventListener("afterprint", function () {
+    printOpened.forEach(function (d) { d.open = false; });
+    printOpened = [];
+  });
 
   /* ------------------------------------------------------------------
      8. Boot

@@ -106,7 +106,7 @@
 .enr-draft__meta { margin-top: .1rem; }
 .enr-draft__actions { grid-column: 1 / -1; display: flex; flex-wrap: wrap; gap: .5rem; }
 @media (min-width: 560px) { .enr-draft__actions { grid-column: 2; } }
-.enr-draft--panel { margin: 0 0 clamp(1.25rem, 3vw, 1.75rem); max-width: none; background: var(--glass-tile-light); border-color: var(--glass-border-strong); }
+.enr-draft--panel { scroll-margin-top: calc(var(--header-h) + 24px); margin: 0 0 clamp(1.25rem, 3vw, 1.75rem); max-width: none; background: var(--glass-tile-light); border-color: var(--glass-border-strong); }
 @media (min-width: 720px) {
   .enr-draft--panel { grid-template-columns: auto minmax(0, 1fr) auto; }
   .enr-draft--panel .enr-draft__actions { grid-column: auto; }

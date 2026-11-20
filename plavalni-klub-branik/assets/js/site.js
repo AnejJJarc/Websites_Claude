@@ -781,10 +781,15 @@
     return d.getFullYear() + pad(d.getMonth() + 1) + pad(d.getDate()) + "T" + pad(d.getHours()) + pad(d.getMinutes()) + "00";
   }
   function icsEscape(s) { return String(s || "").replace(/\\/g, "\\\\").replace(/\n/g, "\\n").replace(/,/g, "\\,").replace(/;/g, "\\;"); }
+  /* RFC 5545 line folding at 75 octets (UTF-8 aware, never splits a character) */
   function icsFold(line) {
-    var out = [];
-    while (line.length > 74) { out.push(line.slice(0, 74)); line = " " + line.slice(74); }
-    out.push(line);
+    var out = [], cur = "", bytes = 0, limit = 75;
+    Array.from(line).forEach(function (ch) {
+      var b = unescape(encodeURIComponent(ch)).length;
+      if (bytes + b > limit) { out.push(cur); cur = " "; bytes = 1; limit = 75; }
+      cur += ch; bytes += b;
+    });
+    out.push(cur);
     return out.join("\r\n");
   }
   /**
