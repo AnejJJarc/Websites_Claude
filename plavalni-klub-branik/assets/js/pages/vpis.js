@@ -115,6 +115,7 @@
     submitted: null,
     typing: false,
     barInView: false,
+    focusBelow: false,
     sheetOpen: false
   };
 
@@ -295,7 +296,7 @@
      Render: programme option cards
      ------------------------------------------------------------------ */
   function optionHTML(p) {
-    var price = num(p.price) ? fmtPrice(p.price) + '<span class="enr-opt__per"> / mes.</span>' : "Po dogovoru";
+    var price = num(p.price) ? fmtPrice(p.price) + '<span class="enr-opt__per"> / mes.</span>' : esc(fmtPrice(null));
     return '<label class="option-card enr-opt" id="enr-opt-' + esc(p.id) + '" style="--c:' + esc(p.color || "") + '">' +
       '<input type="radio" name="program" value="' + esc(p.id) + '" required data-msg="Izberite program, v katerega vpisujete plavalca.">' +
       '<span class="option-card__body enr-opt__body">' +
@@ -512,8 +513,8 @@
     if (el.contactLegend) el.contactLegend.textContent = minor ? "Starš/skrbnik" : "Vaši kontaktni podatki";
     if (el.contactDesc) {
       el.contactDesc.textContent = minor
-        ? "Plavalec je mladoleten, zato potrebujemo podatke starša ali skrbnika. Nanje vam pošljemo potrditev vpisa in termin prvega treninga."
-        : "Na te podatke vam pošljemo potrditev vpisa in termin prvega treninga.";
+        ? "Plavalec je mladoleten, zato potrebujemo podatke starša ali skrbnika. Prek teh kontaktov vas bomo obvestili o potrditvi vpisa in terminu prvega treninga."
+        : "Prek teh kontaktov vas bomo obvestili o potrditvi vpisa in terminu prvega treninga.";
     }
     setLabel(el.emailLabel, minor ? "E-pošta starša/skrbnika" : "E-pošta");
     setLabel(el.phoneLabel, minor ? "Telefon starša/skrbnika" : "Telefon");
@@ -605,7 +606,7 @@
       (pi.fee != null ? "<div><dt>Vpisnina (po ceniku)</dt><dd>" + esc(fmtPrice(pi.fee)) + ' <span class="soft">enkratno</span></dd></div>' : "") +
       "</dl>";
     var big = '<div class="enr-price__big"><span class="enr-kicker">' + (pi.total != null ? "Na mesec" : "Članarina") + "</span>" +
-      '<span class="enr-price__value' + (pi.total != null ? "" : " enr-price__value--text") + '">' + (pi.total != null ? esc(fmtPrice(pi.total)) : "Po dogovoru") + "</span></div>";
+      '<span class="enr-price__value' + (pi.total != null ? "" : " enr-price__value--text") + '">' + esc(fmtPrice(pi.total)) + "</span></div>";
     var note = pi.monthly != null ? (pricing.paymentNote || "") : (pricing.note || "");
     return '<div class="tile tile--raised enr-price__box">' + lines + big +
       (note ? '<p class="enr-price__note small soft">' + icon("info", "icon--sm") + "<span>" + esc(note) + "</span></p>" : "") + "</div>";
@@ -642,7 +643,7 @@
           ? '<span class="enr-sum__price-v">' + esc(fmtPrice(pi.total)) + "</span>" +
             (pi.sibling ? '<span class="enr-sum__price-old"><span class="visually-hidden">namesto </span>' + esc(fmtPrice(pi.monthly)) + "</span>" : "") +
             '<span class="enr-sum__price-l">na mesec' + (pi.sibling ? " · s popustom " + pctText() : "") + "</span>"
-          : '<span class="enr-sum__price-v enr-sum__price-v--text">Po dogovoru</span><span class="enr-sum__price-l">ločen cenik sekcije</span>') +
+          : '<span class="enr-sum__price-v enr-sum__price-v--text">' + esc(fmtPrice(null)) + '</span><span class="enr-sum__price-l">mesečna članarina</span>') +
         "</div>";
     }
     var rows = "";
@@ -684,7 +685,7 @@
     var ns = p ? nextSession(p.id) : null;
     el.barTitle.textContent = p ? p.name : "Program še ni izbran";
     el.barMeta.textContent = p
-      ? (pi.total != null ? fmtPrice(pi.total) + " / mesec" : "Cena po dogovoru") + (ns ? " · " + shortWhen(ns) : "")
+      ? (pi.total != null ? fmtPrice(pi.total) + " / mesec" : "Cena " + fmtPrice(null).toLowerCase()) + (ns ? " · " + shortWhen(ns) : "")
       : "Korak " + state.step + " od " + STEPS + " · izberite skupino";
     el.barStep.textContent = (state.done ? STEPS : state.step) + "/" + STEPS;
     if (el.barDot) el.barDot.style.setProperty("--c", p && p.color ? p.color : "");
@@ -694,7 +695,7 @@
   var mqDesktop = window.matchMedia ? window.matchMedia("(min-width: 1024px)") : { matches: true };
   function updateBar() {
     if (!el.bar) return;
-    var show = !mqDesktop.matches && state.barInView && !state.done && !state.typing;
+    var show = !mqDesktop.matches && state.barInView && !state.done && !state.typing && !state.focusBelow;
     el.bar.classList.toggle("is-visible", show);
     document.body.classList.toggle("enr-bar-on", show);
     if (!show) setSheet(false);
@@ -735,6 +736,19 @@
         if (!still && state.typing) { state.typing = false; updateBar(); }
       }, 120);
     });
+    // keyboard focus below the form (FAQ, footer): step the bar aside so it never covers the focused control
+    document.addEventListener("focusin", function (e) {
+      var t = e.target;
+      var kb = false;
+      try { kb = t.matches(":focus-visible"); } catch (err) { kb = true; }
+      var below = !!(t && t.nodeType === 1 && kb && !el.bar.contains(t) && !el.panel.contains(t) &&
+        (el.panel.compareDocumentPosition(t) & Node.DOCUMENT_POSITION_FOLLOWING));
+      if (below !== state.focusBelow) { state.focusBelow = below; updateBar(); }
+    });
+    document.addEventListener("pointerdown", function (e) {
+      // a pointer user who taps outside the form gets the bar back on the next scroll into the form
+      if (state.focusBelow && !el.bar.contains(e.target)) { state.focusBelow = false; updateBar(); }
+    }, true);
   }
 
   /* ------------------------------------------------------------------
@@ -990,7 +1004,7 @@
     if (!r || !r.p) { el.recoResult.innerHTML = ""; markRecommended(null); return; }
     var p = r.p;
     var picked = valueOf("program") === p.id;
-    var meta = [p.ages, num(p.perWeek) ? p.perWeek + "× na teden" : "", num(p.price) ? fmtPrice(p.price) + " / mes." : "cena po dogovoru"].filter(Boolean).join(" · ");
+    var meta = [p.ages, num(p.perWeek) ? p.perWeek + "× na teden" : "", num(p.price) ? fmtPrice(p.price) + " / mes." : "cena " + fmtPrice(null).toLowerCase()].filter(Boolean).join(" · ");
     var note = "";
     if (r.tooYoung) note = "Vpis v plavalno šolo je mogoč od " + PKB.formatNumber(r.minAge, r.minAge % 1 ? 1 : 0) + ". leta. Ko bo otrok dovolj star, priporočamo to skupino.";
     else if (r.outOfAge) note = "Starost je zunaj priporočenega razpona skupine – trener bo ob poskusnem treningu predlagal najprimernejšo.";
@@ -1098,7 +1112,7 @@
     L.push("Skupina: " + p.name + (catName(p) ? " (" + catName(p) + ")" : ""));
     var wk = weeklyText(p.id);
     if (wk) L.push("Termini: " + wk);
-    L.push("Mesečna članarina: " + (pi.monthly != null ? fmtPrice(pi.monthly) : "po dogovoru") + (pi.sibling ? " (popust za brata ali sestro " + pctText() + (pi.total != null ? " → " + fmtPrice(pi.total) : "") + ")" : ""));
+    L.push("Mesečna članarina: " + (pi.monthly != null ? fmtPrice(pi.monthly) : fmtPrice(null).toLowerCase()) + (pi.sibling ? " (popust za brata ali sestro " + pctText() + (pi.total != null ? " → " + fmtPrice(pi.total) : "") + ")" : ""));
     if (pi.fee != null) L.push("Vpisnina (po ceniku): " + fmtPrice(pi.fee));
     L.push("");
     L.push("PLAVALEC");
@@ -1246,7 +1260,7 @@
     updateBar();
     doSave();
     PKB.toast(keep
-      ? { type: "success", title: "Nov vpis za brata ali sestro", message: "Kontaktne podatke smo prenesli, popust za sorojence je označen." }
+      ? { type: "success", title: "Nov vpis za brata ali sestro", message: "Kontaktne podatke smo prenesli, popust za brata ali sestro je označen." }
       : { type: "info", message: "Začenjate nov vpis." });
   }
 
@@ -1273,7 +1287,7 @@
     if (fs) { if (siblingRate) fs.textContent = pctText(); else fs.closest("li").hidden = true; }
     var ages = agedPrograms().map(function (p) { return p.minAge; });
     var fa = qs('[data-fact="age"]');
-    if (fa && ages.length) fa.textContent = Math.floor(Math.min.apply(null, ages)) + "+";
+    if (fa && ages.length) fa.textContent = yearsLabel(Math.floor(Math.min.apply(null, ages)));
     var office = qs("[data-office]");
     var oh = ((club.officeHours || [])[0] || {}).hours;
     if (office && oh) office.textContent = oh;

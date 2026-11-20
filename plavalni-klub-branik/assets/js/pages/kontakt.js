@@ -139,7 +139,7 @@
   HOURS.forEach(function (r) { r.days.forEach(function (d) { if (!WEEK[d]) WEEK[d] = r; }); });
   if (!HOURS.some(function (r) { return r.type === "open"; })) {
     // safe fallback (matches the published office hours)
-    var fb = { days: [1, 2, 3, 4, 5], type: "open", from: 960, to: 1140, label: "Ponedeljek – petek", hours: "16:00 – 19:00", note: "" };
+    var fb = { days: [1, 2, 3, 4, 5], type: "open", from: 960, to: 1140, label: "Ponedeljek–petek", hours: "16:00–19:00", note: "" };
     HOURS = [fb]; WEEK = {}; fb.days.forEach(function (d) { WEEK[d] = fb; });
   }
   var HOLIDAY_ROW = HOURS.filter(function (r) { return r.holidays; })[0] || null;
@@ -209,6 +209,11 @@
     return DAY_ACC[st.next.wd - 1] + (st.offset > 6 ? " (" + d.getDate() + ". " + (d.getMonth() + 1) + ".)" : "") + " ob " + t;
   }
 
+  /* "na Kopališču Pristan" (locative); other venue names fall back to "na lokaciji …" */
+  function venueLocative() {
+    if (!C.venue) return "Pristanu";
+    return /^Kopališče\b/.test(C.venue) ? C.venue.replace(/^Kopališče/, "Kopališču") : "lokaciji " + C.venue;
+  }
   var office = qs("[data-office]");
   function renderOffice() {
     if (!office) return;
@@ -243,7 +248,7 @@
       title.textContent = "Pisarna je zdaj zaprta";
       if (st.next) {
         var rel = st.until < 1440 ? "čez " + duration(st.until) : "čez " + st.offset + " " + PKB.plural(st.offset, ["dan", "dneva", "dni", "dni"]);
-        sub.innerHTML = "— odpre se <strong>" + esc(whenPhrase(st)) + "</strong> · " + esc(rel) + ".";
+        sub.innerHTML = "Odpre se <strong>" + esc(whenPhrase(st)) + "</strong> · " + esc(rel) + ".";
       } else {
         sub.textContent = "Za termin se dogovorite po telefonu ali e-pošti.";
       }
@@ -254,7 +259,7 @@
     var noteText;
     if (st.today.holiday && st.today.type === "closed" && HOLIDAY_ROW) noteText = PKB.icon("calendar", "icon--sm") + "<span>Danes je dela prost dan (" + esc(st.today.holiday) + "), zato je pisarna zaprta.</span>";
     else if (!st.open && st.today.type === "appointment") noteText = PKB.icon("phone", "icon--sm") + "<span>" + esc(st.today.row.label) + ": " + esc(st.today.row.hours) + " – pokličite ali nam pišite.</span>";
-    else noteText = PKB.icon("map-pin", "icon--sm") + "<span>Pisarna je na " + esc(C.venue ? "lokaciji " + C.venue : "Pristanu") + (C.address ? ", " + esc(C.address) : "") + ".</span>";
+    else noteText = PKB.icon("map-pin", "icon--sm") + "<span>Pisarna je na " + esc(venueLocative()) + (C.address ? ", " + esc(C.address) : "") + ".</span>";
     note.innerHTML = noteText;
 
     // week strip (current Mon–Sun)
@@ -408,7 +413,7 @@
   qs("[data-form-clear]", form).addEventListener("click", function () {
     if (!hasText(formData())) { clearForm(false); fName.focus(); return; }
     var m = PKB.modal.open({
-      title: "Počistim obrazec?",
+      title: "Želite počistiti obrazec?",
       size: "sm",
       className: "contact-modal",
       initialFocus: ".modal__foot [data-modal-close]",
@@ -433,7 +438,7 @@
   function summaryHTML(rec) {
     var rows = [["Zadeva", esc(rec.zadevaLabel)], ["Ime", esc(rec.ime)], ["E-pošta", esc(rec.eposta)]];
     if (rec.telefon) rows.push(["Telefon", esc(rec.telefon)]);
-    rows.push(["Oddano", esc(fmtSent(rec.sentAt))]);
+    rows.push(["Pripravljeno", esc(fmtSent(rec.sentAt))]);
     rows.push(["Sporočilo", esc(rec.sporocilo), "contact-summary__msg"]);
     return rows.map(function (r) {
       return '<div class="contact-summary__row"><dt>' + r[0] + "</dt><dd" + (r[2] ? ' class="' + r[2] + '"' : "") + ">" + r[1] + "</dd></div>";
@@ -461,8 +466,8 @@
     current = rec;
     qs("[data-success-title]", success).textContent = "Hvala" + (firstName(rec.ime) ? ", " + firstName(rec.ime) : "") + "!";
     qs("[data-success-text]", success).innerHTML =
-      "Vaše sporočilo z zadevo »" + esc(rec.zadevaLabel) + "« je oddano. Odgovor bomo poslali na <strong>" + esc(rec.eposta) + "</strong>. " +
-      "Če ga želite poslati tudi iz svojega e-poštnega programa, uporabite gumb »Pošlji po e-pošti« – besedilo je že pripravljeno.";
+      "Sporočilo z zadevo »" + esc(rec.zadevaLabel) + "« je pripravljeno. Pošljite ga z gumbom »Pošlji po e-pošti« – " +
+      "v vašem e-poštnem programu se odpre z že izpolnjenim besedilom. Ko ga prejmemo, vam odgovorimo na <strong>" + esc(rec.eposta) + "</strong>.";
     qs("[data-success-summary]", success).innerHTML = summaryHTML(rec);
     qs("[data-success-mailto]", success).setAttribute("href", mailtoHref(rec));
     form.hidden = true;
@@ -482,7 +487,7 @@
       busy = true;
       submitBtn.classList.add("is-busy");
       submitBtn.setAttribute("aria-disabled", "true");
-      qs("[data-submit-label]", submitBtn).textContent = "Pošiljam …";
+      qs("[data-submit-label]", submitBtn).textContent = "Pripravljam …";
       var t = topicById(data.zadeva) || TOPICS[0];
       var rec = {
         ime: String(data.ime || "").trim(), eposta: String(data.eposta || "").trim(), telefon: String(data.telefon || "").trim(),
@@ -496,7 +501,7 @@
         submitBtn.removeAttribute("aria-disabled");
         qs("[data-submit-label]", submitBtn).textContent = "Pošlji sporočilo";
         showSuccess(rec);
-        PKB.toast({ type: "success", title: "Sporočilo je oddano", message: "Hvala! Odgovor bomo poslali na " + rec.eposta + "." });
+        PKB.toast({ type: "success", message: "Sporočilo je pripravljeno – pošljite ga z gumbom »Pošlji po e-pošti«." });
       }, reduced() ? 150 : 750);
     }
   });

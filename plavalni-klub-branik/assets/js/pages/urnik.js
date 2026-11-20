@@ -387,27 +387,36 @@
 
   function pct(m) { return ((Math.min(Math.max(m, T0), T1) - T0) / SPAN * 100).toFixed(4); }
 
-  /* compact label for narrow lanes in the week grid */
-  var SHORT = { zvezdice: "Zvezdice", mlajsi: "Mlajši", starejsi: "Starejši", kadeti: "Kadeti", prehodna: "Prehodna", odrasli: "Odrasli" };
+  /* compact label for narrow lanes in the week grid; soft hyphens (U+00AD) let a long one wrap onto two lines */
+  var SHORT = {
+    zvezdice: "Zvez­dice", zelvice: "Žel­vice", tjulnji: "Tjul­nji", delfini: "Del­fini", prehodna: "Pre­hodna",
+    mlajsi: "Mlajši", starejsi: "Sta­rejši", kadeti: "Kadeti", odrasli: "Od­rasli"
+  };
   function shortName(p) {
     if (SHORT[p.id]) return SHORT[p.id];
     return String(p.name).split(/\s+/)[0].replace(/[,.;:]+$/, "");
   }
 
+  /* The accessible name comes from the content (WCAG 2.5.3 label in name): the visible label first –
+     short or full name, start time or range, pool, whichever the lane width shows – then a visually hidden
+     tail whose parts are revealed by the same container queries that hide their visible counterparts. */
   function blockHTML(L, st) {
     var s = L.s, p = s.prog, live = liveOf(s, st);
     var top = pct(s.sm), height = (pct(s.em) - pct(s.sm)).toFixed(4);
-    var label = p.name + ", " + timeRange(s) + ", " + s.pool + ", " + DAYS[s.day - 1].toLowerCase() +
-      (live === "now" ? " – poteka zdaj" : live === "next" ? " – naslednji trening" : "");
+    var tail = DAYS[s.day - 1].toLowerCase() + (live === "now" ? " – poteka zdaj" : live === "next" ? " – naslednji trening" : "");
     var flip = s.day >= 6 && L.lane + L.span === L.lanes && L.lanes > 1;
     return '<button type="button" class="sched-block' + (live ? " is-" + live : "") + (flip ? " is-flip" : "") + '" data-session="' + s.id + '" data-key="b' + s.id + '"' +
-      ' style="top:' + top + "%;height:" + height + "%;--lane:" + L.lane + ";--lanes:" + L.lanes + ";--span:" + L.span + ";--c:" + safeColor(p.color) + '"' +
-      ' aria-label="' + esc(label) + '">' +
+      ' style="top:' + top + "%;height:" + height + "%;--lane:" + L.lane + ";--lanes:" + L.lanes + ";--span:" + L.span + ";--c:" + safeColor(p.color) + '">' +
       '<span class="sched-block__in">' +
-        '<span class="sched-block__name"><span class="sched-block__full">' + esc(p.name) + '</span><span class="sched-block__short">' + esc(shortName(p)) + "</span></span>" +
-        '<span class="sched-block__time num">' + s.start + '<span class="sched-block__end">–' + s.end + "</span></span>" +
+        '<span class="sched-block__name"><span class="sched-block__full">' + esc(p.name) + '</span><span class="sched-block__short">' + esc(shortName(p)) + "</span></span> " +
+        '<span class="sched-block__time num">' + s.start + '<span class="sched-block__end">–' + s.end + "</span></span> " +
         '<span class="sched-block__pool">' + esc(s.pool) + "</span>" +
       "</span>" +
+      '<span class="visually-hidden sched-block__sr">, ' +
+        '<span class="sched-block__sr-full">' + esc(p.name) + ", </span>" +
+        '<span class="sched-block__sr-end">do ' + s.end + ", </span>" +
+        '<span class="sched-block__sr-pool">' + esc(s.pool) + ", </span>" +
+        esc(tail) + "</span>" +
       (live === "now" ? '<span class="sched-block__live" aria-hidden="true"></span>' : "") +
       "</button>";
   }
@@ -432,14 +441,14 @@
         "</div>";
     }
     /* days without any training in the season (Sunday) get a narrower column */
-    var colsTpl = [1, 2, 3, 4, 5, 6, 7].map(function (x) { return dataDays.indexOf(x) < 0 ? "minmax(0, .55fr)" : "minmax(0, 1fr)"; }).join(" ");
+    var colsTpl = [1, 2, 3, 4, 5, 6, 7].map(function (x) { return dataDays.indexOf(x) < 0 ? "minmax(0, .45fr)" : "minmax(0, 1fr)"; }).join(" ");
     var lines = "", axis = "";
     for (var h = Math.ceil(T0 / 60); h * 60 <= T1; h++) {
       var p = pct(h * 60);
       lines += '<span style="top:' + p + '%"></span>';
       axis += '<span class="sched-week__tick" style="top:' + p + '%">' + PKB.minutesToTime(h * 60) + "</span>";
     }
-    return '<p class="sched-week__hint small soft">' + PKB.icon("arrow-right", "icon--sm") + "Povlecite vodoravno za ves teden</p>" +
+    return '<p class="sched-week__hint small soft" data-week-hint hidden>' + PKB.icon("arrow-right", "icon--sm") + "Povlecite vodoravno za ves teden</p>" +
       '<div class="sched-week-scroll" tabindex="0" role="region" aria-label="Tedenski urnik, ' + esc(num(list.length, F_TERMIN)) + '">' +
       '<div class="sched-week" style="--cols:' + colsTpl + '">' +
         '<div class="sched-week__head">' + head + "</div>" +
@@ -586,11 +595,25 @@
     });
     updateNowLine();
     if (state.view === "teden") {
+      syncWeekScroll();
       /* keep the user's horizontal position on re-render; jump to today only when the week view opens */
       var sc = qs(".sched-week-scroll", host);
       if (prevView === "teden" && prevLeft !== null && sc) sc.scrollLeft = prevLeft;
       else scrollWeekToToday();
     }
+  }
+
+  /* The week grid has a minimum width (legible lanes); when the board is narrower it scrolls sideways:
+     show the hint, pin the time axis and make the scroller keyboard-focusable only then. */
+  function syncWeekScroll() {
+    var sc = qs(".sched-week-scroll", host);
+    if (!sc) return;
+    var can = sc.scrollWidth > sc.clientWidth + 2;
+    sc.classList.toggle("is-scrollable", can);
+    if (can) sc.setAttribute("tabindex", "0");
+    else if (document.activeElement !== sc) sc.removeAttribute("tabindex");
+    var hint = qs("[data-week-hint]", host);
+    if (hint) hint.hidden = !can;
   }
 
   /* On narrow screens the week grid scrolls inside its container – bring today's column into view. */
@@ -649,11 +672,12 @@
     var color = safeColor(p.color);
 
     var facts = [
-      ["Raven", esc(p.level || "—")],
-      ["Starost", esc(p.ages || "—")],
+      ["Raven", esc(p.level || "–")],
+      ["Starost", esc(p.ages || "–")],
       ["Lokacija", esc(s.pool) + (poolInfo && poolInfo.desc ? '<span class="sched-modal__sub">' + esc(poolInfo.desc) + "</span>" : "")],
       ["Treningi na teden", all.length + "× na teden"],
-      ["Članarina", p.price != null ? esc(PKB.formatPrice(p.price)) + " / mesec" : "Na povpraševanje"]
+      /* null price → PKB.formatPrice gives the shared "Po ceniku sekcije" */
+      ["Članarina", esc(PKB.formatPrice(p.price)) + (p.price != null ? " / mesec" : "")]
     ];
 
     var content =
@@ -906,6 +930,12 @@
       scrollToBoard();
       var t = qs('[data-daytab="' + target + '"]', host);
       if (t) t.focus({ preventScroll: true });
+    });
+
+    var rsRaf = 0;
+    window.addEventListener("resize", function () {
+      if (rsRaf) return;
+      rsRaf = requestAnimationFrame(function () { rsRaf = 0; if (state.view === "teden") syncWeekScroll(); });
     });
 
     /* live clock – every 15 s check whether the minute (or the day) changed */

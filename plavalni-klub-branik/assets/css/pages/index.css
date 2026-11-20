@@ -94,6 +94,12 @@
   }
   .home-stage__lead { text-shadow: 0 1px 14px rgba(8, 10, 14, .55); }
 }
+/* 640–1079: the stage spans the full width and the lead's line ends sit right on the splash – carry the shade further right */
+@media (min-width: 640px) and (max-width: 1079.98px) {
+  .home-stage::after {
+    background: linear-gradient(90deg, rgba(8, 10, 14, .6) 0%, rgba(8, 10, 14, .52) 45%, rgba(8, 10, 14, .46) 68%, rgba(8, 10, 14, .24) 86%, rgba(8, 10, 14, .08) 100%);
+  }
+}
 .home-stage__content { max-width: 34rem; }
 .home-stage .eyebrow { color: rgba(255, 255, 255, .7); }
 .home-stage__title {

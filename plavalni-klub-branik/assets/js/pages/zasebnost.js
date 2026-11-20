@@ -44,7 +44,8 @@
     { re: /^pkb:kontakt:zadnje$/, name: "Kopija zadnjega sporočila", group: GROUP_FORMS },
     { re: /^pkb:kontakt:zemljevid$/, name: "Samodejni prikaz zemljevida", group: GROUP_SETTINGS },
     { re: /^pkb:vpis/, name: "Osnutek spletnega vpisa", group: GROUP_FORMS },
-    { re: /^pkb:newsletter/, name: "Prijava na e-novice", group: GROUP_FORMS },
+    // older versions stored the newsletter address here; the footer now only opens an e-mail (kept so a leftover entry can be deleted)
+    { re: /^pkb:newsletter/, name: "Star zapis prijave na e-novice", group: GROUP_FORMS },
     { re: /^pkb:urnik/, name: "Filtri in pogled urnika", group: GROUP_SETTINGS },
     { re: /^pkb:programi-izbirnik/, name: "Odgovori v izbirniku skupine", group: GROUP_SETTINGS },
     { re: /^pkb:programi-oprema/, name: "Seznam opreme za trening", group: GROUP_SETTINGS },
@@ -164,7 +165,7 @@
     }
     var n = entries.length;
     var m = PKB.modal.open({
-      title: "Izbrišem shranjene podatke?",
+      title: "Želite izbrisati shranjene podatke?",
       size: "sm",
       className: "priv-modal",
       initialFocus: ".modal__foot [data-modal-close]",

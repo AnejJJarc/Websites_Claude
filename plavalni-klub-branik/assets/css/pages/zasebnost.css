@@ -4,8 +4,6 @@
    with scrollspy, live "on this device" storage panel.
    ========================================================================== */
 
-:root[data-theme="dark"] .priv, :root[data-theme="dark"] .priv-modal { --text-soft: rgba(255, 255, 255, .68); }
-:root[data-theme="light"] .priv, :root[data-theme="light"] .priv-modal { --text-soft: rgba(28, 31, 37, .72); }
 /* the underwater photo is bright: inset tiles get a touch more density in dark mode */
 :root[data-theme="dark"] .priv .tile:not(.tile--raised) { background: rgba(10, 12, 16, .32); }
 .priv .btn--sm { min-height: 40px; }
@@ -80,14 +78,15 @@
 .priv-toc__list { list-style: none; padding: 0; margin: 0; display: grid; gap: 2px; }
 .priv-toc__list a {
   display: grid; grid-template-columns: 2rem minmax(0, 1fr); align-items: baseline; gap: .25rem;
-  padding: .5rem .6rem; border-radius: 12px; min-height: 40px;
+  padding: .5rem .6rem; border-radius: var(--radius-sm); min-height: 40px;
   font-size: .9rem; font-weight: 500; line-height: 1.35; color: var(--text-muted); text-decoration: none;
   transition: background .2s var(--ease), color .2s var(--ease);
 }
 .priv-toc__list a:hover { background: var(--glass-bg-hover); color: var(--heading); }
-.priv-toc__list a:focus-visible { border-radius: 12px; }
-.priv-toc__list a[aria-current="true"] { color: var(--selected-ink); background: var(--selected-bg); font-weight: 600; }
-.priv-toc__n { font-size: .74rem; font-variant-numeric: tabular-nums; opacity: .7; letter-spacing: .04em; }
+.priv-toc__list a[aria-current="true"] { color: var(--selected-ink); background: var(--btn-primary-fill); box-shadow: var(--btn-primary-shadow); font-weight: 600; }
+/* A6: section numbers use the soft text token (no extra opacity) so they stay ≥ 4.5:1 in the light theme */
+.priv-toc__n { font-size: .74rem; font-variant-numeric: tabular-nums; color: var(--text-soft); letter-spacing: .04em; }
+.priv-toc__list a[aria-current="true"] .priv-toc__n { color: inherit; opacity: .8; }
 .priv-toc__foot { display: flex; flex-wrap: wrap; gap: .4rem; padding-top: .75rem; border-top: 1px solid var(--divider); }
 .priv-toc__foot .btn { flex: 1 1 auto; }
 
@@ -145,7 +144,7 @@
 .priv-dl dt { font-size: .84rem; color: var(--text-muted); }
 .priv-dl dd { color: var(--text); overflow-wrap: anywhere; }
 
-.priv-table-wrap { overflow-x: auto; border-radius: var(--radius); border: 1px solid var(--glass-border); background: var(--glass-tile); box-shadow: var(--glass-edge); }
+.priv-table-wrap { overflow-x: auto; border-radius: var(--radius); border: 1px solid transparent; border-color: var(--glass-border-lit); background: var(--glass-tile); box-shadow: var(--glass-edge); }
 .priv-table { width: 100%; font-size: .92rem; }
 .priv-table th, .priv-table td { padding: .75rem 1rem; text-align: left; vertical-align: top; border-top: 1px solid var(--divider); }
 .priv-table thead th { border-top: 0; font-size: .72rem; letter-spacing: .1em; text-transform: uppercase; color: var(--text-soft); font-weight: 600; white-space: nowrap; }
@@ -158,7 +157,7 @@
   font-size: .74rem; font-weight: 600; color: var(--text-soft); border: 1px solid var(--glass-border); white-space: nowrap;
 }
 
-.priv-retention { list-style: none; padding: 0; display: grid; gap: 0; border-radius: var(--radius); border: 1px solid var(--glass-border); background: var(--glass-tile); box-shadow: var(--glass-edge); }
+.priv-retention { list-style: none; padding: 0; display: grid; gap: 0; border-radius: var(--radius); border: 1px solid transparent; border-color: var(--glass-border-lit); background: var(--glass-tile); box-shadow: var(--glass-edge); }
 .priv-retention li { display: grid; gap: .15rem 1rem; padding: .75rem 1rem; border-top: 1px solid var(--divider); }
 .priv-retention li:first-child { border-top: 0; }
 @media (min-width: 640px) { .priv-retention li { grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr); } }
@@ -168,7 +167,7 @@
 .priv-rights { list-style: none; padding: 0; display: grid; gap: .6rem; grid-template-columns: repeat(auto-fit, minmax(min(100%, 250px), 1fr)); }
 .priv-rights li {
   display: flex; gap: .75rem; align-items: flex-start; padding: .85rem 1rem; border-radius: var(--radius);
-  background: var(--glass-tile); border: 1px solid var(--glass-border); box-shadow: var(--glass-edge);
+  background: var(--glass-tile); border: 1px solid transparent; border-color: var(--glass-border-lit); box-shadow: var(--glass-edge);
 }
 .priv-rights li > .icon { flex: none; width: 18px; height: 18px; margin-top: .2rem; color: var(--text-soft); }
 .priv-rights li div { display: grid; gap: .15rem; }
@@ -193,7 +192,7 @@
 .priv-live__list:empty { display: none; }
 .priv-live__item {
   display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: center; gap: .75rem;
-  padding: .6rem .5rem .6rem .8rem; border-radius: 12px; background: var(--glass-tile-light); border: 1px solid var(--glass-border);
+  padding: .6rem .5rem .6rem .8rem; border-radius: var(--radius-sm); background: var(--glass-tile-light); border: 1px solid transparent; border-color: var(--glass-border-lit);
 }
 .priv-live__item.is-leaving { animation: priv-out .3s var(--ease) forwards; }
 @keyframes priv-out { to { opacity: 0; transform: translateX(14px); } }
@@ -206,7 +205,7 @@
 .priv-contact { display: flex; flex-wrap: wrap; gap: .6rem; }
 .priv-contact .btn { white-space: normal; }
 
-.priv-modal-list { list-style: none; padding: 0; margin-top: .9rem; display: grid; gap: 0; border-radius: var(--radius-sm); border: 1px solid var(--glass-border); background: var(--glass-tile); }
+.priv-modal-list { list-style: none; padding: 0; margin-top: .9rem; display: grid; gap: 0; border-radius: var(--radius-sm); border: 1px solid transparent; border-color: var(--glass-border-lit); background: var(--glass-tile); box-shadow: var(--glass-edge-sm); }
 .priv-modal-list li { display: flex; justify-content: space-between; gap: 1rem; padding: .55rem .85rem; border-top: 1px solid var(--divider); font-size: .9rem; }
 .priv-modal-list li:first-child { border-top: 0; }
 .priv-modal-list li span:last-child { color: var(--text-soft); font-variant-numeric: tabular-nums; white-space: nowrap; }

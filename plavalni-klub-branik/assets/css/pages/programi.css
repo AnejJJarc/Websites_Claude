@@ -52,7 +52,7 @@
   flex: none; display: grid; place-items: center; width: 38px; height: 38px; border-radius: 50%;
   background: #fff; color: #111318; transition: transform .3s var(--ease);
 }
-.prog-round .icon { width: 17px; height: 17px; color: #111318; stroke: #111318; }
+.prog-round .icon { width: 17px; height: 17px; }
 
 /* ==========================================================================
    HERO

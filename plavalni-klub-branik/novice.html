@@ -28,7 +28,7 @@
 
     <!-- ============ HERO: naslov + izpostavljena novica ============ -->
     <section class="page-hero news-hero-section" aria-labelledby="news-title">
-      <div class="news-container">
+      <div class="container--wide">
         <div class="page-hero__panel glass glass--strong news-hero" data-reveal>
           <div class="news-hero__text">
             <div>
@@ -59,7 +59,7 @@
 
     <!-- ============ SEZNAM NOVIC + STRANSKI STOLPEC ============ -->
     <section class="section--tight news-main" id="seznam" aria-labelledby="news-list-title">
-      <div class="news-container news-layout">
+      <div class="container--wide news-layout">
         <div class="news-layout__main">
           <div class="glass news-toolbar" data-toolbar>
             <div class="news-toolbar__top">
@@ -115,10 +115,10 @@
             </noscript>
             <div class="news-more" data-more-wrap hidden>
               <div class="news-more__progress">
-                <span class="small soft" data-more-text></span>
+                <span class="small" data-more-text></span>
                 <div class="news-more__bar" aria-hidden="true"><span data-more-bar></span></div>
               </div>
-              <button type="button" class="btn news-more__btn" data-more>Naloži več <span class="news-more__n" data-more-n></span></button>
+              <button type="button" class="btn news-more__btn" data-more>Naloži več <span class="news-more__n" data-more-n></span><span class="visually-hidden" data-more-noun></span></button>
             </div>
           </div>
         </div>
@@ -149,7 +149,7 @@
             <div class="news-archive" data-archive></div>
           </section>
 
-          <section class="tile tile--raised news-side__card news-mail" aria-labelledby="news-mail-title">
+          <section class="glass glass--strong news-side__card news-mail" aria-labelledby="news-mail-title">
             <h2 class="news-mail__title" id="news-mail-title">Novice v vaš nabiralnik</h2>
             <p class="small muted">Enkrat na mesec: rezultati, vpisi in dogodki – naravnost v vaš e-poštni predal.</p>
             <a class="btn btn--sm news-mail__btn" href="#nl-email" data-newsletter-focus><i data-icon="send"></i>Prijava na e-novice</a>

@@ -383,7 +383,7 @@
     el.cats.innerHTML = [""].concat(CATS).map(function (c) {
       return '<button type="button" class="chip news-chip" data-cat="' + esc(c) + '" aria-pressed="false">' +
         (c ? '<span class="dot" style="--dot:' + TONE_VAR[tone(c)] + '"></span>' + esc(c) : "Vse") +
-        ' <span class="count" data-chip-count>0</span></button>';
+        ' <span class="count" data-chip-count>0</span><span class="visually-hidden" data-chip-noun></span></button>';
     }).join("");
   }
   function renderChips() {
@@ -397,19 +397,21 @@
       b.classList.toggle("is-empty", n === 0);
       var cnt = qs("[data-chip-count]", b);
       if (cnt) cnt.textContent = String(n);
-      b.setAttribute("aria-label", (c || "Vse rubrike") + ", " + n + " " + PKB.plural(n, ["novica", "novici", "novice", "novic"]));
+      // accessible name = visible text + noun ("Vse 10 novic") – label in name (WCAG 2.5.3)
+      var noun = qs("[data-chip-noun]", b);
+      if (noun) noun.textContent = " " + PKB.plural(n, ["novica", "novici", "novice", "novic"]);
     });
   }
   function renderActive() {
     if (!el.active) return;
     var chips = [];
-    if (state.q) chips.push({ k: "q", label: "»" + state.q + "«", aria: "Odstrani iskalni niz " + state.q });
-    if (state.cat) chips.push({ k: "cat", label: state.cat, aria: "Odstrani rubriko " + state.cat });
-    if (state.month) chips.push({ k: "month", label: monthLabel(state.month, true), aria: "Odstrani mesec " + monthLabel(state.month) });
+    if (state.q) chips.push({ k: "q", label: "»" + state.q + "«", action: "odstrani iskalni niz" });
+    if (state.cat) chips.push({ k: "cat", label: state.cat, action: "odstrani rubriko" });
+    if (state.month) chips.push({ k: "month", label: monthLabel(state.month, true), action: "odstrani mesec" });
     el.active.hidden = !chips.length;
     el.activeChips.innerHTML = chips.map(function (c) {
-      return '<button type="button" class="chip news-active__chip" data-remove="' + c.k + '" aria-label="' + esc(c.aria) + '">' +
-        '<span class="news-active__text">' + esc(c.label) + "</span>" + icon("x", "icon--sm") + "</button>";
+      return '<button type="button" class="chip news-active__chip" data-remove="' + c.k + '">' +
+        '<span class="news-active__text">' + esc(c.label) + '</span><span class="visually-hidden"> – ' + esc(c.action) + "</span>" + icon("x", "icon--sm") + "</button>";
     }).join("");
   }
   function renderCount(list) {
@@ -524,7 +526,9 @@
     el.moreBar.style.width = Math.round(shown / total * 100) + "%";
     el.more.hidden = rest <= 0;
     el.moreN.textContent = String(rest);
-    el.more.setAttribute("aria-label", "Naloži več (še " + rest + " " + PKB.plural(rest, ["novica", "novici", "novice", "novic"]) + ")");
+    var noun = qs("[data-more-noun]", el.more);
+    if (noun) noun.textContent = " " + PKB.plural(rest, ["novica", "novici", "novice", "novic"]);
+    el.more.removeAttribute("aria-label");
   }
   function loadMore() {
     var from = state.shown;
@@ -556,10 +560,11 @@
       return (multi ? '<p class="news-archive__year">' + esc(y) + "</p>" : "") +
         '<ul class="news-archive__list" role="list">' + ms.map(function (m) {
           var c = MONTH_COUNT[m];
-          return '<li><button type="button" class="news-archive__btn" data-month="' + m + '" aria-pressed="false" aria-label="' + esc(monthLabel(m, true)) + ", " + c + " " + PKB.plural(c, ["novica", "novici", "novice", "novic"]) + '">' +
-            '<span class="news-archive__name">' + esc(multi ? monthLabel(m, true).replace(/\s*\d{4}$/, "") : monthLabel(m, true)) + "</span>" +
+          var name = multi ? monthLabel(m, true).replace(/\s*\d{4}$/, "") : monthLabel(m, true);
+          return '<li><button type="button" class="news-archive__btn" data-month="' + m + '" aria-pressed="false">' +
+            '<span class="news-archive__name">' + esc(name) + (multi ? '<span class="visually-hidden"> ' + esc(y) + "</span>" : "") + '<span class="visually-hidden">,</span></span> ' +
             '<span class="news-archive__bar" aria-hidden="true"><span style="width:' + Math.max(8, Math.round(c / max * 100)) + '%"></span></span>' +
-            '<span class="news-archive__n" aria-hidden="true">' + c + "</span></button></li>";
+            '<span class="news-archive__n">' + c + '<span class="visually-hidden"> ' + PKB.plural(c, ["novica", "novici", "novice", "novic"]) + "</span></span></button></li>";
         }).join("") + "</ul>";
     }).join("");
   }
@@ -826,12 +831,10 @@
     var pb = qs("[data-reader-prev]", d), nb = qs("[data-reader-next]", d);
     if (pb) {
       pb.disabled = !prev;
-      pb.setAttribute("aria-label", prev ? "Prejšnja novica: " + prev.title : "Ni prejšnje novice");
       qs("[data-prev-title]", pb).textContent = prev ? navLabel(prev) : "Ni prejšnje";
     }
     if (nb) {
       nb.disabled = !next;
-      nb.setAttribute("aria-label", next ? "Naslednja novica: " + next.title : "Ni naslednje novice");
       qs("[data-next-title]", nb).textContent = next ? navLabel(next) : "Ni naslednje";
     }
     var pos = qs("[data-reader-pos]", d);
@@ -916,10 +919,10 @@
     }
     var footer =
       '<button type="button" class="btn btn--sm news-reader__nav news-reader__nav--prev" data-reader-prev>' + icon("arrow-left") +
-        '<span class="news-reader__nav-text"><span class="news-reader__nav-k">Prejšnja</span><span class="news-reader__nav-t" data-prev-title></span></span></button>' +
+        '<span class="news-reader__nav-text"><span class="news-reader__nav-k">Prejšnja<span class="visually-hidden">:</span></span> <span class="news-reader__nav-t" data-prev-title></span></span></button>' +
       '<span class="news-reader__pos small soft" data-reader-pos></span>' +
       '<button type="button" class="btn btn--sm news-reader__nav news-reader__nav--next" data-reader-next>' +
-        '<span class="news-reader__nav-text"><span class="news-reader__nav-k">Naslednja</span><span class="news-reader__nav-t" data-next-title></span></span>' + icon("arrow-right") + "</button>";
+        '<span class="news-reader__nav-text"><span class="news-reader__nav-k">Naslednja<span class="visually-hidden">:</span></span> <span class="news-reader__nav-t" data-next-title></span></span>' + icon("arrow-right") + "</button>";
     var m = PKB.modal.open({
       ariaLabel: "Članek",
       size: "lg",

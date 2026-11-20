@@ -656,7 +656,22 @@
     if (mini.next) mini.next.disabled = idx >= monthIndex(mini.max.getFullYear(), mini.max.getMonth());
     if (mini.todayBtn) mini.todayBtn.disabled = mini.y === today.getFullYear() && mini.m === today.getMonth();
     renderMonthList();
+    syncAsideSticky();
   }
+
+  /* The calendar aside sticks beside the list only while all of it fits below the fixed header
+     (on a 1440×900 screen it is taller than the space, and its foot would never be reachable). */
+  var calAside = qs(".comp-cal-aside");
+  function syncAsideSticky() {
+    if (!calAside) return;
+    var headerH = parseFloat(getComputedStyle(doc.documentElement).getPropertyValue("--header-h")) || 76;
+    calAside.classList.toggle("is-sticky", calAside.offsetHeight + headerH + 32 <= window.innerHeight);
+  }
+  var stickyRaf = 0;
+  window.addEventListener("resize", function () {
+    if (stickyRaf) return;
+    stickyRaf = requestAnimationFrame(function () { stickyRaf = 0; syncAsideSticky(); });
+  });
 
   function renderMonthList() {
     if (!mini.list) return;
@@ -787,7 +802,15 @@
   };
   var res = { comp: "", cat: "", gender: "", q: "", sort: { col: "competition", dir: "desc" } };
   var SORT_DEFAULT_DIR = { athlete: "asc", event: "asc", time: "asc", place: "asc", competition: "desc" };
-  var SORT_LABEL = { athlete: "plavalcu", event: "disciplini", time: "času", place: "mestu", competition: "tekmi" };
+  /* natural wording for the current order ("razvrščeno od najnovejše tekme") */
+  var SORT_PHRASE = {
+    "competition:desc": "od najnovejše tekme", "competition:asc": "od najstarejše tekme",
+    "time:asc": "od najhitrejšega časa", "time:desc": "od najpočasnejšega časa",
+    "place:asc": "od najboljše uvrstitve", "place:desc": "od najslabše uvrstitve",
+    "athlete:asc": "po abecedi (A–Ž)", "athlete:desc": "po abecedi (Ž–A)",
+    "event:asc": "po disciplini", "event:desc": "po disciplini, obratno"
+  };
+  function sortPhrase() { return SORT_PHRASE[res.sort.col + ":" + res.sort.dir] || "po tekmi"; }
   var SORT_OPTIONS = [
     ["competition:desc", "Najnovejše tekme"], ["competition:asc", "Najstarejše tekme"],
     ["time:asc", "Najhitrejši čas"], ["place:asc", "Najboljša uvrstitev"],
@@ -970,11 +993,11 @@
     if (R.count) {
       var n = rows.length;
       R.count.innerHTML = plural(n, ["Prikazan", "Prikazana", "Prikazani", "Prikazanih"]) + " <strong>" + n + "</strong> " + plural(n, ["rezultat", "rezultata", "rezultati", "rezultatov"]) +
-        (filtered ? " od " + RESULTS.length : "") + '<span class="comp-res-bar__sort"> · razvrščeno po ' + SORT_LABEL[res.sort.col] + (res.sort.dir === "asc" ? " naraščajoče" : " padajoče") + "</span>";
+        (filtered ? " od " + RESULTS.length : "") + '<span class="comp-res-bar__sort"> · razvrščeno ' + sortPhrase() + "</span>";
     }
     if (R.caption) {
       var c2 = res.comp ? COMP_MAP[res.comp] : null;
-      R.caption.textContent = "Rezultati plavalcev PK Branik" + (c2 ? " – " + c2.name : "") + ", razvrščeni po " + SORT_LABEL[res.sort.col] + (res.sort.dir === "asc" ? " naraščajoče" : " padajoče");
+      R.caption.textContent = "Rezultati plavalcev PK Branik" + (c2 ? " – " + c2.name : "") + ", razvrščeni " + sortPhrase();
     }
     if (R.clear) R.clear.disabled = !filtered;
     if (R.csv) R.csv.disabled = !hasRows;
@@ -987,7 +1010,7 @@
       if (!qs('option[value="' + v + '"]', R.sortSel)) {
         var o = doc.createElement("option");
         o.value = v;
-        o.textContent = "Razvrsti: " + SORT_LABEL[res.sort.col] + (res.sort.dir === "asc" ? " ↑" : " ↓");
+        o.textContent = "Razvrsti: " + sortPhrase();
         R.sortSel.appendChild(o);
       }
       R.sortSel.value = v;
@@ -1099,6 +1122,21 @@
       var pr = R.sortSel.value.split(":");
       setSort(pr[0], pr[1]);
     });
+    /* results become cards below 720px: the column headers stay for screen readers (visually hidden),
+       but their sort buttons leave the tab order – the "Razvrsti" select does the job there */
+    var mqCards = window.matchMedia ? window.matchMedia("(max-width: 719.98px)") : null;
+    var syncSortHeaders = function () {
+      var cards = !!(mqCards && mqCards.matches);
+      qsa("th[data-sort-col] button", R.root).forEach(function (b) {
+        if (cards) b.setAttribute("tabindex", "-1");
+        else b.removeAttribute("tabindex");
+      });
+    };
+    syncSortHeaders();
+    if (mqCards) {
+      if (mqCards.addEventListener) mqCards.addEventListener("change", syncSortHeaders);
+      else if (mqCards.addListener) mqCards.addListener(syncSortHeaders);
+    }
     var reset = function () { setRes({ comp: "", cat: "", gender: "", q: "" }); if (R.q) R.q.focus({ preventScroll: true }); };
     if (R.clear) R.clear.addEventListener("click", reset);
     var rb = qs("[data-res-reset]", R.root);
@@ -1125,7 +1163,9 @@
   function renderRecords() {
     var athletesWithResults = {};
     RESULTS.forEach(function (r) { athletesWithResults[r.athlete] = (athletesWithResults[r.athlete] || 0) + 1; });
-    var isNew = function (r) { return r.year && r.year >= SEASON.y1; };
+    /* records only carry a year, so "new" means set in the current calendar year (not the season) */
+    var thisYear = PKB.today().getFullYear();
+    var isNew = function (r) { return r.year === thisYear; };
     ["M", "Ž"].forEach(function (g) {
       var body = qs('[data-rec-body="' + g + '"]');
       var rows = RECORDS.filter(function (r) { return r.gender === g; });
@@ -1153,7 +1193,7 @@
 
     var news = RECORDS.filter(isNew);
     var nv = qs("[data-rec-new]"), nl = qs("[data-rec-new-list]"), lab = qs("[data-rec-new-label]");
-    if (lab) lab.textContent = "Novi rekordi v sezoni " + SEASON.label;
+    if (lab) lab.textContent = "Novi rekordi v letu " + thisYear;
     if (nv) nv.textContent = String(news.length);
     if (nl) nl.innerHTML = news.length ? news.map(function (r) {
       return '<li><span class="comp-rec-tile__ev">' + esc(r.event) + " · " + (r.gender === "Ž" ? "Ž" : "M") + '</span><span class="comp-rec-tile__who">' + esc(r.athlete) + '</span><span class="comp-rec-tile__t">' + esc(r.time) + "</span></li>";

@@ -108,10 +108,10 @@
         '<img src="' + esc(it.thumb) + '" srcset="' + esc(it.thumb) + " " + it.tw + "w, " + esc(it.src) + " " + it.w + 'w" sizes="(min-width: 980px) 520px, 100vw"' +
           ' alt="" width="' + it.tw + '" height="' + it.th + '" decoding="async" fetchpriority="high">' +
         '<span class="gal-feature__tag"><span class="gal-feature__tag-dot" aria-hidden="true"></span>Najnovejša fotografija</span> ' +
-        '<span class="photo-card__glass gal-feature__cap">' +
+        '<span class="photo-card__glass photo-card__glass--dark gal-feature__cap">' +
           '<span class="gal-feature__text"><span class="gal-feature__kicker">' + esc(meta) + "</span> " +
             '<strong class="gal-feature__title">' + esc(it.title) + "</strong></span>" +
-          '<span class="gal-round" aria-hidden="true">' + PKB.icon("maximize") + "</span>" +
+          '<span class="gal-round" aria-hidden="true">' + PKB.icon("arrow-up-right") + "</span>" +
         "</span>" +
       "</button>";
   }
@@ -126,13 +126,14 @@
     var html = ALBUMS.map(function (a) {
       var n = albumCount(a);
       var cover = newest.filter(function (it) { return it.album === a; })[0];
+      // DOM order "Treningi, 6 fotografij" (accessible name starts with the visible album name, WCAG 2.5.3);
+      // CSS shows the number on top
       return '<li class="gal-stat gal-stat--album">' +
-        '<a class="gal-stat__link" href="galerija.html?album=' + encodeURIComponent(a) + '#fotografije" data-album-link="' + esc(a) + '"' +
-          ' aria-label="Album ' + esc(a) + ": " + n + " " + photosWord(n) + ' – prikaži">' +
-          '<span class="gal-stat__value">' + n + "</span>" +
+        '<a class="gal-stat__link" href="galerija.html?album=' + encodeURIComponent(a) + '#fotografije" data-album-link="' + esc(a) + '">' +
           '<span class="gal-stat__label">' +
             (cover ? '<span class="gal-stat__cover"><img src="' + esc(cover.thumb) + '" alt="" width="' + cover.tw + '" height="' + cover.th + '" loading="lazy" decoding="async"></span>' : "") +
-            "<span>" + esc(a) + "</span></span>" +
+            "<span>" + esc(a) + '<span class="visually-hidden">,</span></span></span> ' +
+          '<span class="gal-stat__value">' + n + '<span class="visually-hidden"> ' + photosWord(n) + "</span></span>" +
           '<span class="gal-stat__bar" aria-hidden="true"><span style="--value:' + Math.round(n / max * 100) + '%"></span></span>' +
         "</a></li>";
     }).join("");
@@ -148,7 +149,7 @@
       return '<button type="button" class="chip gal-chip" data-album="' + esc(value) + '" aria-pressed="' + (state.album === value) + '">' +
         (cover ? '<span class="gal-chip__cover" aria-hidden="true"><img src="' + esc(cover.thumb) + '" alt="" width="' + cover.tw + '" height="' + cover.th + '" loading="lazy" decoding="async"></span>'
                : '<span class="gal-chip__cover gal-chip__cover--all" aria-hidden="true">' + PKB.icon("grid") + "</span>") +
-        "<span>" + esc(label) + '</span> <span class="count">' + n + "</span></button>";
+        "<span>" + esc(label) + '</span> <span class="count">' + n + '</span><span class="visually-hidden"> ' + photosWord(n) + "</span></button>";
     };
     el.albums.innerHTML = chip("", "Vse", ALL.length, null) + ALBUMS.map(function (a) {
       return chip(a, a, albumCount(a), newest.filter(function (it) { return it.album === a; })[0]);
@@ -228,7 +229,7 @@
         '<span class="gal-card__media">' +
           '<img src="' + esc(it.thumb) + '" alt="" width="' + it.tw + '" height="' + it.th + '" loading="lazy" decoding="async" draggable="false">' +
         "</span>" +
-        '<span class="gal-card__cap">' +
+        '<span class="photo-card__glass photo-card__glass--dark gal-card__cap">' +
           '<span class="gal-card__text"><span class="gal-card__title">' + esc(it.title) + "</span> " +
             '<span class="gal-card__meta">' + esc(meta) + "</span></span>" +
           '<span class="gal-card__zoom" aria-hidden="true">' + PKB.icon("maximize") + "</span>" +
