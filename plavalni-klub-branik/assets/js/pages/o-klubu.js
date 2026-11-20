@@ -54,7 +54,8 @@
       phone.setAttribute("href", C.phoneHref);
       var span = qs("span", phone);
       if (span) span.textContent = C.phone;
-      phone.setAttribute("aria-label", "Pokličite klub: " + C.phone);
+      // label in name: the accessible name starts with the visible number
+      phone.setAttribute("aria-label", C.phone + " – pokličite klub");
     }
   }
 
@@ -70,12 +71,28 @@
     if (!map.length) return;
     var inBand = {};
     var activeId = null;
+    // the list is the horizontal scroller (inside the glass pill), so the edge fade never hides the pill's rim
+    var scroller = qs(".club-quicknav__list", bar) || bar;
 
-    function keepInView(a) {
-      if (bar.scrollWidth <= bar.clientWidth + 1) return;
-      var target = a.offsetLeft - (bar.clientWidth - a.offsetWidth) / 2;
-      bar.scrollTo({ left: Math.max(0, target), behavior: smooth() });
+    function updateFade() {
+      var max = scroller.scrollWidth - scroller.clientWidth;
+      scroller.classList.toggle("can-left", max > 1 && scroller.scrollLeft > 2);
+      scroller.classList.toggle("can-right", max > 1 && scroller.scrollLeft < max - 2);
     }
+    function keepInView(a) {
+      if (scroller.scrollWidth <= scroller.clientWidth + 1) return;
+      var target = a.offsetLeft - (scroller.clientWidth - a.offsetWidth) / 2; // list is position:relative (offsetParent)
+      scroller.scrollTo({ left: Math.max(0, target), behavior: smooth() });
+    }
+    var fadeQueued = false;
+    scroller.addEventListener("scroll", function () {
+      if (fadeQueued) return;
+      fadeQueued = true;
+      window.requestAnimationFrame(function () { fadeQueued = false; updateFade(); });
+    }, { passive: true });
+    resizeTasks.push(updateFade);
+    updateFade();
+    if (doc.fonts && doc.fonts.ready) doc.fonts.ready.then(updateFade);
     function setActive(id) {
       if (id === activeId) return;
       activeId = id;
@@ -165,7 +182,8 @@
       return '<li class="club-tl__item" id="' + esc(m.id) + '">' +
         '<span class="club-tl__side" aria-hidden="true">' + esc(m.year) + "</span>" +
         '<span class="club-tl__dot" aria-hidden="true"></span>' +
-        '<article class="club-tl__card" tabindex="0" aria-labelledby="club-tl-y-' + m.i + " club-tl-t-" + m.i + '">' +
+        // not a tab stop (not interactive); focusable from script so the year chips can move focus here
+        '<article class="club-tl__card" tabindex="-1" aria-labelledby="club-tl-y-' + m.i + " club-tl-t-" + m.i + '">' +
           '<div class="club-tl__head"><span class="icon-bubble icon-bubble--sm">' + PKB.icon(m.h.icon || "flag") + "</span>" +
           '<time class="club-tl__year" id="club-tl-y-' + m.i + '"' + dt + ">" + esc(m.year) + "</time></div>" +
           '<h3 class="club-tl__title" id="club-tl-t-' + m.i + '">' + esc(m.h.title) + "</h3>" +
@@ -175,7 +193,8 @@
 
     if (chipsHost) {
       chipsHost.innerHTML = model.map(function (m) {
-        return '<button type="button" class="chip" data-tl-target="' + esc(m.id) + '" aria-label="Skoči na leto ' + esc(m.year) + '">' + esc(m.year) + "</button>";
+        // name = the visible year (label in name); the group label says what the chips do
+        return '<button type="button" class="chip" data-tl-target="' + esc(m.id) + '">' + esc(m.year) + "</button>";
       }).join("");
     }
 
@@ -344,8 +363,10 @@
       if (!byId[id]) { g.setAttribute("hidden", ""); g.removeAttribute("tabindex"); return false; }
       var s = stats[id];
       var countEl = qs("[data-pool-count]", g);
-      if (countEl) countEl.textContent = s.total + "× na teden";
-      g.setAttribute("aria-label", byId[id].name + ", " + count(s.total, FORMS.weekly));
+      var visible = s.total + "× na teden";
+      if (countEl) countEl.textContent = visible;
+      // label in name: starts with the visible text ("50 m bazen", "26× na teden")
+      g.setAttribute("aria-label", byId[id].name + ", " + visible);
       return true;
     });
     if (chipsHost) {
@@ -641,6 +662,28 @@
     PKB.clubCoaches = { filter: function () { return currentFilter; }, open: function (id) { return openCoach(String(id), false); } };
   }
 
+  /* ---------- 7. Deep links to plain sections (#olimpijci, #trenerji, #partnerji …) ----------
+     The browser jumps to the fragment before the JS-rendered sections above it have their final
+     height, so re-align once they are rendered (next frame) and again after load – unless the
+     visitor has already started scrolling. */
+  var userMoved = false;
+  ["wheel", "touchstart", "keydown", "pointerdown"].forEach(function (ev) {
+    window.addEventListener(ev, function () { userMoved = true; }, { passive: true, once: true });
+  });
+  function alignInitialHash() {
+    var raw = window.location.hash.slice(1);
+    if (!raw) return;
+    var h = raw;
+    try { h = decodeURIComponent(raw); } catch (e) { h = raw; }
+    if (/^trener-/.test(h)) return; // handled by the coach dialog
+    var el = doc.getElementById(h);
+    if (!el || !el.closest("main")) return;
+    var align = function () { if (!userMoved) el.scrollIntoView({ behavior: "instant", block: "start" }); };
+    window.requestAnimationFrame(align);
+    if (doc.readyState === "complete") window.setTimeout(align, 60);
+    else window.addEventListener("load", function () { window.setTimeout(align, 60); }, { once: true });
+  }
+
   /* ---------- boot ---------- */
   function boot() {
     fillStatic();
@@ -651,6 +694,7 @@
     initCoaches();
     initScrollspy();
     runScrollTasks();
+    alignInitialHash();
   }
   try { boot(); }
   catch (err) {

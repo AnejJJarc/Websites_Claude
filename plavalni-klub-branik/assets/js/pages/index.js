@@ -59,6 +59,10 @@
       .replace(/(\d)\s+(m|€|min|let|leta|h)(?=[\s.,;)]|$)/g, "$1\u00a0$2");
   }
   function t(s) { return esc(nb(s)); }
+  /** "še 1 termin", "še 2 termina", "še 3 termini", "še 5 terminov" (capitalised for a link label) */
+  function moreSessions(n) {
+    return "Še " + n + " " + PKB.plural(n, ["termin", "termina", "termini", "terminov"]);
+  }
   function revealDelay(i, step) { return "--reveal-delay:" + Math.min(i * (step || 90), 600) + "ms"; }
 
   /* ------------------------------------------------------------------
@@ -120,7 +124,7 @@
       todayBody.innerHTML =
         '<div class="home-today__empty" data-today-empty>' +
           '<span class="icon-bubble icon-bubble--sm">' + PKB.icon("sun") + "</span>" +
-          '<p class="home-today__empty-title">Danes ni treningov – lep dan!</p>' +
+          '<p class="home-today__empty-title">Danes ni treningov. Lep dan vam želimo!</p>' +
           (nx ? '<p class="small muted">Naslednji trening: ' + esc(nx.text) + ".</p>" : "") +
           '<a class="btn btn--sm" href="urnik.html">' + PKB.icon("calendar") + "Tedenski urnik</a>" +
         "</div>";
@@ -185,7 +189,7 @@
     todayBody.innerHTML =
       '<ol class="home-sess" role="list" aria-label="Današnji treningi">' + rows + "</ol>" +
       '<div class="home-today__foot"><span aria-live="polite" data-today-summary>' + esc(summary) + "</span>" +
-        '<a href="urnik.html">' + (hidden > 0 ? "+" + hidden + " · " : "") + "Urnik" + PKB.icon("arrow-right", "icon--sm") + "</a></div>";
+        '<a href="urnik.html">' + (hidden > 0 ? esc(moreSessions(hidden)) + " · " : "") + "Urnik" + PKB.icon("arrow-right", "icon--sm") + "</a></div>";
   }
 
   /* ------------------------------------------------------------------
@@ -393,15 +397,19 @@
             '<div class="home-fact"><dt>Raven</dt><dd class="home-fact__value">' + esc(p.level) + "</dd></div>" +
             '<div class="home-fact"><dt>Članarina</dt><dd class="home-fact__value">' + esc(price) + "</dd><dd class=\"home-fact__sub\">" + (typeof p.price === "number" ? "na mesec, prvi otrok" : "pišite nam") + "</dd></div>" +
           "</dl>" +
+        "</div>" +
+        // goals tile + actions share the right column on wide screens (heights stay balanced);
+        // below 1100 px the wrapper is display: contents and the actions sit right under the facts
+        '<div class="home-path__side">' +
+          '<div class="tile tile--raised home-path__goals">' +
+            "<h4>Kaj otrok osvoji</h4>" +
+            '<ul class="list-check">' + (p.goals || []).map(function (g) { return "<li>" + t(g) + "</li>"; }).join("") + "</ul>" +
+            (p.requirements ? '<p class="home-path__req"><strong>Pogoj za vpis:</strong> ' + t(p.requirements) + "</p>" : "") +
+          "</div>" +
           '<div class="cluster home-path__actions">' +
             '<a class="btn btn--primary" href="vpis.html?program=' + encodeURIComponent(p.id) + '" data-path-enrol>Vpis v skupino' + PKB.icon("arrow-right", "icon--move") + "</a>" +
             '<a class="btn" href="programi.html#' + encodeURIComponent(p.id) + '" data-path-more>Več o skupini</a>' +
           "</div>" +
-        "</div>" +
-        '<div class="tile tile--raised home-path__goals">' +
-          "<h4>Kaj otrok osvoji</h4>" +
-          '<ul class="list-check">' + (p.goals || []).map(function (g) { return "<li>" + t(g) + "</li>"; }).join("") + "</ul>" +
-          (p.requirements ? '<p class="home-path__req"><strong>Pogoj za vpis:</strong> ' + t(p.requirements) + "</p>" : "") +
         "</div>" +
       "</div>";
     }
@@ -446,13 +454,16 @@
       keepTabVisible(tabs[i], !opts.instant);
       if (prevBtn) {
         prevBtn.disabled = i === 0;
-        qs("[data-path-prev-label]", prevBtn).textContent = i > 0 ? steps[i - 1].name : "Nazaj";
-        prevBtn.setAttribute("aria-label", i > 0 ? "Prejšnji korak: " + steps[i - 1].name : "Prejšnji korak");
+        // visible text = neighbour name (or "Nazaj"); the accessible name starts with exactly that text (WCAG 2.5.3)
+        var prevTxt = i > 0 ? steps[i - 1].name : "Nazaj";
+        qs("[data-path-prev-label]", prevBtn).textContent = prevTxt;
+        prevBtn.setAttribute("aria-label", prevTxt + ", prejšnji korak");
       }
       if (nextBtn) {
         nextBtn.disabled = i === steps.length - 1;
-        qs("[data-path-next-label]", nextBtn).textContent = i < steps.length - 1 ? steps[i + 1].name : "Naprej";
-        nextBtn.setAttribute("aria-label", i < steps.length - 1 ? "Naslednji korak: " + steps[i + 1].name : "Naslednji korak");
+        var nextTxt = i < steps.length - 1 ? steps[i + 1].name : "Naprej";
+        qs("[data-path-next-label]", nextBtn).textContent = nextTxt;
+        nextBtn.setAttribute("aria-label", nextTxt + ", naslednji korak");
       }
       var count = qs("[data-path-count]");
       if (count) count.textContent = (i + 1) + " / " + steps.length;
@@ -617,7 +628,7 @@
       '<li><span class="dot" style="--dot:var(--c-gold)" aria-hidden="true"></span>Zlato <strong>' + sum.g + "</strong></li>" +
       '<li><span class="dot" style="--dot:var(--c-silver)" aria-hidden="true"></span>Srebro <strong>' + sum.s + "</strong></li>" +
       '<li><span class="dot" style="--dot:var(--c-bronze)" aria-hidden="true"></span>Bron <strong>' + sum.b + "</strong></li>" +
-      '<li><span class="home-chart__key" aria-hidden="true"></span>Črta: skupaj na tekmo</li>';
+      '<li><span class="home-chart__key" aria-hidden="true"></span>Črta: skupno število medalj na tekmo</li>';
     if (tableHost) tableHost.innerHTML =
       '<div class="visually-hidden"><table><caption>Medalje po tekmah v sezoni ' + esc(C.season || "") + "</caption>" +
       '<thead><tr><th scope="col">Tekma</th><th scope="col">Datum</th><th scope="col">Zlato</th><th scope="col">Srebro</th><th scope="col">Bron</th><th scope="col">Skupaj</th></tr></thead><tbody>' +
@@ -694,7 +705,7 @@
       return '<li data-reveal="zoom" style="' + revealDelay(i, 70) + '">' +
         '<a class="home-gal__link" href="galerija.html#' + encodeURIComponent(g.id) + '" aria-label="' + esc(g.title) + ' – odpri v galeriji">' +
           '<img src="' + esc(g.thumb || g.src) + '" alt="" loading="lazy" decoding="async" width="' + tw + '" height="' + th + '">' +
-          '<span class="home-gal__cap" aria-hidden="true"><span>' + esc(g.title) + "</span>" + PKB.icon("maximize") + "</span>" +
+          '<span class="photo-card__glass home-gal__cap" aria-hidden="true"><span>' + esc(g.title) + "</span>" + PKB.icon("maximize") + "</span>" +
         "</a></li>";
     }).join("");
   }

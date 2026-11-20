@@ -41,13 +41,13 @@
                 <a class="btn btn--lg" href="urnik.html"><i data-icon="calendar"></i>Urnik treningov</a>
               </div>
             </div>
-            <figure class="photo-card prog-hero__photo">
-              <img src="assets/img/photos/sola-ucenje-sm.jpg" srcset="assets/img/photos/sola-ucenje-sm.jpg 720w, assets/img/photos/sola-ucenje.jpg 1920w" sizes="(min-width: 900px) 460px, 100vw" alt="Trener v vodi pomaga otroku pri prvih zavesljajih" width="720" height="480" loading="lazy" decoding="async">
-              <figcaption class="photo-card__glass prog-hero__caption">
+            <a class="photo-card prog-hero__photo" href="vpis.html">
+              <img src="assets/img/photos/sola-ucenje-sm.jpg" srcset="assets/img/photos/sola-ucenje-sm.jpg 720w, assets/img/photos/sola-ucenje.jpg 1920w" sizes="(min-width: 900px) 460px, 100vw" alt="" width="720" height="480" loading="lazy" decoding="async">
+              <span class="photo-card__glass prog-hero__caption">
                 <span class="prog-hero__caption-text"><strong>Prvi trening je poskusni</strong><span class="small">Spoznajte skupino in trenerja, nato se odločite.</span></span>
-                <span class="prog-round" aria-hidden="true"><i data-icon="waves"></i></span>
-              </figcaption>
-            </figure>
+                <span class="prog-round" aria-hidden="true"><i data-icon="arrow-up-right"></i></span>
+              </span>
+            </a>
           </div>
 
           <nav class="prog-quick tile" aria-label="Na tej strani">
@@ -77,7 +77,7 @@
         <div class="prog-toolbar" data-prog-toolbar>
           <div class="prog-seg tabs-list" role="group" aria-label="Kategorija programov" data-prog-filter>
             <button type="button" class="tab" data-cat="all" aria-pressed="true">Vsi <span class="prog-seg__count" data-count="all"></span></button>
-            <button type="button" class="tab" data-cat="sola" aria-pressed="false"><span class="prog-seg__long">Plavalna šola</span><span class="prog-seg__short" aria-hidden="true">Šola</span> <span class="prog-seg__count" data-count="sola"></span></button>
+            <button type="button" class="tab" data-cat="sola" aria-pressed="false"><span class="prog-seg__long">Plavalna šola</span><span class="prog-seg__short">Šola</span> <span class="prog-seg__count" data-count="sola"></span></button>
             <button type="button" class="tab" data-cat="tekmovalno" aria-pressed="false">Tekmovalno <span class="prog-seg__count" data-count="tekmovalno"></span></button>
             <button type="button" class="tab" data-cat="odrasli" aria-pressed="false">Odrasli <span class="prog-seg__count" data-count="odrasli"></span></button>
           </div>
@@ -137,7 +137,7 @@
                   <div class="field prog-age__field">
                     <label class="label" for="quiz-age">Starost v letih</label>
                     <input class="input prog-age__input" type="number" id="quiz-age" name="age" inputmode="decimal" min="1" max="99" step="any" value="7" required data-msg="Vnesite starost med 1 in 99 let." aria-describedby="quiz-age-hint" data-age-input>
-                    <p class="hint" id="quiz-age-hint" data-age-hint>V plavalno šolo vpisujemo od 4. leta, plavanje za odrasle je namenjeno starejšim od 18 let.</p>
+                    <p class="hint" id="quiz-age-hint" data-age-hint>V plavalno šolo vpisujemo od 4. leta, plavanje za odrasle je namenjeno polnoletnim (18 let in več).</p>
                   </div>
                 </div>
               </fieldset>
@@ -184,7 +184,7 @@
           </div>
           <p class="prog-compare__hint small soft"><i data-icon="arrow-right" class="icon--sm"></i>Tabelo povlecite vstran za vse skupine.</p>
         </div>
-        <div class="table-wrap prog-compare" role="region" aria-labelledby="primerjava-title" tabindex="0" data-reveal data-compare>
+        <div class="table-wrap prog-compare" role="group" aria-label="Primerjalna tabela skupin plavalne šole" tabindex="0" data-reveal data-compare>
           <noscript><p class="prog-noscript">Za prikaz primerjalne tabele omogočite JavaScript.</p></noscript>
         </div>
       </div>
@@ -197,7 +197,7 @@
           <div>
             <p class="eyebrow">Cenik</p>
             <h2 id="cenik-title">Mesečna članarina <span class="gradient-text">plavalne šole</span></h2>
-            <p class="lead" data-pricing-lead>Mesečna članarina za prvega otroka. Za tekmovalne skupine in odrasle velja ločen cenik – pišite nam.</p>
+            <p class="lead" data-pricing-lead>Mesečna članarina za prvega otroka. Tekmovalne skupine in odrasli plačujejo po ceniku sekcije – pišite nam.</p>
           </div>
           <a class="btn" href="vpis.html"><i data-icon="euro"></i>Izračun članarine ob vpisu</a>
         </div>
@@ -314,7 +314,7 @@
           <h2 id="prog-cta-title">Prvi trening <span class="gradient-text">je poskusni</span></h2>
           <p class="lead">Pridite na Pristan, spoznajte skupino in trenerja – za vpis se odločite šele po treningu.</p>
           <div class="cluster prog-cta__actions">
-            <a class="btn btn--primary btn--lg" href="vpis.html">Prijava na vpis <i data-icon="arrow-right" class="icon--move"></i></a>
+            <a class="btn btn--primary btn--lg" href="vpis.html">Spletni vpis <i data-icon="arrow-right" class="icon--move"></i></a>
             <a class="btn btn--lg" href="kontakt.html?zadeva=vpis#obrazec"><i data-icon="mail"></i>Vprašanje o skupinah</a>
           </div>
         </div>

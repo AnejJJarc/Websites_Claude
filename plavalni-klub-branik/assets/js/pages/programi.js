@@ -60,7 +60,7 @@
   }
   function priceBlock(p) {
     if (typeof p.price !== "number") {
-      return '<p class="prog-price"><span class="prog-price__value prog-price__value--text">' + esc(PKB.formatPrice(null)) + '</span><span class="prog-price__per">ločen cenik</span></p>';
+      return '<p class="prog-price"><span class="prog-price__value prog-price__value--text">' + esc(PKB.formatPrice(null)) + "</span></p>";
     }
     return '<p class="prog-price"><span class="prog-price__value">' + esc(PKB.formatPrice(p.price)) + '</span><span class="prog-price__per">/ mesec</span></p>';
   }
@@ -143,7 +143,7 @@
         "</dl>" +
         '<div class="prog-card__foot">' + priceBlock(p) +
           '<button type="button" class="btn btn--sm prog-toggle" aria-expanded="false" aria-controls="' + esc(detId) + '" data-toggle="' + esc(p.id) + '">' +
-            'Podrobnosti<span class="visually-hidden"> o programu ' + esc(p.name) + "</span>" + PKB.icon("chevron-down") + "</button>" +
+            'Podrobnosti<span class="visually-hidden">: ' + esc(p.name) + "</span>" + PKB.icon("chevron-down") + "</button>" +
         "</div>" +
         '<div class="prog-details" id="' + esc(detId) + '" role="region" aria-labelledby="' + esc(p.id) + '-ime" data-details="' + esc(p.id) + '">' +
           '<div class="prog-details__inner"><div class="prog-details__body">' + detailsHTML(p) + "</div></div>" +
@@ -153,13 +153,14 @@
   }
 
   function helpTileHTML(n) {
-    var minAge = programs.reduce(function (m, p) { return typeof p.minAge === "number" ? Math.min(m, p.minAge) : m; }, Infinity);
+    var school = programs.filter(function (p) { return p.category === "sola"; });
+    var minAge = (school.length ? school : programs).reduce(function (m, p) { return typeof p.minAge === "number" ? Math.min(m, p.minAge) : m; }, Infinity);
     var catN = cats.filter(function (c) { return programs.some(function (p) { return p.category === c.id; }); }).length;
     var stats = [
       [String(programs.length), plural(programs.length, ["program", "programa", "programi", "programov"])],
       [String(catN), plural(catN, ["kategorija", "kategoriji", "kategorije", "kategorij"])]
     ];
-    if (isFinite(minAge)) stats.push([decimal(minAge) + "+", "let ob vpisu"]);
+    if (isFinite(minAge)) stats.push([ageLabel(minAge), "najnižja starost za vpis v plavalno šolo"]);
     return '<aside class="prog-help glass glass--strong' + (n === 1 ? " prog-help--wide" : "") + '" aria-label="Pomoč pri izbiri programa">' +
       '<div class="prog-help__main">' +
         '<span class="icon-bubble" aria-hidden="true">' + PKB.icon("help-circle") + "</span>" +
@@ -428,8 +429,10 @@
     var adults = programs.filter(function (p) { return p.category === "odrasli" && typeof p.minAge === "number"; });
     if (Q.ageHint && school.length) {
       var sMin = Math.min.apply(null, school.map(function (p) { return p.minAge; }));
+      var aMin = adults.length ? Math.min.apply(null, adults.map(function (p) { return p.minAge; })) : null;
       Q.ageHint.textContent = "V plavalno šolo vpisujemo od " + decimal(sMin) + ". leta" +
-        (adults.length ? ", plavanje za odrasle je namenjeno starejšim od " + Math.min.apply(null, adults.map(function (p) { return p.minAge; })) + " let." : ".");
+        (aMin === null ? "." : aMin === 18 ? ", plavanje za odrasle je namenjeno polnoletnim (18 let in več)." :
+          ", plavanje za odrasle je namenjeno plavalcem od " + decimal(aMin) + ". leta naprej.");
     }
   }
 
@@ -582,7 +585,7 @@
           (approx ? '<p class="prog-rec__note">' + PKB.icon("info", "icon--sm") + "<span>Za to kombinacijo odgovorov nimamo povsem ujemajoče se skupine, zato predlagamo najbližjo. <a href=\"kontakt.html?zadeva=vpis#obrazec\">Pišite nam</a> in skupaj bomo našli najboljšo rešitev.</span></p>" : "") +
           '<div class="prog-rec__actions">' +
             '<a class="btn btn--primary btn--sm" href="vpis.html?program=' + encodeURIComponent(p.id) + '">Vpis v skupino' + PKB.icon("arrow-right", "icon--move") + "</a>" +
-            '<a class="btn btn--sm" href="#' + esc(p.id) + '">' + PKB.icon("info") + "Podrobnosti</a>" +
+            '<a class="btn btn--sm" href="#' + esc(p.id) + '">' + PKB.icon("info") + 'Podrobnosti<span class="visually-hidden">: ' + esc(p.name) + "</span></a>" +
             '<a class="btn btn--sm btn--ghost" href="urnik.html?skupina=' + encodeURIComponent(p.id) + '">' + PKB.icon("calendar") + "Urnik skupine</a>" +
           "</div>" +
         "</div></article>";
@@ -804,7 +807,7 @@
       }).join("") + "</tbody>" +
       '<tfoot><tr><th scope="row" data-col="0"><span class="visually-hidden">Povezave</span></th>' +
         list.map(function (p, i) {
-          return '<td data-col="' + (i + 1) + '"><a class="prog-compare__link" href="#' + esc(p.id) + '">Podrobnosti<span class="visually-hidden"> o skupini ' + esc(p.name) + "</span>" + PKB.icon("arrow-right") + "</a></td>";
+          return '<td data-col="' + (i + 1) + '"><a class="prog-compare__link" href="#' + esc(p.id) + '">Podrobnosti<span class="visually-hidden">: ' + esc(p.name) + "</span>" + PKB.icon("arrow-right") + "</a></td>";
         }).join("") + "</tr></tfoot></table>";
     host.innerHTML = html;
     compareTable = qs("table", host);
@@ -842,7 +845,8 @@
     var notesHost = qs("[data-pricing-notes]");
     var P = D.pricing || {};
     var lead = qs("[data-pricing-lead]");
-    if (lead && P.note) lead.textContent = P.note;
+    // data note still says "ločen cenik"; the static lead uses the site-wide "po ceniku sekcije" wording
+    if (lead && P.note && !/ločen cenik/i.test(P.note)) lead.textContent = P.note;
     if (host) {
       var priced = programs.filter(function (p) { return typeof p.price === "number"; });
       var byPrice = {};
@@ -875,7 +879,8 @@
         return '<article class="tile prog-price-tile">' + head +
           '<p class="prog-price-tile__value"><span class="prog-price-tile__num">' + esc(PKB.formatPrice(price)) + '</span><span class="prog-price-tile__per">/ mesec</span></p>' +
           '<span class="stat-bar" aria-hidden="true"><span style="--value:100%"></span></span>' +
-          (ps.length > 1 ? chips(ps) : "") +
+          // several groups → links to them; one group → its short description (keeps the tiles balanced)
+          (ps.length > 1 ? chips(ps) : ps[0].summary ? '<p class="prog-price-tile__list">' + esc(ps[0].summary) + "</p>" : "") +
           (meta ? '<p class="prog-price-tile__meta">' + esc(meta) + "</p>" : "") +
         "</article>";
       });
@@ -889,7 +894,7 @@
           '<p class="prog-price-tile__value"><span class="prog-price-tile__num prog-price-tile__num--text">' + esc(PKB.formatPrice(null)) + "</span></p>" +
           '<span class="stat-bar" aria-hidden="true"><span style="--value:100%"></span></span>' +
           '<p class="prog-price-tile__list">' + unpriced.map(function (p) { return esc(p.name); }).join(" · ") + "</p>" +
-          '<p class="prog-price-tile__meta">Velja ločen cenik – <a href="kontakt.html?zadeva=vpis#obrazec">pišite nam</a>.</p>' +
+          '<p class="prog-price-tile__meta">Za cenik sekcije <a href="kontakt.html?zadeva=vpis#obrazec">nam pišite</a>.</p>' +
         "</article>");
       }
       host.innerHTML = tiles.length ? tiles.join("") : '<p class="muted">Cenik bo objavljen kmalu.</p>';

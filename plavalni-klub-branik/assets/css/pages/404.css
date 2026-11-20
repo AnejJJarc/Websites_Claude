@@ -4,8 +4,6 @@
    "4◯4" porthole numerals, depth-gauge tile, glass chips to main pages.
    ========================================================================== */
 
-:root[data-theme="dark"] .nf { --text-soft: rgba(255, 255, 255, .68); }
-:root[data-theme="light"] .nf { --text-soft: rgba(28, 31, 37, .72); }
 .nf-section { display: flex; align-items: center; min-height: calc(100vh - var(--header-h) - 28px); min-height: calc(100dvh - var(--header-h) - 28px); padding-block: clamp(.5rem, 2vw, 2rem) clamp(1rem, 3vw, 2.5rem); }
 .nf-wrap { width: min(1120px, 100% - 2 * var(--gutter)); }
 .nf-panel { position: relative; overflow: hidden; isolation: isolate; padding: clamp(1.4rem, 5vw, 3.4rem); }
@@ -73,7 +71,7 @@
 .nf-gauge__unit { font-family: var(--font-display); font-size: 1.4rem; color: var(--text-soft); }
 .nf-gauge__scale { display: grid; gap: .45rem; margin-top: .2rem; }
 .nf-gauge__track { position: relative; height: 4px; border-radius: 4px; background: var(--divider); }
-.nf-gauge__track::before { content: ""; position: absolute; inset: 0 3% 0 0; border-radius: inherit; background: linear-gradient(90deg, color-mix(in srgb, var(--heading) 10%, transparent), color-mix(in srgb, var(--heading) 70%, transparent)); }
+.nf-gauge__track::before { content: ""; position: absolute; inset: 0 3% 0 0; border-radius: inherit; background: color-mix(in srgb, var(--heading) 55%, transparent); }
 .nf-gauge__marker { position: absolute; right: 0; top: 50%; width: 12px; height: 12px; margin-top: -6px; border-radius: 50%; background: var(--heading); box-shadow: 0 0 0 4px color-mix(in srgb, var(--heading) 18%, transparent); }
 .nf-gauge__ticks { display: flex; justify-content: space-between; font-size: .74rem; color: var(--text-soft); }
 .nf-gauge__stats { list-style: none; padding: .85rem 0 0; margin: 0; display: grid; grid-template-columns: 1fr 1fr; border-top: 1px solid var(--divider); }
@@ -89,7 +87,6 @@
 .nf-chips { list-style: none; padding: 0; margin: 0; gap: .45rem; }
 .nf-chips .chip { min-height: 42px; padding-inline: .9rem; color: var(--text); }
 .nf-chips .chip .icon { width: 1em; height: 1em; opacity: .75; }
-.nf-chips .chip:focus-visible { border-radius: var(--radius-pill); }
 
 @media (max-width: 479.98px) {
   .nf-actions .btn { flex: 1 1 100%; }

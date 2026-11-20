@@ -7,6 +7,9 @@
 /* ---------- shared bits ---------- */
 .club-noscript { margin-top: 1rem; color: var(--text-muted); }
 .club-section .section-head--split > :last-child { max-width: 100%; }
+/* deep links (#olimpijci …): html scroll-padding clears the header; this clears the sticky section nav too */
+.club-section { scroll-margin-top: 52px; }
+@media (min-width: 900px) { .club-section { scroll-margin-top: 24px; } }
 
 /* ---------- hero ---------- */
 .club-hero h1 { max-width: 15ch; }
@@ -29,7 +32,7 @@
 .club-stats__item dt { order: 2; font-size: .84rem; line-height: 1.35; color: var(--text-muted); }
 .club-stats__item::after {
   content: ""; order: 3; width: 28px; height: 2px; border-radius: 2px;
-  background: var(--heading); opacity: .45; margin-top: .15rem;
+  background: var(--heading); opacity: .45; margin-top: auto; /* bars stay aligned when a label wraps */
 }
 .club-stats__item:nth-child(even)::before { content: ""; position: absolute; left: 0; top: 18%; bottom: 18%; width: 1px; background: var(--divider); }
 .club-stats__item:nth-child(n+3) { box-shadow: inset 0 1px 0 var(--divider); }
@@ -50,12 +53,19 @@
 }
 body:has(.site-header.is-hidden) .club-quicknav { top: 12px; }
 .club-quicknav__bar {
-  pointer-events: auto; max-width: 100%; padding: 5px;
-  overflow-x: auto; overscroll-behavior-x: contain; scrollbar-width: none;
-  scroll-behavior: smooth;
+  pointer-events: auto; max-width: 100%; padding: 0; overflow: hidden;
 }
-.club-quicknav__bar::-webkit-scrollbar { display: none; }
-.club-quicknav__list { display: flex; gap: 2px; margin: 0; padding: 0; list-style: none; }
+/* the list scrolls inside the pill; its padding leaves room for the focus outline */
+.club-quicknav__list {
+  position: relative; display: flex; gap: 2px; margin: 0; padding: 5px; list-style: none;
+  overflow-x: auto; overscroll-behavior-x: contain; scrollbar-width: none;
+  scroll-behavior: smooth; scroll-padding-inline: 40px;
+}
+.club-quicknav__list::-webkit-scrollbar { display: none; }
+/* edge fade when more links are hidden left / right (set by o-klubu.js) */
+.club-quicknav__list.can-right { -webkit-mask-image: linear-gradient(90deg, #000 calc(100% - 40px), transparent); mask-image: linear-gradient(90deg, #000 calc(100% - 40px), transparent); }
+.club-quicknav__list.can-left { -webkit-mask-image: linear-gradient(90deg, transparent, #000 40px); mask-image: linear-gradient(90deg, transparent, #000 40px); }
+.club-quicknav__list.can-left.can-right { -webkit-mask-image: linear-gradient(90deg, transparent, #000 40px, #000 calc(100% - 40px), transparent); mask-image: linear-gradient(90deg, transparent, #000 40px, #000 calc(100% - 40px), transparent); }
 .club-quicknav__link {
   display: inline-flex; align-items: center; gap: .45rem; min-height: 40px; padding: .45rem 1rem;
   border-radius: var(--radius-pill); white-space: nowrap; text-decoration: none;
@@ -65,8 +75,8 @@ body:has(.site-header.is-hidden) .club-quicknav { top: 12px; }
 .club-quicknav__link .icon { opacity: .7; }
 .club-quicknav__link:hover { color: var(--heading); background: var(--glass-bg); }
 .club-quicknav__link.is-active {
-  color: var(--selected-ink); background: var(--selected-bg);
-  box-shadow: 0 4px 14px -6px rgba(0, 0, 0, .4);
+  color: var(--selected-ink); background: var(--btn-primary-fill);
+  box-shadow: var(--btn-primary-shadow);
 }
 .club-quicknav__link.is-active .icon { opacity: 1; }
 .club-quicknav__link:focus-visible { border-radius: var(--radius-pill); }
@@ -131,15 +141,17 @@ body:has(.site-header.is-hidden) .club-quicknav { top: 12px; }
 .club-tl__card {
   grid-column: 2; grid-row: 1; display: grid; gap: .5rem;
   padding: 1.15rem 1.3rem 1.25rem; border-radius: var(--radius-lg);
-  background: var(--glass-bg); border: 1px solid var(--glass-border);
-  -webkit-backdrop-filter: blur(var(--blur)) saturate(var(--saturate)); backdrop-filter: blur(var(--blur)) saturate(var(--saturate));
+  background: var(--glass-bg);
+  border: 1px solid transparent; border-color: var(--glass-border-lit);
+  -webkit-backdrop-filter: blur(16px) saturate(170%); backdrop-filter: var(--glass-filter);
   box-shadow: var(--glass-shadow), var(--glass-edge);
-  transition: background .45s var(--ease), border-color .45s var(--ease), transform .45s var(--ease), box-shadow .3s var(--ease);
+  transition: background .45s var(--ease), transform .45s var(--ease), box-shadow .3s var(--ease);
   cursor: default;
 }
-.club-tl__item.is-passed .club-tl__card { background: var(--glass-bg-strong); border-color: var(--glass-border-strong); }
+.club-tl__item.is-passed .club-tl__card { background: var(--glass-bg-strong); }
 .club-tl__card:hover { transform: translateY(-2px); }
-.club-tl__card:focus-visible { border-radius: var(--radius-lg); box-shadow: var(--focus-ring), var(--glass-shadow); }
+/* cards are only focused from script (year chips, arrow keys): shared outline ring */
+.club-tl__card:focus-visible { outline: 2px solid var(--focus-color); outline-offset: 2px; }
 .club-tl__head { display: flex; align-items: center; gap: .7rem; }
 .club-tl__year {
   font-family: var(--font-display); font-weight: 600; font-size: 1.05rem; letter-spacing: -.01em;
@@ -176,13 +188,12 @@ body:has(.site-header.is-hidden) .club-quicknav { top: 12px; }
 }
 .club-olympian > img { object-position: var(--obj-pos, center 35%); transition: transform 1.2s var(--ease); }
 .club-olympian:hover > img { transform: scale(1.03); }
-.club-olympian::after { background: linear-gradient(180deg, rgba(10, 12, 16, .18) 0%, rgba(10, 12, 16, 0) 26%, rgba(10, 12, 16, .2) 55%, rgba(10, 12, 16, .62) 100%); }
+.club-olympian::after { background: linear-gradient(180deg, rgba(10, 12, 16, .18) 0%, rgba(10, 12, 16, 0) 24%, rgba(10, 12, 16, .36) 48%, rgba(10, 12, 16, .66) 100%); } /* deeper shade under the caption: bright splash photos */
 .club-olympian__glass {
   position: relative; left: auto; right: auto; bottom: auto;
   display: grid; gap: 1rem; padding: clamp(1.2rem, 2.4vw, 1.7rem);
   border-radius: calc(var(--radius-xl) - 8px);
-  background: rgba(18, 21, 26, .36); border-color: rgba(255, 255, 255, .22);
-  -webkit-backdrop-filter: blur(26px) saturate(130%); backdrop-filter: blur(26px) saturate(130%);
+  background: rgba(14, 16, 20, .46); /* = .photo-card__glass--dark: a long caption over a bright photo */
 }
 .club-olympian__stats { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); margin: .1rem 0 0; padding-top: 1rem; border-top: 1px solid rgba(255, 255, 255, .18); }
 .club-olympian__stat { display: flex; flex-direction: column; gap: .4rem; padding-inline: .9rem; min-width: 0; }
@@ -191,8 +202,9 @@ body:has(.site-header.is-hidden) .club-quicknav { top: 12px; }
 .club-olympian__stat:first-child { padding-left: 0; }
 .club-olympian__stat + .club-olympian__stat { border-left: 1px solid rgba(255, 255, 255, .16); }
 .club-olympian__stat-value { font-family: var(--font-display); font-weight: 500; font-size: clamp(1.35rem, 1vw + 1rem, 1.85rem); line-height: 1.05; letter-spacing: -.035em; font-variant-numeric: tabular-nums; overflow-wrap: anywhere; }
-.club-olympian__stat-label { font-size: .76rem; line-height: 1.3; opacity: .78; }
-.club-olympian__disc { margin: 0 0 -.45rem; opacity: .82; }
+.club-olympian__stat-label { font-size: .76rem; line-height: 1.3; color: var(--text-muted); }
+/* sits on the photo caption in both themes: full white text token, no extra fading */
+.club-olympian__disc, :root[data-theme="light"] .club-olympian__disc { margin: 0 0 -.45rem; color: var(--text); }
 .club-olympian__name { font-size: clamp(1.7rem, 1.5vw + 1.15rem, 2.35rem); letter-spacing: -.035em; }
 .club-olympian__games { display: flex; flex-wrap: wrap; gap: .45rem; margin: 0; padding: 0; list-style: none; }
 .club-olympian__games .badge {
@@ -200,7 +212,7 @@ body:has(.site-header.is-hidden) .club-quicknav { top: 12px; }
   font-size: .78rem; padding: .3rem .72rem;
 }
 .club-olympian__games .badge .icon { width: 13px; height: 13px; opacity: .85; }
-.club-olympian__note { font-size: .96rem; line-height: 1.55; opacity: .9; max-width: 52ch; }
+.club-olympian__note { font-size: .96rem; line-height: 1.55; color: var(--text); max-width: 52ch; }
 @media (max-width: 419px) {
   .club-olympian__stat { padding-inline: .6rem; }
   .club-olympian__stat-value { font-size: 1.2rem; }
@@ -225,6 +237,7 @@ body:has(.site-header.is-hidden) .club-quicknav { top: 12px; }
 .club-venue__hint .icon { margin-top: .2em; flex: none; }
 
 .club-plan { width: 100%; height: auto; color: var(--heading); overflow: visible; -webkit-tap-highlight-color: transparent; }
+/* the SVG groups draw their own rounded focus ring (.club-pool__focus) instead of the rectangular outline */
 .club-pool { cursor: pointer; outline: none; }
 .club-pool:focus { outline: none; }
 .club-pool__shape {
@@ -239,7 +252,7 @@ body:has(.site-header.is-hidden) .club-quicknav { top: 12px; }
 .club-pool__detail--rope { stroke-dasharray: 1 5; stroke-width: 1.6; stroke-opacity: .42; }
 .club-pool__label { fill: currentColor; font-family: var(--font-display); font-weight: 600; font-size: 17px; letter-spacing: -.01em; fill-opacity: .8; transition: fill-opacity .3s; }
 .club-pool__count { fill: currentColor; font-family: var(--font-body); font-size: 13px; fill-opacity: .72; font-variant-numeric: tabular-nums; }
-.club-pool__focus { fill: none; stroke: currentColor; stroke-width: 1.5; stroke-dasharray: 5 4; opacity: 0; vector-effect: non-scaling-stroke; transition: opacity .2s; pointer-events: none; }
+.club-pool__focus { fill: none; stroke: var(--focus-color); stroke-width: 2; opacity: 0; vector-effect: non-scaling-stroke; transition: opacity .2s; pointer-events: none; }
 .club-pool:hover .club-pool__shape,
 .club-pool.is-preview .club-pool__shape { fill-opacity: .08; stroke-opacity: .85; }
 .club-pool:hover .club-pool__detail,
@@ -252,7 +265,7 @@ body:has(.site-header.is-hidden) .club-quicknav { top: 12px; }
 .club-pool[aria-pressed="true"] .club-pool__detail--floor { stroke-opacity: .24; }
 .club-pool[aria-pressed="true"] .club-pool__label { fill-opacity: 1; }
 .club-pool[aria-pressed="true"] .club-pool__count { fill-opacity: .8; }
-.club-pool:focus-visible .club-pool__focus { opacity: .9; }
+.club-pool:focus-visible .club-pool__focus { opacity: 1; }
 @media (max-width: 599px) {
   .club-pool__count { display: none; }
   .club-pool__label { font-size: 27px; }
@@ -269,7 +282,7 @@ body:has(.site-header.is-hidden) .club-quicknav { top: 12px; }
 .club-pooltile__title { font-size: clamp(1.35rem, 1vw + 1rem, 1.7rem); margin-top: .3rem; }
 .club-pooltile__desc { margin-top: .4rem; font-size: .92rem; color: var(--text-muted); }
 .club-pooltile__stats { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .6rem; }
-.club-pooltile__stat { padding: .85rem .95rem; border-radius: var(--radius); background: var(--glass-tile); border: 1px solid var(--glass-border); }
+.club-pooltile__stat { padding: .85rem .95rem; border-radius: var(--radius); background: var(--glass-tile); border: 1px solid transparent; border-color: var(--glass-border-lit); box-shadow: var(--glass-edge-sm); }
 .club-pooltile__stat .stat-value { font-size: clamp(1.8rem, 1.2vw + 1.2rem, 2.3rem); }
 .club-pooltile__stat .stat-label { font-size: .8rem; margin-top: .35rem; display: block; }
 .club-pooltile__sub { font-size: .74rem; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; color: var(--text-soft); margin-bottom: .55rem; }
@@ -287,12 +300,13 @@ body:has(.site-header.is-hidden) .club-quicknav { top: 12px; }
 .club-pooltile__list { display: grid; gap: .4rem; margin: 0; padding: 0; list-style: none; }
 .club-pooltile__list a {
   display: flex; align-items: center; gap: .7rem; min-height: 46px; padding: .55rem .8rem;
-  border-radius: var(--radius-sm); background: var(--glass-tile); border: 1px solid var(--glass-border);
+  border-radius: var(--radius-pill); background: var(--glass-tile); border: 1px solid transparent; border-color: var(--glass-border-lit);
+  box-shadow: var(--glass-edge-sm);
   color: var(--text); text-decoration: none; font-size: .92rem; font-weight: 500;
   transition: background .2s var(--ease), border-color .2s var(--ease);
 }
 .club-pooltile__list a:hover { background: var(--glass-bg-hover); border-color: var(--glass-border-strong); color: var(--heading); }
-.club-pooltile__list a:focus-visible { border-radius: var(--radius-sm); }
+
 .club-pooltile__dot { width: 8px; height: 8px; border-radius: 50%; background: var(--dot, currentColor); flex: none; }
 .club-pooltile__name { min-width: 0; flex: 1; }
 .club-pooltile__n { margin-left: auto; font-size: .8rem; color: var(--text-soft); white-space: nowrap; font-variant-numeric: tabular-nums; }
@@ -305,7 +319,8 @@ body:has(.site-header.is-hidden) .club-quicknav { top: 12px; }
 
 .club-venue__address {
   display: flex; flex-wrap: wrap; align-items: center; gap: .75rem 1rem;
-  padding: .7rem .8rem .7rem .9rem; border-radius: var(--radius); border: 1px solid var(--glass-border); background: var(--glass-tile-light);
+  padding: .7rem .8rem .7rem .9rem; border-radius: var(--radius); background: var(--glass-tile-light);
+  border: 1px solid transparent; border-color: var(--glass-border-lit); box-shadow: var(--glass-edge-sm);
 }
 .club-venue__address address { display: flex; flex-wrap: wrap; gap: .1rem .75rem; font-style: normal; flex: 1; min-width: 180px; }
 .club-venue__address strong { color: var(--heading); font-weight: 600; }
@@ -344,11 +359,11 @@ body:has(.site-header.is-hidden) .club-quicknav { top: 12px; }
 .club-coach__stats dt { order: 2; font-size: .78rem; color: var(--text-soft); }
 .club-coach__more {
   flex: none; display: grid; place-items: center; width: 40px; height: 40px; border-radius: 50%;
-  color: var(--heading); background: var(--glass-bg-strong); border: 1px solid var(--glass-border); box-shadow: var(--glass-edge);
-  transition: background .3s var(--ease), color .3s var(--ease), border-color .3s var(--ease);
+  color: var(--heading); background: var(--glass-bg-strong); border: 1px solid transparent; border-color: var(--glass-border-lit); box-shadow: var(--glass-edge-sm);
+  transition: background .3s var(--ease), color .3s var(--ease), box-shadow .3s var(--ease);
 }
 .club-coach__more .icon { width: 17px; height: 17px; transition: transform .3s var(--ease); }
-.club-coach:hover .club-coach__more { background: var(--selected-bg); color: var(--selected-ink); border-color: transparent; }
+.club-coach:hover .club-coach__more { background: var(--btn-primary-fill); box-shadow: var(--btn-primary-shadow); color: var(--selected-ink); border-color: transparent; }
 .club-coach:hover .club-coach__more .icon { transform: translate(1px, -1px); }
 .club-coaches .empty-state { grid-column: 1 / -1; }
 
@@ -402,5 +417,5 @@ body:has(.site-header.is-hidden) .club-quicknav { top: 12px; }
 @media (prefers-reduced-motion: reduce) {
   .club-tl__fill, .club-days__bar > span { transition: none; }
   .club-olympian > img { transition: none; }
-  .club-quicknav__bar { scroll-behavior: auto; }
+  .club-quicknav__list { scroll-behavior: auto; }
 }
