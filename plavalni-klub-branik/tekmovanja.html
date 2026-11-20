@@ -77,14 +77,18 @@
         </div>
 
         <div class="glass comp-toolbar" role="group" aria-label="Filtri koledarja">
-          <div class="tabs-list comp-seg comp-seg--when" role="group" aria-label="Obdobje" data-when-group>
-            <button type="button" class="tab" data-when="upcoming" aria-pressed="true">Prihajajoča <span class="comp-seg__n" data-when-n="upcoming"></span></button>
-            <button type="button" class="tab" data-when="past" aria-pressed="false">Pretekla <span class="comp-seg__n" data-when-n="past"></span></button>
-            <button type="button" class="tab" data-when="all" aria-pressed="false">Vse <span class="comp-seg__n" data-when-n="all"></span></button>
+          <div class="comp-toolbar__top">
+            <div class="tabs-list comp-seg comp-seg--when" role="group" aria-label="Obdobje" data-when-group>
+              <button type="button" class="tab" data-when="upcoming" aria-pressed="true">Prihajajoča <span class="comp-seg__n" data-when-n="upcoming"></span></button>
+              <button type="button" class="tab" data-when="past" aria-pressed="false">Pretekla <span class="comp-seg__n" data-when-n="past"></span></button>
+              <button type="button" class="tab" data-when="all" aria-pressed="false">Vse <span class="comp-seg__n" data-when-n="all"></span></button>
+            </div>
+            <p class="comp-toolbar__count small muted" aria-live="polite" aria-atomic="true" data-cal-count></p>
           </div>
-          <span class="comp-toolbar__sep" aria-hidden="true"></span>
-          <div class="chip-group chip-group--scroll comp-levels" role="group" aria-label="Raven tekmovanja" data-levels></div>
-          <p class="comp-toolbar__count small muted" aria-live="polite" aria-atomic="true" data-cal-count></p>
+          <div class="comp-toolbar__filters">
+            <span class="comp-toolbar__label" id="comp-level-label">Raven</span>
+            <div class="chip-group chip-group--scroll comp-levels" role="group" aria-labelledby="comp-level-label" data-levels></div>
+          </div>
         </div>
 
         <div class="comp-cal-layout">

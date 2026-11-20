@@ -146,6 +146,13 @@
     if (a.getMonth() === b.getMonth()) return a.getDate() + ".–" + b.getDate() + ". " + MONTHS_SHORT[a.getMonth()] + ". " + b.getFullYear();
     return a.getDate() + ". " + MONTHS_SHORT[a.getMonth()] + ". – " + b.getDate() + ". " + MONTHS_SHORT[b.getMonth()] + ". " + b.getFullYear();
   }
+  /** "13." or "8.–9." (or "30. 11.–2. 12." across months) */
+  function dayDots(c) {
+    var a = PKB.parseDate(c.date), b = PKB.parseDate(endISO(c));
+    if (b <= a) return a.getDate() + ".";
+    if (a.getMonth() === b.getMonth()) return a.getDate() + ".–" + b.getDate() + ".";
+    return a.getDate() + ". " + (a.getMonth() + 1) + ".–" + b.getDate() + ". " + (b.getMonth() + 1) + ".";
+  }
   function levelBadge(level) {
     var tone = LEVEL_TONE[level];
     return '<span class="badge ' + (tone ? "badge--" + tone : "badge-dot") + '">' + esc(level || "Tekma") + "</span>";
@@ -203,13 +210,26 @@
     if (!c) {
       if (hero.label) hero.label.textContent = "Naslednja tekma";
       if (hero.badges) hero.badges.innerHTML = "";
-      var last = COMPS.filter(function (x) { return status(x) === "past"; }).pop();
+      var last = COMPS.filter(function (x) { return status(x) === "past" && resultsFor(x.id).length; }).pop();
+      var lastBlock = "";
+      if (last) {
+        var lr = resultsFor(last.id);
+        var md = function (p) { return lr.filter(function (r) { return r.place === p; }).length; };
+        lastBlock =
+          '<p class="comp-next__cats"><span class="comp-next__cats-label">Zadnja tekma</span>' +
+            '<a class="comp-next__last" href="#' + esc(last.id) + '" data-comp-link="' + esc(last.id) + '">' + esc(last.name) + "</a> · " + esc(PKB.formatDateRange(last.date, last.endDate)) + "</p>" +
+          '<div class="comp-count">' +
+            [["zlate", md(1)], ["srebrne", md(2)], ["bronaste", md(3)]].map(function (u) {
+              return '<div class="comp-count__unit"><span class="comp-count__num">' + u[1] + '</span><span class="comp-count__lbl">' + u[0] + "</span></div>";
+            }).join("") +
+          "</div>" +
+          '<div class="comp-next__foot"><button type="button" class="btn btn--sm" data-show-results="' + esc(last.id) + '">' + PKB.icon("medal") + "Zadnji rezultati</button></div>";
+      }
       hero.body.innerHTML =
         '<div class="comp-next__empty">' +
           '<p class="comp-next__empty-title">Nove tekme bodo objavljene kmalu</p>' +
           '<p class="small muted">Koledar tekem bomo objavili, ko bodo termini potrjeni.</p>' +
-          (last ? '<button type="button" class="btn btn--sm" data-show-results="' + esc(last.id) + '">' + PKB.icon("medal") + "Zadnji rezultati</button>" : "") +
-        "</div>";
+        "</div>" + lastBlock;
       return;
     }
     var s = status(c);
@@ -222,7 +242,7 @@
       '<p class="comp-next__meta">' +
         "<span>" + PKB.icon("calendar", "icon--sm") + esc(PKB.formatDateRange(c.date, c.endDate)) + "</span>" +
         "<span>" + PKB.icon("map-pin", "icon--sm") + esc([c.city, c.venue].filter(Boolean).join(" · ")) + "</span>" +
-        (c.course ? "<span>" + PKB.icon("waves", "icon--sm") + esc(c.course) + "</span>" : "") +
+        (c.course ? "<span>" + PKB.icon("waves", "icon--sm") + esc(c.course) + " bazen</span>" : "") +
       "</p>";
     var mid;
     if (s === "live") {
@@ -386,7 +406,7 @@
           '<div class="comp-row__badges">' + levelBadge(c.level) + (c.host ? '<span class="badge badge--solid">Domači miting</span>' : "") + statusBadge(c) + "</div>" +
           '<h4 class="comp-row__name" id="' + esc(c.id) + '-name">' + esc(c.name) + "</h4>" +
           '<p class="comp-row__meta">' +
-            "<span>" + PKB.icon("calendar", "icon--sm") + esc(PKB.formatDateRange(c.date, c.endDate)) + '<span class="comp-row__wd">, ' + esc(weekdaySpan(c)) + "</span></span>" +
+            "<span>" + PKB.icon("calendar", "icon--sm") + '<span>' + esc(PKB.formatDateRange(c.date, c.endDate)) + '<span class="comp-row__wd">, ' + esc(weekdaySpan(c)) + "</span></span></span>" +
             "<span>" + PKB.icon("map-pin", "icon--sm") + esc([c.city, c.venue].filter(Boolean).join(" · ")) + "</span>" +
             (c.course ? "<span>" + PKB.icon("waves", "icon--sm") + esc(c.course) + " bazen</span>" : "") +
           "</p>" +
@@ -410,7 +430,7 @@
         '<div class="glass empty-state comp-list__empty">' +
           '<span class="icon-bubble">' + PKB.icon("calendar") + "</span>" +
           '<p class="comp-empty__title">' + (onlyWhen && cal.when === "upcoming" ? "Trenutno ni napovedanih tekem" : "Ni tekem za izbrane filtre") + "</p>" +
-          '<p class="small muted">' + (onlyWhen && cal.when === "upcoming" ? "Nove tekme bodo objavljene kmalu. Med tem si oglejte pretekle tekme in rezultate." : "Izberite drugo raven tekmovanja ali prikažite vse tekme.") + "</p>" +
+          '<p class="small muted">' + (onlyWhen && cal.when === "upcoming" ? "Nove tekme bodo objavljene kmalu. Medtem si oglejte pretekle tekme in rezultate." : "Izberite drugo raven tekmovanja ali prikažite vse tekme.") + "</p>" +
           '<button type="button" class="btn btn--sm" data-cal-reset>' + PKB.icon("refresh") + "Pokaži vse tekme</button>" +
         "</div>";
     } else {
@@ -614,7 +634,8 @@
         var multi = comps.some(function (c) { return endISO(c) !== c.date; });
         if (multi) {
           var starts = comps.some(function (c) { return c.date === iso; }), ends = comps.some(function (c) { return endISO(c) === iso && c.date !== iso; });
-          cellCls += " is-range" + (starts ? " is-range-start" : "") + (ends ? " is-range-end" : "");
+          cellCls += " is-range" + (starts ? " is-range-start" : "") + (ends ? " is-range-end" : "") +
+            (comps.every(function (c) { return status(c) === "past"; }) ? " is-done" : "");
         }
       }
       var btnCls = "comp-mday" + (comps.length ? " is-comp" : "") + (isToday ? " is-today" : "") + (date < today ? " is-before" : "") +
@@ -652,7 +673,7 @@
       var t = dateTile(c);
       var s = status(c);
       return '<li><a class="comp-mlist__item" href="#' + esc(c.id) + '" data-comp-link="' + esc(c.id) + '">' +
-        '<span class="comp-mlist__date">' + esc(t.day) + ".</span>" +
+        '<span class="comp-mlist__date">' + esc(dayDots(c)) + "</span>" +
         '<span class="comp-mlist__text"><span class="comp-mlist__name">' + esc(c.name) + '</span><span class="comp-mlist__meta">' + esc(c.city || "") + " · " + esc(c.level || "") + "</span></span>" +
         '<span class="comp-mlist__st comp-mlist__st--' + s + '">' + (s === "past" ? "zaključeno" : s === "live" ? "v teku" : esc(PKB.relativeDay(c.date))) + "</span>" +
       "</a></li>";
@@ -1120,14 +1141,12 @@
         var who = n
           ? '<button type="button" class="comp-athlink" data-athlete="' + esc(r.athlete) + '" title="Pokaži rezultate v tej sezoni">' + esc(r.athlete) + PKB.icon("arrow-up-right", "icon--sm") + '<span class="visually-hidden"> – pokaži ' + n + " " + plural(n, ["rezultat", "rezultata", "rezultate", "rezultatov"]) + "</span></button>"
           : '<span class="comp-rec__who">' + esc(r.athlete) + "</span>";
-        var age = r.year ? PKB.today().getFullYear() - r.year : null;
         return '<tr role="row" class="comp-rec' + (isNew(r) ? " is-new" : "") + '">' +
           '<th scope="row" role="rowheader" class="comp-rec__event">' + esc(r.event) + "</th>" +
           '<td role="cell" class="num comp-rec__time">' + esc(r.time) + "</td>" +
           '<td role="cell" class="comp-rec__athlete">' + who + "</td>" +
           '<td role="cell" class="num comp-rec__year">' + (isNew(r) ? '<span class="badge badge--solid comp-new">Nov</span>' : "") +
-            '<span class="comp-rec__y">' + esc(r.year || "–") + "</span>" +
-            (age && age > 1 ? '<span class="comp-rec__age">' + age + " " + plural(age, ["leto", "leti", "leta", "let"]) + "</span>" : "") + "</td>" +
+            '<span class="comp-rec__y">' + esc(r.year || "–") + "</span></td>" +
         "</tr>";
       }).join("");
     });

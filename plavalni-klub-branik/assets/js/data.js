@@ -309,7 +309,7 @@ window.PKB_DATA = {
       title: "Odlični nastopi na jesenskem mitingu v Kranju",
       excerpt: "Branikovci so se z mitinga vrnili z dvanajstimi medaljami in kopico osebnih rekordov.",
       body: [
-        "Na jesenskem mitingu v Kranju je nastopilo 23 plavalk in plavalcev PK Branik, ki so skupaj osvojili dvanajst medalj — štiri zlate, pet srebrnih in tri bronaste.",
+        "Na jesenskem mitingu v Kranju je nastopilo 23 plavalk in plavalcev PK Branik, ki so skupaj osvojili dvanajst medalj — štiri zlate, šest srebrnih in dve bronasti.",
         "Najbolj so blesteli starejši dečki in deklice, ki so na 50-metrskem bazenu izboljšali kar 31 osebnih rekordov. Lara Vidmar je zmagala na 200 m mešano, Luka Žagar pa je bil najhitrejši na 100 m delfin.",
         "»Miting je pokazal, da je jesenski trening na pravi poti. Zdaj se osredotočamo na zimsko državno prvenstvo,« je po tekmi povedal glavni trener Rok Novak.",
         "Vsem plavalcem čestitamo, staršem pa hvala za podporo na tribuni!"
@@ -419,7 +419,7 @@ window.PKB_DATA = {
   /* VZORČNI koledar tekmovanj (status: upcoming | past) */
   competitions: [
     { id: "miting-celje-2026", name: "Jesenski miting Celje", date: "2026-10-11", endDate: null, city: "Celje", venue: "Kopališče Golovec", course: "25 m", level: "Miting", status: "past", categories: ["mlajsi", "starejsi"] },
-    { id: "miting-kranj-2026", name: "Jesenski miting Kranj", date: "2026-11-08", endDate: "2026-11-09", city: "Kranj", venue: "Olimpijski bazen Kranj", course: "50 m", level: "Miting", status: "past", categories: ["mlajsi", "starejsi", "kadeti"] },
+    { id: "miting-kranj-2026", name: "Jesenski miting Kranj", date: "2026-11-07", endDate: "2026-11-08", city: "Kranj", venue: "Olimpijski bazen Kranj", course: "50 m", level: "Miting", status: "past", categories: ["mlajsi", "starejsi", "kadeti"] },
     { id: "zdp-mlajsi-2026", name: "Zimsko DP mlajših kategorij", date: "2026-11-28", endDate: "2026-11-29", city: "Kranj", venue: "Olimpijski bazen Kranj", course: "25 m", level: "Državno prvenstvo", status: "upcoming", categories: ["mlajsi", "starejsi"] },
     { id: "bozicni-miting-2026", name: "Božično-novoletni miting PK Branik", date: "2026-12-13", endDate: null, city: "Maribor", venue: "Kopališče Pristan", course: "25 m", level: "Miting", status: "upcoming", host: true, categories: ["prehodna", "mlajsi", "starejsi", "kadeti"] },
     { id: "zdp-absolutno-2026", name: "Zimsko absolutno DP", date: "2026-12-18", endDate: "2026-12-20", city: "Ljubljana", venue: "Kopališče Tivoli", course: "25 m", level: "Državno prvenstvo", status: "upcoming", categories: ["kadeti"] },
@@ -485,7 +485,7 @@ window.PKB_DATA = {
     { id: "g6", src: "assets/img/photos/pod-vodo.jpg", thumb: "assets/img/photos/pod-vodo-sm.jpg", w: 1920, h: 1440, album: "Treningi", title: "Pogled pod gladino", date: "2026-09-12" },
     { id: "g7", src: "assets/img/photos/start-tekma.jpg", thumb: "assets/img/photos/start-tekma-sm.jpg", w: 1920, h: 1280, album: "Tekmovanja", title: "Na startnih blokih", date: "2026-11-08" },
     { id: "g8", src: "assets/img/photos/start-hrbtno.jpg", thumb: "assets/img/photos/start-hrbtno-sm.jpg", w: 1200, h: 1800, album: "Tekmovanja", title: "Start hrbtne tehnike", date: "2026-11-08" },
-    { id: "g9", src: "assets/img/photos/tekma-proge.jpg", thumb: "assets/img/photos/tekma-proge-sm.jpg", w: 1920, h: 1282, album: "Tekmovanja", title: "Finale na 50-metrskem bazenu", date: "2026-11-09" },
+    { id: "g9", src: "assets/img/photos/tekma-proge.jpg", thumb: "assets/img/photos/tekma-proge-sm.jpg", w: 1920, h: 1282, album: "Tekmovanja", title: "Finale na 50-metrskem bazenu", date: "2026-11-08" },
     { id: "g10", src: "assets/img/photos/tekma-delfin.jpg", thumb: "assets/img/photos/tekma-delfin-sm.jpg", w: 1920, h: 1280, album: "Tekmovanja", title: "Delfin pod budnim očesom sodnikov", date: "2026-10-11" },
     { id: "g11", src: "assets/img/photos/skok-v-bazen.jpg", thumb: "assets/img/photos/skok-v-bazen-sm.jpg", w: 1920, h: 1280, album: "Tekmovanja", title: "Skok v vodo", date: "2026-07-12" },
     { id: "g12", src: "assets/img/photos/blok-6.jpg", thumb: "assets/img/photos/blok-6-sm.jpg", w: 1200, h: 1800, album: "Tekmovanja", title: "Šesta proga", date: "2026-07-11" },
