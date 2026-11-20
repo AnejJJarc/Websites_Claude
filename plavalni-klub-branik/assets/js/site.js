@@ -849,7 +849,9 @@
     if (el.hasAttribute("data-count-to")) countUp(el);
   }
   function setupReveal(scope) {
-    qsa("[data-reveal-stagger]", scope).forEach(function (group) {
+    var groups = qsa("[data-reveal-stagger]", scope);
+    if (scope && scope.nodeType === 1 && scope.matches("[data-reveal-stagger]")) groups.unshift(scope);
+    groups.forEach(function (group) {
       var step = Number(group.getAttribute("data-reveal-stagger")) || 80;
       qsa(":scope > [data-reveal]", group).forEach(function (child, i) {
         if (!child.style.getPropertyValue("--reveal-delay")) child.style.setProperty("--reveal-delay", Math.min(i * step, 600) + "ms");
@@ -892,7 +894,9 @@
   PKB.countUp = countUp;
   function setupCounters(scope) {
     qsa("[data-count-to]", scope).forEach(function (el) {
-      if (!el.closest("[data-reveal]") && !el.hasAttribute("data-reveal")) {
+      var revealAncestor = el.closest("[data-reveal]");
+      if (revealAncestor && revealAncestor.classList.contains("is-revealed")) { countUp(el); return; }
+      if (!revealAncestor) {
         if (!("IntersectionObserver" in window)) { countUp(el); return; }
         var o = new IntersectionObserver(function (en) {
           if (en[0].isIntersecting) { countUp(el); o.disconnect(); }

@@ -1,0 +1,186 @@
+<!doctype html>
+<html lang="sl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Urnik · PK Branik Maribor</title>
+  <meta name="description" content="Tedenski urnik treningov PK Branik Maribor za sezono 2026/2027: plavalna šola, tekmovalne skupine in odrasli na Kopališču Pristan.">
+  <meta name="theme-color" content="#0e1013">
+  <meta property="og:title" content="Urnik · PK Branik Maribor">
+  <meta property="og:description" content="Vsi termini plavalne šole, tekmovalnih skupin in odraslih na enem mestu — s filtri in izvozom v koledar.">
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="sl_SI">
+  <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Manrope:wght@500;600;700&display=swap">
+  <link rel="stylesheet" href="assets/css/style.css">
+  <link rel="stylesheet" href="assets/css/pages/urnik.css">
+  <script>(function(){try{var t=localStorage.getItem("pkb-theme");}catch(e){}document.documentElement.setAttribute("data-theme",t||(matchMedia("(prefers-color-scheme: light)").matches?"light":"dark"));})();</script>
+  <script src="assets/js/data.js" defer></script>
+  <script src="assets/js/site.js" defer></script>
+  <script src="assets/js/pages/urnik.js" defer></script>
+</head>
+<body data-page="urnik">
+  <a class="skip-link" href="#main">Preskoči na vsebino</a>
+  <header data-site-header></header>
+  <main id="main" class="sched" data-sched>
+
+    <!-- ============ HERO: danes + zdaj ============ -->
+    <section class="page-hero sched-hero-section" aria-labelledby="sched-title">
+      <div class="sched-container">
+        <div class="page-hero__panel glass glass--strong sched-hero" data-reveal>
+          <div class="sched-hero__grid">
+            <div class="sched-hero__text">
+              <ol class="breadcrumb" aria-label="Drobtinice"><li><a href="index.html">Domov</a></li><li><span aria-current="page">Urnik</span></li></ol>
+              <p class="eyebrow">Urnik treningov · sezona 2026/2027</p>
+              <h1 id="sched-title">Tedenski urnik <span class="gradient-text">vseh skupin</span></h1>
+              <p class="lead">Vsi termini plavalne šole, tekmovalnih skupin in vadbe za odrasle na Kopališču Pristan. Izberite svojo skupino, preverite, kdo je ta hip v vodi, in termine dodajte v svoj koledar.</p>
+              <div class="page-hero__actions cluster">
+                <a class="btn btn--primary" href="vpis.html">Vpis v plavalno šolo <i data-icon="arrow-right" class="icon--move"></i></a>
+                <a class="btn" href="programi.html#izbirnik"><i data-icon="target"></i>Izbirnik skupine</a>
+              </div>
+            </div>
+
+            <aside class="tile sched-now" aria-labelledby="sched-now-day" data-now>
+              <div class="sched-now__top">
+                <span class="badge badge--success badge-live sched-now__clock" data-now-clock>Zdaj</span>
+                <span class="small soft" data-now-date>Danes</span>
+              </div>
+              <h2 class="sched-now__day" id="sched-now-day" data-now-day>Danes</h2>
+              <div class="sched-now__status" data-now-status aria-live="polite">
+                <noscript><p class="small muted">Za prikaz trenutnega stanja omogočite JavaScript.</p></noscript>
+              </div>
+              <p class="sched-now__rel small muted" data-now-rel></p>
+              <div class="sched-now__foot">
+                <div class="sched-now__progress">
+                  <div class="sched-now__progress-text small"><span data-now-progress-label>Današnji treningi</span><span class="soft num" data-now-progress-count></span></div>
+                  <div class="progress" aria-hidden="true"><span data-now-progress></span></div>
+                </div>
+                <button type="button" class="btn btn--sm sched-now__go" data-goto-today><span data-goto-label>Današnji termini</span> <i data-icon="arrow-right" class="icon--move"></i></button>
+              </div>
+            </aside>
+          </div>
+
+          <ul class="sched-stats" role="list" aria-label="Urnik v številkah">
+            <li class="sched-stat"><span class="sched-stat__value" data-stat="sessions">42</span><span class="sched-stat__label" data-stat-label="sessions">terminov na teden</span><span class="sched-stat__bar" aria-hidden="true"></span></li>
+            <li class="sched-stat"><span class="sched-stat__value" data-stat="programs">10</span><span class="sched-stat__label" data-stat-label="programs">skupin</span><span class="sched-stat__bar" aria-hidden="true"></span></li>
+            <li class="sched-stat"><span class="sched-stat__value" data-stat="today">–</span><span class="sched-stat__label" data-stat-label="today">treningov danes</span><span class="sched-stat__bar" aria-hidden="true"></span></li>
+            <li class="sched-stat"><span class="sched-stat__value" data-stat="pools">4</span><span class="sched-stat__label" data-stat-label="pools">lokacije na Pristanu</span><span class="sched-stat__bar" aria-hidden="true"></span></li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ URNIK: orodna vrstica + pogledi ============ -->
+    <section class="section--tight sched-main" id="termini" aria-labelledby="sched-main-title">
+      <div class="sched-container">
+        <div class="glass sched-toolbar">
+          <div class="sched-toolbar__top">
+            <div class="sched-toolbar__heading">
+              <h2 id="sched-main-title" class="sched-toolbar__title">Termini treningov</h2>
+              <p class="sched-toolbar__count small muted" data-results aria-live="polite" aria-atomic="true">42 terminov na teden</p>
+            </div>
+            <div class="sched-toolbar__actions">
+              <div class="tabs-list sched-views" role="group" aria-label="Pogled urnika">
+                <button type="button" class="tab" data-view="teden" aria-pressed="true"><i data-icon="grid"></i>Teden</button>
+                <button type="button" class="tab" data-view="seznam" aria-pressed="false"><i data-icon="list"></i>Seznam</button>
+                <button type="button" class="tab" data-view="dan" aria-pressed="false"><i data-icon="calendar"></i>Dan</button>
+              </div>
+              <div class="sched-toolbar__buttons">
+                <button type="button" class="btn btn--sm sched-filter-toggle" data-filter-toggle aria-expanded="false" aria-controls="sched-filters"><i data-icon="filter"></i>Filtri<span class="sched-filter-toggle__n" data-filter-n hidden></span></button>
+                <button type="button" class="btn btn--sm" data-export><i data-icon="calendar-plus"></i>Izvozi urnik (.ics)</button>
+                <button type="button" class="btn btn--sm" data-print><i data-icon="printer"></i>Natisni</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="sched-filters" id="sched-filters" data-filters>
+            <div class="sched-filters__row">
+              <span class="sched-filters__label" id="sched-cat-label">Hitri izbor</span>
+              <div class="chip-group" role="group" aria-labelledby="sched-cat-label" data-cats></div>
+            </div>
+            <div class="sched-filters__row">
+              <span class="sched-filters__label" id="sched-prog-label">Skupine</span>
+              <div class="chip-group" role="group" aria-labelledby="sched-prog-label" data-programs></div>
+            </div>
+            <div class="sched-filters__row">
+              <label class="sched-filters__label" for="sched-pool">Lokacija</label>
+              <div class="sched-filters__controls">
+                <select class="select sched-pool" id="sched-pool" data-pool>
+                  <option value="">Vse lokacije</option>
+                </select>
+                <label class="switch sched-today"><input type="checkbox" data-today><span>Samo danes</span></label>
+                <div class="sched-active">
+                  <span class="small muted" data-active-text>Brez filtrov</span>
+                  <button type="button" class="btn btn--sm btn--ghost" data-clear aria-disabled="true"><i data-icon="x"></i>Počisti</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="glass glass--strong sched-board" data-board>
+          <div class="sched-print-head" data-print-head>
+            <p class="sched-print-head__title">PK Branik Maribor · Urnik treningov 2026/2027</p>
+            <p class="sched-print-head__meta" data-print-meta></p>
+          </div>
+          <div class="sched-host" data-view-host>
+            <noscript>
+              <div class="empty-state">
+                <p>Za prikaz interaktivnega urnika omogočite JavaScript. Termine vseh skupin najdete tudi na strani <a href="programi.html">Programi</a> ali nas pokličite na +386 41 682 016.</p>
+              </div>
+            </noscript>
+          </div>
+          <p class="sched-board__note small soft"><i data-icon="info" class="icon--sm"></i><span>Kliknite termin za podrobnosti, trenerje in dodajanje v koledar. Urnik velja za sezono 2026/2027.</span></p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ LEGENDA + LOKACIJE ============ -->
+    <section class="section--tight sched-more" id="legenda" aria-labelledby="sched-legend-title">
+      <div class="sched-container sched-more__grid">
+        <div class="glass sched-legend" data-reveal>
+          <div class="sched-legend__head">
+            <p class="eyebrow">Legenda</p>
+            <h2 id="sched-legend-title">Skupine <span class="gradient-text">na urniku</span></h2>
+            <p class="sched-legend__note muted"><i data-icon="info" class="icon--sm"></i><span>Urnik velja za sezono 2026/2027. Med šolskimi počitnicami in prazniki se lahko spremeni.</span></p>
+          </div>
+          <div class="sched-legend__groups" data-legend>
+            <noscript><p class="small muted">Opise vseh skupin najdete na strani <a href="programi.html">Programi</a>.</p></noscript>
+          </div>
+        </div>
+
+        <div class="sched-more__side">
+          <a class="photo-card sched-pristan" href="kontakt.html#zemljevid" data-reveal>
+            <img src="assets/img/photos/startni-bloki-hala-sm.jpg" alt="" width="560" height="702" loading="lazy" decoding="async">
+            <span class="photo-card__glass sched-pristan__cap">
+              <span class="sched-pristan__text">
+                <strong>Vsi treningi na Kopališču Pristan</strong>
+                <span class="small">Koroška cesta 33, Maribor · zemljevid in prihod</span>
+              </span>
+              <span class="sched-pristan__go" aria-hidden="true"><i data-icon="arrow-up-right"></i></span>
+            </span>
+          </a>
+
+          <div class="glass sched-pools" data-reveal>
+            <h3 class="sched-pools__title">Kje treniramo</h3>
+            <p class="small soft sched-pools__hint">Izberite lokacijo, da v urniku prikažete samo njene termine.</p>
+            <ul class="sched-pools__list" role="list" data-pools></ul>
+          </div>
+
+          <div class="tile tile--raised sched-cta" data-reveal>
+            <p class="sched-cta__title">Ne veste, katera skupina je prava?</p>
+            <p class="small muted">Izbirnik predlaga skupino glede na starost in znanje. Prvi trening je poskusni.</p>
+            <div class="cluster sched-cta__actions">
+              <a class="btn btn--primary btn--sm" href="vpis.html">Vpis <i data-icon="arrow-right" class="icon--move"></i></a>
+              <a class="btn btn--sm" href="programi.html#izbirnik"><i data-icon="target"></i>Izbirnik skupine</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+  <footer data-site-footer></footer>
+</body>
+</html>

@@ -16,8 +16,8 @@
 window.PKB_DATA = {
   /* Fotografija v ozadju posamezne strani (body[data-photo] jo lahko prepiše) */
   pagePhotos: {
-    "domov": "assets/img/photos/delfin-trening.jpg",
-    "o-klubu": "assets/img/photos/bazen-hala.jpg",
+    "domov": "assets/img/photos/pod-vodo.jpg",
+    "o-klubu": "assets/img/photos/bazen-mirno.jpg",
     "programi": "assets/img/photos/kravl-proga.jpg",
     "urnik": "assets/img/photos/proga-vrv.jpg",
     "tekmovanja": "assets/img/photos/tekma-proge.jpg",
