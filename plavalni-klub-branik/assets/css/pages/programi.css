@@ -599,8 +599,6 @@ body:has(.site-header.is-hidden) .prog-toolbar { top: 12px; }
 .prog-faq__help-title { font-weight: 600; color: var(--heading); }
 .prog-faq__help-actions { --cluster-gap: .45rem; margin-top: .8rem; }
 .prog-faq__list .accordion-item > summary { font-size: 1.02rem; line-height: 1.35; }
-/* inside the clipped accordion item: the shared outline, drawn just inside the edge */
-.prog-faq__list .accordion-item > summary:focus-visible { outline: 2px solid var(--focus-color); outline-offset: -3px; }
 .prog-faq__list .accordion-body p { line-height: 1.65; }
 .prog-faq__list mark { background: var(--prog-mark-bg); color: var(--heading); border-radius: 4px; padding: 0 .12em; box-shadow: inset 0 -1px 0 var(--glass-border-strong); }
 .prog-faq__empty { padding: 2.5rem 1.5rem; border-radius: var(--radius-lg); }
