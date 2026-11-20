@@ -34,7 +34,7 @@
             <div class="enr-hero__text">
               <ol class="breadcrumb" aria-label="Drobtinice"><li><a href="index.html">Domov</a></li><li><span aria-current="page">Vpis</span></li></ol>
               <p class="eyebrow">Vpis · sezona <span data-season>2026/2027</span></p>
-              <h1 id="enr-title">Spletni vpis <span class="gradient-text">v štirih korakih.</span></h1>
+              <h1 id="enr-title">Spletni vpis <span class="gradient-text">v&nbsp;štirih korakih.</span></h1>
               <p class="lead">Izberite program, vpišite podatke plavalca in kontakt ter preverite povzetek. Vnosi se sproti shranjujejo v vašem brskalniku, zato lahko kadar koli nadaljujete, kjer ste ostali.</p>
 
               <div class="page-hero__actions cluster enr-hero__actions" data-hero-actions>
@@ -141,6 +141,7 @@
                 </div>
 
                 <div class="field enr-programs" data-programs-field>
+                  <p class="field-error" id="enr-program-error"></p>
                   <div class="enr-programs__groups" data-programs></div>
                 </div>
               </section>
@@ -171,7 +172,7 @@
                       <input class="input" id="enr-rojstvo" name="rojstvo" type="date" required data-birth aria-describedby="enr-rojstvo-hint">
                       <p class="hint" id="enr-rojstvo-hint">Starost izračunamo samodejno.</p>
                     </div>
-                    <div class="tile enr-age" data-age-tile aria-live="polite">
+                    <div class="tile enr-age" data-age-tile>
                       <span class="enr-age__label">Starost</span>
                       <span class="enr-age__value" data-age-value>–</span>
                       <span class="enr-age__sub small muted" data-age-sub>Vnesite datum rojstva.</span>
@@ -311,7 +312,7 @@
               <div class="enr-nav" data-nav>
                 <button type="button" class="btn enr-nav__back" data-back hidden><i data-icon="arrow-left"></i>Nazaj</button>
                 <p class="enr-nav__save small soft" data-save-status><i data-icon="lock" class="icon--sm"></i><span>Osnutek se shranjuje samo na tej napravi.</span></p>
-                <button type="submit" class="btn btn--primary enr-nav__next" data-next><span data-next-label>Naprej: Plavalec</span><i data-icon="arrow-right" class="icon--move" data-next-icon></i></button>
+                <button type="submit" class="btn btn--primary enr-nav__next" data-next><span data-next-label>Naprej: Plavalec</span><span class="enr-nav__icon" data-next-icon aria-hidden="true"><i data-icon="arrow-right" class="icon--move"></i></span></button>
               </div>
             </form>
             <form id="enr-reco-form" hidden aria-hidden="true"></form>
@@ -341,22 +342,6 @@
         </div>
       </div>
 
-      <!-- ===== live summary (mobile bottom bar) ===== -->
-      <div class="enr-bar" data-bar>
-        <div class="enr-sheet glass glass--strong" id="enr-sheet" data-sheet role="region" aria-label="Povzetek prijave" hidden>
-          <div data-summary></div>
-        </div>
-        <button type="button" class="enr-bar__btn" aria-expanded="false" aria-controls="enr-sheet" data-bar-toggle>
-          <span class="enr-dot" data-bar-dot aria-hidden="true"></span>
-          <span class="enr-bar__text">
-            <span class="enr-bar__title" data-bar-title>Program še ni izbran</span>
-            <span class="enr-bar__meta" data-bar-meta>Korak 1 od 4</span>
-          </span>
-          <span class="enr-bar__step num" data-bar-step aria-hidden="true">1/4</span>
-          <i data-icon="chevron-up" class="enr-bar__chev"></i>
-          <span class="visually-hidden">Prikaži povzetek prijave</span>
-        </button>
-      </div>
     </section>
 
     <!-- ============ POGOSTA VPRAŠANJA ============ -->
@@ -377,6 +362,23 @@
       </div>
     </section>
   </main>
+
+  <!-- ===== live summary (mobile bottom bar) ===== -->
+  <aside class="enr-bar" data-bar aria-label="Hitri povzetek prijave">
+    <div class="enr-sheet glass glass--strong" id="enr-sheet" data-sheet hidden>
+      <div data-summary></div>
+    </div>
+    <button type="button" class="enr-bar__btn" aria-expanded="false" aria-controls="enr-sheet" data-bar-toggle>
+      <span class="enr-dot" data-bar-dot aria-hidden="true"></span>
+      <span class="enr-bar__text">
+        <span class="enr-bar__title" data-bar-title>Program še ni izbran</span>
+        <span class="enr-bar__meta" data-bar-meta>Korak 1 od 4</span>
+      </span>
+      <span class="enr-bar__step num" data-bar-step aria-hidden="true">1/4</span>
+      <i data-icon="chevron-up" class="enr-bar__chev"></i>
+      <span class="visually-hidden">Prikaži povzetek prijave</span>
+    </button>
+  </aside>
   <footer data-site-footer></footer>
 </body>
 </html>

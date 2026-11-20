@@ -225,6 +225,9 @@
 
 /* ---------- Map ---------- */
 .contact-mapwrap { padding: clamp(.6rem, 1.2vw, .85rem); border-radius: var(--radius-xl); }
+.contact-mapwrap__head { padding: clamp(.85rem, 2.4vw, 1.9rem) clamp(.6rem, 2.2vw, 1.6rem) clamp(1rem, 2.2vw, 1.6rem); }
+.contact-mapwrap__head h2 { font-size: clamp(1.6rem, 1.6vw + 1rem, 2.3rem); }
+.contact-mapwrap__lead { margin-top: .65rem; max-width: 62ch; font-size: clamp(1rem, .25vw + .95rem, 1.1rem); }
 .contact-map {
   position: relative; overflow: hidden; isolation: isolate;
   aspect-ratio: 16 / 7; min-height: 360px;
@@ -292,7 +295,10 @@
   .contact-faq { grid-template-columns: minmax(0, .85fr) minmax(0, 1.3fr); }
   .contact-faq__side { position: sticky; top: calc(var(--header-h) + 24px); }
 }
+.contact-faq__side { padding: clamp(1.3rem, 3vw, 2.1rem); border-radius: var(--radius-xl); }
 .contact-faq__side .section-head { margin-bottom: 1.5rem; }
+.contact-faq__side h2 { font-size: clamp(1.6rem, 1.6vw + 1rem, 2.3rem); }
+.contact-faq__side .lead { font-size: clamp(1rem, .25vw + .95rem, 1.1rem); }
 .contact-faq__cta { display: grid; gap: .35rem; padding: 1.2rem 1.25rem; border-radius: var(--radius-lg); }
 .contact-faq__cta-title { font-family: var(--font-display); font-weight: 600; font-size: 1.05rem; color: var(--heading); letter-spacing: -.01em; }
 .contact-faq__cta-actions { margin-top: .6rem; --cluster-gap: .5rem; }

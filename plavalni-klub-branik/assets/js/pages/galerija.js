@@ -107,9 +107,9 @@
       '<button type="button" class="photo-card gal-feature__card" data-open="' + esc(it.id) + '" aria-haspopup="dialog">' +
         '<img src="' + esc(it.thumb) + '" srcset="' + esc(it.thumb) + " " + it.tw + "w, " + esc(it.src) + " " + it.w + 'w" sizes="(min-width: 980px) 520px, 100vw"' +
           ' alt="" width="' + it.tw + '" height="' + it.th + '" decoding="async" fetchpriority="high">' +
-        '<span class="gal-feature__tag"><span class="gal-feature__tag-dot" aria-hidden="true"></span>Najnovejša fotografija</span>' +
+        '<span class="gal-feature__tag"><span class="gal-feature__tag-dot" aria-hidden="true"></span>Najnovejša fotografija</span> ' +
         '<span class="photo-card__glass gal-feature__cap">' +
-          '<span class="gal-feature__text"><span class="gal-feature__kicker">' + esc(meta) + "</span>" +
+          '<span class="gal-feature__text"><span class="gal-feature__kicker">' + esc(meta) + "</span> " +
             '<strong class="gal-feature__title">' + esc(it.title) + "</strong></span>" +
           '<span class="gal-round" aria-hidden="true">' + PKB.icon("maximize") + "</span>" +
         "</span>" +
@@ -148,7 +148,7 @@
       return '<button type="button" class="chip gal-chip" data-album="' + esc(value) + '" aria-pressed="' + (state.album === value) + '">' +
         (cover ? '<span class="gal-chip__cover" aria-hidden="true"><img src="' + esc(cover.thumb) + '" alt="" width="' + cover.tw + '" height="' + cover.th + '" loading="lazy" decoding="async"></span>'
                : '<span class="gal-chip__cover gal-chip__cover--all" aria-hidden="true">' + PKB.icon("grid") + "</span>") +
-        "<span>" + esc(label) + '</span><span class="count">' + n + "</span></button>";
+        "<span>" + esc(label) + '</span> <span class="count">' + n + "</span></button>";
     };
     el.albums.innerHTML = chip("", "Vse", ALL.length, null) + ALBUMS.map(function (a) {
       return chip(a, a, albumCount(a), newest.filter(function (it) { return it.album === a; })[0]);
@@ -229,7 +229,7 @@
           '<img src="' + esc(it.thumb) + '" alt="" width="' + it.tw + '" height="' + it.th + '" loading="lazy" decoding="async" draggable="false">' +
         "</span>" +
         '<span class="gal-card__cap">' +
-          '<span class="gal-card__text"><span class="gal-card__title">' + esc(it.title) + "</span>" +
+          '<span class="gal-card__text"><span class="gal-card__title">' + esc(it.title) + "</span> " +
             '<span class="gal-card__meta">' + esc(meta) + "</span></span>" +
           '<span class="gal-card__zoom" aria-hidden="true">' + PKB.icon("maximize") + "</span>" +
         "</span>" +
@@ -285,30 +285,84 @@
     return { W: W, cols: cols, gap: gap, pad: pad, colW: (W - gap * (cols - 1)) / cols };
   }
 
-  /** Shortest-column masonry; positions are stored on the node and applied as left/top. */
+  var zeros = function (k) { var a = []; for (var i = 0; i < k; i++) a.push(0); return a; };
+  var maxOf = function (a) { return Math.max.apply(null, a); };
+
+  /**
+   * Masonry: shortest-column placement, then the last few photos are re-assigned (exhaustive search)
+   * so the columns end as evenly as possible, and finally each column is evened out by letting its
+   * thumbnails crop a little (object-fit: cover, at most ±12 %) so the bottom edge is flush.
+   * Sizes come from data w/h, so nothing shifts when the images load.
+   */
   function place(list) {
     var m = metrics();
     if (!m.W) return;
     lastWidth = m.W;
-    var hs = [];
-    for (var c = 0; c < m.cols; c++) hs.push(0);
-    list.forEach(function (it) {
-      var n = nodes[it.id];
-      var col = 0;
-      for (var k = 1; k < m.cols; k++) if (hs[k] < hs[col] - 1) col = k;
-      var h = Math.round((m.colW - 2 * m.pad) * it.h / it.w + 2 * m.pad);
-      n.x = Math.round(col * (m.colW + m.gap));
-      n.y = hs[col];
-      n.w = m.colW;
-      n.h = h;
-      n.li.style.left = n.x + "px";
-      n.li.style.top = n.y + "px";
-      n.li.style.width = m.colW + "px";
-      n.li.style.height = h + "px";
-      hs[col] += h + m.gap;
+    var C = m.cols, n = list.length, pad2 = 2 * m.pad, gap = m.gap;
+    var media = list.map(function (it) { return (m.colW - pad2) * it.h / it.w; });
+    var cost = function (i) { return media[i] + pad2 + gap; };
+    var assign = [], hs = zeros(C), i, c, k;
+
+    for (i = 0; i < n; i++) {
+      c = 0;
+      for (k = 1; k < C; k++) if (hs[k] < hs[c] - 1) c = k;
+      assign.push(c);
+      hs[c] += cost(i);
+    }
+
+    // the first row always stays in reading order; only photos after it may move, and moves that put a
+    // later photo noticeably above an earlier one are penalised (keeps "newest first" readable)
+    var K = Math.min(n - C, C === 2 ? 8 : C === 3 ? 7 : 6);
+    if (C > 1 && K > 1) {
+      var base = zeros(C), lastTop = 0;
+      for (i = 0; i < n - K; i++) { lastTop = base[assign[i]]; base[assign[i]] += cost(i); }
+      var combos = Math.pow(C, K), best = null, bestScore = Infinity, cur = [];
+      for (var code = 0; code < combos; code++) {
+        var x = code, h = base.slice(), prevTop = lastTop, inv = 0;
+        for (var j = 0; j < K; j++) {
+          c = x % C; x = (x - c) / C; cur[j] = c;
+          if (h[c] < prevTop) inv += prevTop - h[c];
+          prevTop = h[c];
+          h[c] += cost(n - K + j);
+        }
+        var lo = Infinity, hi = 0;
+        for (c = 0; c < C; c++) { if (h[c] > hi) hi = h[c]; if (h[c] < lo) lo = h[c]; }
+        var score = hi - lo + inv * 0.35;
+        if (score < bestScore - 0.5) { bestScore = score; best = cur.slice(); }
+      }
+      if (best) for (j = 0; j < K; j++) assign[n - K + j] = best[j];
+    }
+
+    // per-column scale so all columns end at the same height (within ±12 %)
+    var M = zeros(C), cnt = zeros(C), F = zeros(C), H = zeros(C), used = 0, sum = 0;
+    for (i = 0; i < n; i++) { M[assign[i]] += media[i]; cnt[assign[i]]++; }
+    for (c = 0; c < C; c++) {
+      F[c] = cnt[c] * pad2 + Math.max(0, cnt[c] - 1) * gap;
+      H[c] = M[c] + F[c];
+      if (cnt[c]) { used++; sum += H[c]; }
+    }
+    var T = used ? sum / used : 0;
+    var scale = zeros(C).map(function (z, cc) { return M[cc] > 0 ? clamp((T - F[cc]) / M[cc], 0.88, 1.12) : 1; });
+
+    var yf = zeros(C), bottoms = zeros(C);
+    list.forEach(function (it, idx) {
+      var col = assign[idx];
+      var node = nodes[it.id];
+      var hf = media[idx] * scale[col] + pad2;
+      var top = Math.round(yf[col]);
+      var bottom = Math.round(yf[col] + hf);
+      node.x = Math.round(col * (m.colW + gap));
+      node.y = top;
+      node.w = m.colW;
+      node.h = bottom - top;
+      node.li.style.left = node.x + "px";
+      node.li.style.top = top + "px";
+      node.li.style.width = m.colW + "px";
+      node.li.style.height = node.h + "px";
+      yf[col] += hf + gap;
+      bottoms[col] = bottom;
     });
-    var total = Math.max.apply(null, hs);
-    el.grid.style.height = Math.max(0, total - m.gap) + "px";
+    el.grid.style.height = (n ? maxOf(bottoms) : 0) + "px";
   }
 
   var leaveTimers = {};
@@ -453,7 +507,7 @@
         "</div>" +
         '<div class="gal-lb__strip-wrap"><ul class="gal-lb__strip" role="list" aria-label="Sličice fotografij" data-lb-strip></ul></div>' +
       "</div>" +
-      '<p class="gal-lb__keys" aria-hidden="true"><kbd>←</kbd><kbd>→</kbd> listanje<span class="dot-sep"></span>klik povečava<span class="dot-sep"></span><kbd>Esc</kbd> zapri</p>' +
+      '<p class="gal-lb__keys" aria-hidden="true"><kbd>' + PKB.icon("arrow-left") + "</kbd><kbd>" + PKB.icon("arrow-right") + '</kbd> listanje<span class="dot-sep"></span>klik povečava<span class="dot-sep"></span><kbd>Esc</kbd> zapri</p>' +
       '<p class="visually-hidden" aria-live="polite" aria-atomic="true" data-lb-live></p>' +
     "</div>";
   }
@@ -593,7 +647,7 @@
     LB.$("[data-lb-title]").textContent = it.title;
     var rel = it.date ? PKB.relativeDay(it.date) : "";
     LB.$("[data-lb-meta]").innerHTML =
-      '<span class="badge gal-lb__album">' + esc(it.album) + "</span>" +
+      '<span class="badge gal-lb__album">' + esc(it.album) + "</span> " +
       (it.date ? '<span class="gal-lb__date"><time datetime="' + esc(it.date) + '">' + esc(fmtDate(it.date)) + "</time>" +
         (rel ? '<span class="gal-lb__rel"> · ' + esc(rel) + "</span>" : "") + "</span>" : "") +
       '<span class="visually-hidden">Fotografija ' + (i + 1) + " od " + LB.list.length + ".</span>";
@@ -682,6 +736,8 @@
     if (reduce() || LB.list.length < 2) on = false;
     LB.playing = !!on;
     LB.elapsed = 0;
+    LB.hover = false;
+    LB.hoverOrigin = null;
     LB.playBtn.setAttribute("aria-pressed", String(LB.playing));
     var lbl = LB.playing ? "Ustavi diaprojekcijo" : "Predvajaj diaprojekcijo";
     LB.playBtn.setAttribute("aria-label", lbl);
@@ -752,8 +808,17 @@
       }
     });
 
-    LB.stage.addEventListener("pointerenter", function (e) { if (e.pointerType === "mouse") LB.hover = true; });
-    LB.stage.addEventListener("pointerleave", function (e) { if (e.pointerType === "mouse") LB.hover = false; });
+    // hover-hold for the slideshow: only after the mouse really moves over the stage (a dialog that opens
+    // under a resting cursor fires synthetic enter events, which must not pause a slideshow just started)
+    LB.stage.addEventListener("pointermove", function (e) {
+      if (e.pointerType !== "mouse" || LB.hover) return;
+      var o = LB.hoverOrigin;
+      if (!o) { LB.hoverOrigin = { x: e.clientX, y: e.clientY }; return; }
+      if (Math.abs(e.clientX - o.x) + Math.abs(e.clientY - o.y) > 6) LB.hover = true;
+    });
+    LB.stage.addEventListener("pointerleave", function (e) {
+      if (e.pointerType === "mouse") { LB.hover = false; LB.hoverOrigin = null; }
+    });
 
     vp.addEventListener("pointerdown", function (e) {
       if (!LB || !LB.frame || (e.pointerType === "mouse" && e.button !== 0)) return;

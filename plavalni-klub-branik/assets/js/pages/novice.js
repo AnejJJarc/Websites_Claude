@@ -349,9 +349,10 @@
         '<span class="news-pill news-feature__pill">' + icon("star", "icon--sm") + (f.featured ? "Izpostavljeno" : "Najnovejše") + "</span>" +
         (also ? alsoHTML(also) : "") +
         '<div class="photo-card__glass news-feature__cap">' +
-          '<p class="news-feature__meta"><span class="news-dot" style="--dot:' + TONE_VAR[tone(f.category)] + '"></span>' + esc(f.category) +
-            '<span class="dot-sep"></span><time datetime="' + f.date + '">' + esc(PKB.formatDate(f.date)) + "</time>" +
-            '<span class="dot-sep"></span>' + f.readMins + " min branja</p>" +
+          '<p class="news-feature__meta">' +
+            '<span class="news-feature__mi"><span class="news-dot" style="--dot:' + TONE_VAR[tone(f.category)] + '"></span>' + esc(f.category) + "</span>" +
+            '<span class="news-feature__mi">' + icon("calendar", "icon--sm") + '<time datetime="' + f.date + '">' + esc(PKB.formatDate(f.date)) + "</time></span>" +
+            '<span class="news-feature__mi">' + icon("clock", "icon--sm") + f.readMins + " min branja</span></p>" +
           '<h2 class="news-feature__title" id="news-feature-title">' + esc(f.title) + "</h2>" +
           (f.excerpt ? '<p class="news-feature__excerpt">' + esc(f.excerpt) + "</p>" : "") +
           '<div class="news-feature__actions">' +
@@ -419,7 +420,30 @@
     if (state.month) parts.push(esc(monthLabel(state.month)));
     if (state.q) parts.push("»" + esc(state.q) + "«");
     var head = n ? "<strong>" + n + "</strong> " + PKB.plural(n, ["novica", "novici", "novice", "novic"]) : "<strong>Ni zadetkov</strong>";
-    el.count.innerHTML = head + (parts.length ? ' <span class="dot-sep"></span>' + parts.join(' <span class="dot-sep"></span>') : (n ? " v arhivu" : ""));
+    el.count.innerHTML = head + (parts.length ? '<span class="dot-sep"></span>' + parts.join('<span class="dot-sep"></span>') : (n ? " v arhivu" : ""));
+  }
+  /* edge fade on the horizontally scrolling chip row (mobile) */
+  function updateChipFade() {
+    var c = el.cats;
+    if (!c) return;
+    var max = c.scrollWidth - c.clientWidth;
+    c.classList.toggle("can-left", max > 2 && c.scrollLeft > 2);
+    c.classList.toggle("can-right", max > 2 && c.scrollLeft < max - 2);
+  }
+  if (el.cats) {
+    var chipTick = false;
+    var onChipScroll = function () {
+      if (chipTick) return;
+      chipTick = true;
+      requestAnimationFrame(function () { chipTick = false; updateChipFade(); });
+    };
+    el.cats.addEventListener("scroll", onChipScroll, { passive: true });
+    window.addEventListener("resize", onChipScroll);
+    // keep the pressed chip in view when it sits off-screen in the scroll row
+    el.cats.addEventListener("focusin", function (e) {
+      var b = e.target.closest && e.target.closest(".news-chip");
+      if (b && el.cats.scrollWidth > el.cats.clientWidth) b.scrollIntoView({ block: "nearest", inline: "nearest" });
+    });
   }
 
   /* ------------------------------------------------------------------
@@ -829,6 +853,9 @@
   function showArticle(n, opts) {
     opts = opts || {};
     var host = qs("[data-reader-host]", reader.m.dialog);
+    var ae = doc.activeElement;
+    // focus inside the content that is about to be replaced would fall back to <body>
+    var hadFocus = !!host.innerHTML && (host.contains(ae) || !ae || ae === doc.body);
     reader.id = n.id;
     if (!reader.seq.some(function (x) { return x.id === n.id; })) reader.seq = sequenceFor(n.id);
     host.innerHTML = readerHTML(n);
@@ -841,7 +868,7 @@
       var live = qs("[data-reader-live]", reader.m.dialog);
       if (live) live.textContent = "Članek: " + n.title;
     }
-    if (opts.focusTitle) {
+    if (opts.focusTitle || hadFocus) {
       var h = qs("#news-reader-title", host);
       if (h) h.focus({ preventScroll: true });
     }
@@ -926,14 +953,22 @@
       ticking = true;
       requestAnimationFrame(function () { ticking = false; updateProgress(); });
     }, { passive: true });
-
-    d.addEventListener("keydown", function (e) {
-      if (e.altKey || e.ctrlKey || e.metaKey || e.shiftKey) return;
-      var tg = e.target;
-      if (tg && (/^(INPUT|TEXTAREA|SELECT)$/.test(tg.tagName) || tg.isContentEditable)) return;
-      if (e.key === "ArrowLeft") { e.preventDefault(); step(-1, true); }
-      else if (e.key === "ArrowRight") { e.preventDefault(); step(1, true); }
-    });
+    bindReaderClicks(m);
+    return true;
+  }
+  /* ← → page through articles while the reader is the topmost dialog */
+  doc.addEventListener("keydown", function (e) {
+    if (!reader || e.defaultPrevented || e.altKey || e.ctrlKey || e.metaKey || e.shiftKey) return;
+    if (e.key !== "ArrowLeft" && e.key !== "ArrowRight") return;
+    var open = qsa("dialog.modal[open]");
+    if (open[open.length - 1] !== reader.m.dialog || reader.m.dialog.classList.contains("is-closing")) return;
+    var tg = e.target;
+    if (tg && (/^(INPUT|TEXTAREA|SELECT)$/.test(tg.tagName) || tg.isContentEditable)) return;
+    e.preventDefault();
+    step(e.key === "ArrowLeft" ? -1 : 1, true);
+  });
+  function bindReaderClicks(m) {
+    var d = m.dialog;
     d.addEventListener("click", function (e) {
       var t = e.target;
       if (!reader || !t.closest) return;
@@ -960,7 +995,6 @@
         goTo(a.getAttribute("data-open"), { announce: true, focusTitle: true });
       }
     });
-    return true;
   }
   function onReaderClose() {
     var r = reader;
@@ -1028,6 +1062,7 @@
   if (el.sort) el.sort.value = state.sort;
   buildChips();
   applyView();
+  requestAnimationFrame(updateChipFade);
   renderStats();
   renderFeatured();
   renderArchive();
