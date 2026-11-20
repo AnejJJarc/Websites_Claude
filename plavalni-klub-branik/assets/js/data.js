@@ -186,7 +186,8 @@ window.PKB_DATA = {
     enrollmentFee: 25,          // TODO: preveri vpisnino v veljavnem ceniku
     siblingDiscount: 0.1,       // TODO: preveri popust za drugega otroka
     note: "Mesečna članarina za prvega otroka. Tekmovalne skupine in odrasli plačujejo po ceniku sekcije – pišite nam.",
-    paymentNote: "Članarina se poravna mesečno do 15. v mesecu na TRR kluba."
+    paymentNote: "Članarina se poravna mesečno do 15. v mesecu na TRR kluba.",
+    sectionNote: "Tekmovalne skupine in odrasli plačujejo po ceniku sekcije – pišite nam."
   },
 
   /* Lokacije vadbe na Kopališču Pristan */

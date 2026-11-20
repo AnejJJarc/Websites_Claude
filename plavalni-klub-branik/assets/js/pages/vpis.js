@@ -607,7 +607,7 @@
       "</dl>";
     var big = '<div class="enr-price__big"><span class="enr-kicker">' + (pi.total != null ? "Na mesec" : "Članarina") + "</span>" +
       '<span class="enr-price__value' + (pi.total != null ? "" : " enr-price__value--text") + '">' + esc(fmtPrice(pi.total)) + "</span></div>";
-    var note = pi.monthly != null ? (pricing.paymentNote || "") : (pricing.note || "");
+    var note = pi.monthly != null ? (pricing.paymentNote || "") : (pricing.sectionNote || pricing.note || "");
     return '<div class="tile tile--raised enr-price__box">' + lines + big +
       (note ? '<p class="enr-price__note small soft">' + icon("info", "icon--sm") + "<span>" + esc(note) + "</span></p>" : "") + "</div>";
   }
@@ -1071,7 +1071,7 @@
       "Prvi trening je poskusni – za vpis se odločite po njem.",
       enrollFee != null ? "Ob prvem vpisu se poravna vpisnina po veljavnem ceniku (" + fmtPrice(enrollFee) + ")." : "Ob prvem vpisu se poravna vpisnina po veljavnem ceniku.",
       pricing.paymentNote || "",
-      pricing.note || "",
+      pricing.sectionNote || pricing.note || "",
       siblingRate ? "Za drugega otroka iz iste družine velja " + pctText() + " popust pri mesečni članarini." : "",
       "Plavalna šola poteka od sredine septembra do konca šolskega leta. Vpis med letom je mogoč, če so v skupini prosta mesta.",
       "Če trener oceni, da bi bila za otroka primernejša druga skupina, vas o tem obvestimo."
