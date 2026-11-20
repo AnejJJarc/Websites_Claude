@@ -599,6 +599,13 @@
     }
     html += '<p class="prog-result__disclaimer">' + PKB.icon("info", "icon--sm") + "<span>Priporočilo je informativno. Na poskusnem treningu trener preveri znanje in potrdi najprimernejšo skupino.</span></p>";
     Q.result.innerHTML = html;
+    if (qs("#quiz-result-title", Q.result)) {
+      Q.result.setAttribute("aria-labelledby", "quiz-result-title");
+      Q.result.removeAttribute("aria-label");
+    } else {
+      Q.result.removeAttribute("aria-labelledby");
+      Q.result.setAttribute("aria-label", "Priporočilo izbirnika");
+    }
     Q.form.hidden = true;
     Q.result.hidden = false;
     markRecommended(recommendedId);
@@ -886,6 +893,7 @@
         "</article>");
       }
       host.innerHTML = tiles.length ? tiles.join("") : '<p class="muted">Cenik bo objavljen kmalu.</p>';
+      host.style.setProperty("--prog-tiles", String(Math.max(1, Math.min(tiles.length, 4))));
     }
     if (notesHost) {
       var notes = [];
@@ -899,6 +907,7 @@
         return '<li><span class="icon-bubble icon-bubble--sm" aria-hidden="true">' + PKB.icon(n.icon) + "</span><span><strong>" + esc(n.title) + "</strong>" + esc(n.text) + "</span></li>";
       }).join("");
       notesHost.hidden = !notes.length;
+      notesHost.style.setProperty("--prog-notes", String(Math.max(1, Math.min(notes.length, 4))));
     }
   }
 

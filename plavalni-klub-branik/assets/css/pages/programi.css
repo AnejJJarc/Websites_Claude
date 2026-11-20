@@ -18,18 +18,6 @@
   --prog-line: rgba(15, 20, 30, .26);
 }
 
-/* Local fix (reported as a shared request): a view-transition-name makes .site-header a
-   "backdrop root", so the frosted nav pill could not blur the page scrolling beneath it.
-   Moving the name onto the pill keeps the cross-page transition and restores the blur. */
-.site-header { view-transition-name: none; }
-.site-header .nav-shell { view-transition-name: site-header; }
-/* Local fix (reported as a shared request): at ≤ 359px the menu button overflowed the nav pill */
-@media (max-width: 359px) {
-  .site-header .nav-shell { gap: .5rem; padding-left: 12px; }
-  .site-header .nav-actions { gap: 2px; }
-  .site-header .nav-actions .btn--icon { width: 40px; height: 40px; min-height: 40px; }
-}
-
 .prog h2, .prog .section-head .lead { text-wrap: balance; }
 
 /* soft frosted "halo" behind section heads that sit directly on the photo
@@ -168,7 +156,16 @@ body:has(.site-header.is-hidden) .prog-toolbar { top: 12px; }
 .prog-group__desc { margin-top: .2rem; color: var(--text-muted); font-size: .94rem; }
 .prog-group__count { flex: none; margin-top: .35rem; }
 
-.prog-grid { display: grid; gap: clamp(.9rem, 1.8vw, 1.25rem); grid-template-columns: repeat(auto-fill, minmax(min(100%, 300px), 1fr)); align-items: start; }
+.prog-grid { display: grid; gap: clamp(.9rem, 1.8vw, 1.25rem); grid-template-columns: minmax(0, 1fr); align-items: start; }
+@media (min-width: 620px) { .prog-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (min-width: 980px) { .prog-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+/* two-column range: a lone last card fills the row as a horizontal card (no empty slot) */
+@media (min-width: 620px) and (max-width: 979.98px) {
+  .prog-grid > .prog-card:last-child:nth-child(odd) {
+    grid-column: 1 / -1; display: grid; grid-template-columns: minmax(0, .92fr) minmax(0, 1.08fr); align-items: start;
+  }
+  .prog-grid > .prog-card:last-child:nth-child(odd) .card-media { aspect-ratio: 4 / 3; margin: 8px 0 8px 8px; }
+}
 
 /* filter animation */
 .prog-group { transition: opacity .2s var(--ease), transform .2s var(--ease); }
@@ -195,7 +192,7 @@ body:has(.site-header.is-hidden) .prog-toolbar { top: 12px; }
 .prog-help__stats > div + div::before { content: ""; position: absolute; left: 0; top: 22%; bottom: 22%; width: 1px; background: var(--divider); }
 .prog-help__stats dd { order: 1; margin: 0; font-family: var(--font-display); font-weight: 500; font-size: clamp(1.5rem, 1vw + 1.1rem, 2rem); letter-spacing: -.04em; line-height: 1; color: var(--heading); }
 .prog-help__stats dt { order: 2; font-size: .78rem; color: var(--text-muted); }
-@media (min-width: 1024px) { .prog-help--wide { grid-column: span 2; } }
+@media (min-width: 980px) { .prog-help--wide { grid-column: span 2; } }
 .prog-card .card-media .badge { display: inline-flex; align-items: center; gap: .4rem; }
 .prog-card .card-media .badge .prog-dot { width: 7px; height: 7px; box-shadow: none; }
 .prog-card .card-body { gap: .7rem; }
@@ -210,6 +207,15 @@ body:has(.site-header.is-hidden) .prog-toolbar { top: 12px; }
 .prog-facts > div + div::before { content: ""; position: absolute; left: 0; top: 22%; bottom: 22%; width: 1px; background: var(--divider); }
 .prog-facts dt { order: 2; font-size: .7rem; letter-spacing: .06em; text-transform: uppercase; color: var(--text-soft); font-weight: 600; }
 .prog-facts dd { order: 1; margin: 0; font-size: .9rem; font-weight: 600; color: var(--heading); line-height: 1.25; }
+/* narrow cards (small phones, 3-column desktop grid): facts become a compact spec list */
+.prog-card .card-body { container: prog-card / inline-size; }
+@container prog-card (max-width: 334px) {
+  .prog-facts { grid-template-columns: minmax(0, 1fr); padding: .1rem .15rem; }
+  .prog-facts > div { flex-direction: row; align-items: baseline; justify-content: space-between; gap: .75rem; padding: .5rem .65rem; }
+  .prog-facts > div + div::before { left: .65rem; right: .65rem; top: 0; bottom: auto; width: auto; height: 1px; }
+  .prog-facts dt { order: 1; flex: none; }
+  .prog-facts dd { order: 2; text-align: right; min-width: 0; }
+}
 
 .prog-card__foot { display: flex; align-items: flex-end; justify-content: space-between; gap: .75rem; margin-top: .25rem; }
 .prog-price { display: flex; align-items: baseline; gap: .35rem; flex-wrap: wrap; min-width: 0; }
@@ -467,7 +473,15 @@ body:has(.site-header.is-hidden) .prog-toolbar { top: 12px; }
    ========================================================================== */
 .prog-pricing { display: grid; gap: 10px; padding: 10px; border-radius: var(--radius-xl); }
 @media (min-width: 640px) { .prog-pricing { padding: 12px; gap: 12px; } }
-.prog-pricing__tiles { display: grid; gap: 10px; grid-template-columns: repeat(auto-fit, minmax(min(100%, 220px), 1fr)); }
+.prog-pricing__tiles { display: grid; gap: 10px; grid-template-columns: minmax(0, 1fr); }
+@media (min-width: 520px) {
+  .prog-pricing__tiles { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .prog-pricing__tiles > .prog-price-tile:last-child:nth-child(odd) { grid-column: 1 / -1; }
+}
+@media (min-width: 1180px) {
+  .prog-pricing__tiles { grid-template-columns: repeat(var(--prog-tiles, 4), minmax(0, 1fr)); }
+  .prog-pricing__tiles > .prog-price-tile:last-child:nth-child(odd) { grid-column: auto; }
+}
 .prog-price-tile { display: flex; flex-direction: column; gap: .8rem; padding: 1.25rem 1.25rem 1.2rem; border-radius: calc(var(--radius-xl) - 10px); min-width: 0; }
 .prog-price-tile__label { display: flex; align-items: center; min-height: 1.5rem; font-size: .76rem; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; color: var(--text-soft); font-family: var(--font-body); }
 .prog-price-tile__name { display: inline-flex; align-items: center; gap: .5rem; font-family: var(--font-display); font-size: 1.12rem; font-weight: 600; letter-spacing: -.02em; text-transform: none; line-height: 1.2; color: var(--heading); text-decoration: none; border-radius: 6px; }
@@ -476,7 +490,7 @@ body:has(.site-header.is-hidden) .prog-toolbar { top: 12px; }
 .prog-price-tile__list { font-size: .86rem; color: var(--text-muted); line-height: 1.5; }
 .prog-price-tile__value { display: flex; align-items: baseline; gap: .4rem; }
 .prog-price-tile__num { font-family: var(--font-display); font-weight: 500; font-size: clamp(2.5rem, 2.2vw + 1.6rem, 3.3rem); letter-spacing: -.045em; line-height: 1; color: var(--heading); font-variant-numeric: tabular-nums; }
-.prog-price-tile__num--text { font-size: clamp(2rem, 1.6vw + 1.3rem, 2.55rem); letter-spacing: -.035em; line-height: 1.1; }
+.prog-price-tile__num--text { font-size: clamp(1.9rem, 1vw + 1.35rem, 2.35rem); letter-spacing: -.035em; line-height: 1.1; }
 .prog-price-tile__per { color: var(--text-soft); font-size: .9rem; }
 .prog-price-tile .stat-bar { width: 36px; margin-top: 0; }
 .prog-price-tile__names { list-style: none; padding: 0; margin: 0; display: flex; flex-wrap: wrap; gap: .35rem; }
@@ -486,7 +500,9 @@ body:has(.site-header.is-hidden) .prog-toolbar { top: 12px; }
 .prog-price-tile__names .prog-dot { width: 7px; height: 7px; }
 .prog-price-tile__meta { margin-top: auto; font-size: .84rem; color: var(--text-muted); }
 .prog-price-tile__meta a { color: var(--heading); font-weight: 600; }
-.prog-pricing__notes { list-style: none; margin: 0; padding: .35rem .25rem .2rem; display: grid; gap: .25rem 1.25rem; grid-template-columns: repeat(auto-fit, minmax(min(100%, 250px), 1fr)); }
+.prog-pricing__notes { list-style: none; margin: 0; padding: .35rem .25rem .2rem; display: grid; gap: .25rem 1.25rem; grid-template-columns: minmax(0, 1fr); }
+@media (min-width: 560px) { .prog-pricing__notes { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (min-width: 1180px) { .prog-pricing__notes { grid-template-columns: repeat(var(--prog-notes, 4), minmax(0, 1fr)); } }
 .prog-pricing__notes li { display: flex; gap: .65rem; align-items: flex-start; padding: .75rem .65rem; font-size: .88rem; color: var(--text-muted); line-height: 1.45; }
 .prog-pricing__notes .icon-bubble { margin-top: -.15rem; }
 .prog-pricing__notes strong { display: block; color: var(--heading); font-weight: 600; font-size: .9rem; }
@@ -508,6 +524,15 @@ body:has(.site-header.is-hidden) .prog-toolbar { top: 12px; }
 .prog-gear__num { font-weight: 500; font-size: 2.3rem; letter-spacing: -.045em; line-height: 1; color: var(--heading); font-variant-numeric: tabular-nums; }
 .prog-gear__of { font-size: 1rem; color: var(--text-soft); font-weight: 500; }
 .prog-gear__bar { grid-column: 1 / -1; height: 4px; }
+/* phones: count + reset on one row, the status sentence gets its own full-width row */
+@media (max-width: 479px) {
+  .prog-gear__status { grid-template-columns: auto minmax(0, 1fr) auto; grid-template-areas: "count . reset" "status status status" "bar bar bar"; gap: .55rem .75rem; }
+  .prog-gear__meter { display: contents; }
+  .prog-gear__count { grid-area: count; }
+  .prog-gear__meter > [data-gear-status] { grid-area: status; }
+  .prog-gear__status > [data-gear-reset] { grid-area: reset; }
+  .prog-gear__bar { grid-area: bar; }
+}
 .prog-gear__list { list-style: none; padding: 0; margin: 1rem 0 0; display: grid; gap: .5rem; }
 @media (min-width: 560px) { .prog-gear__list { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 .prog-gear__item {
