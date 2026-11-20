@@ -563,6 +563,9 @@ a.card { color: inherit; text-decoration: none; }
   --glass-bg: rgba(255, 255, 255, .12); --glass-bg-strong: rgba(255, 255, 255, .18); --glass-bg-hover: rgba(255, 255, 255, .22);
   --glass-border: rgba(255, 255, 255, .24); --glass-border-strong: rgba(255, 255, 255, .36);
   --glass-bg-solid: rgba(32, 35, 40, .94); --focus-color: #ffffff;
+  /* small glass controls inside a caption (icon bubbles, chips) keep the dark-theme rim in both themes */
+  --glass-border-lit: rgba(255, 255, 255, .42) rgba(255, 255, 255, .15) rgba(255, 255, 255, .07) rgba(255, 255, 255, .24);
+  --glass-edge-sm: inset 0 1px 0 rgba(255, 255, 255, .42), inset 0 10px 14px -11px rgba(255, 255, 255, .5), inset 0 -8px 12px -9px rgba(0, 0, 0, .5);
 }
 
 /* ---------- 11. Page hero & breadcrumb ---------- */
