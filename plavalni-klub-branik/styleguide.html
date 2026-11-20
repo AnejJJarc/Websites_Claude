@@ -1,0 +1,194 @@
+<!doctype html>
+<html lang="sl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Knjižnica komponent · PK Branik Maribor</title>
+  <meta name="description" content="Interna knjižnica komponent za spletno stran PK Branik Maribor.">
+  <meta name="robots" content="noindex">
+  <meta name="theme-color" content="#0e1013">
+  <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Manrope:wght@500;600;700&display=swap">
+  <link rel="stylesheet" href="assets/css/style.css">
+  <script>(function(){try{var t=localStorage.getItem("pkb-theme");}catch(e){}document.documentElement.setAttribute("data-theme",t||(matchMedia("(prefers-color-scheme: light)").matches?"light":"dark"));})();</script>
+  <script src="assets/js/data.js" defer></script>
+  <script src="assets/js/site.js" defer></script>
+</head>
+<body data-page="styleguide">
+  <a class="skip-link" href="#main">Preskoči na vsebino</a>
+  <header data-site-header></header>
+
+  <main id="main">
+    <section class="page-hero">
+      <div class="container">
+        <div class="page-hero__panel glass glass--strong" data-reveal>
+          <ol class="breadcrumb" aria-label="Drobtinice">
+            <li><a href="index.html">Domov</a></li>
+            <li><span aria-current="page">Komponente</span></li>
+          </ol>
+          <p class="eyebrow">Interno</p>
+          <h1>Knjižnica <span class="gradient-text">komponent</span></h1>
+          <p class="lead">Vsi gradniki oblikovnega sistema na enem mestu. Strani jih sestavljajo iz istih razredov, zato je videz povsod enoten.</p>
+          <div class="page-hero__actions cluster">
+            <a class="btn btn--primary btn--lg" href="vpis.html">Primarni gumb <i data-icon="arrow-right" class="icon--move"></i></a>
+            <button class="btn btn--lg" type="button" id="demo-toast"><i data-icon="sparkles"></i>Obvestilo</button>
+            <button class="btn btn--ghost btn--lg" type="button" id="demo-modal">Modalno okno</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section--tight">
+      <div class="container stack stack-lg">
+        <div class="section-head section-head--split">
+          <div>
+            <p class="eyebrow">Gumbi in oznake</p>
+            <h2>Gumbi, čipi, značke</h2>
+          </div>
+          <a class="btn btn--link" href="#">Povezava kot gumb <i data-icon="arrow-right" class="icon--move"></i></a>
+        </div>
+        <div class="cluster">
+          <button class="btn btn--primary">Primarni</button>
+          <button class="btn">Stekleni</button>
+          <button class="btn btn--ghost">Prozorni</button>
+          <button class="btn btn--sm">Majhen</button>
+          <button class="btn btn--icon" aria-label="Ikona"><i data-icon="heart"></i></button>
+          <button class="btn btn--danger btn--sm">Nevarno</button>
+          <button class="btn" disabled>Onemogočen</button>
+        </div>
+        <div class="chip-group" role="group" aria-label="Filter">
+          <button class="chip" aria-pressed="true">Vse <span class="count">16</span></button>
+          <button class="chip" aria-pressed="false">Treningi <span class="count">4</span></button>
+          <button class="chip" aria-pressed="false">Tekmovanja <span class="count">4</span></button>
+        </div>
+        <div class="cluster">
+          <span class="badge badge--aqua">Aqua</span><span class="badge badge--violet">Violet</span><span class="badge badge--gold badge-dot">Zlato</span>
+          <span class="badge badge--silver">Srebro</span><span class="badge badge--bronze">Bron</span><span class="badge badge--success badge-dot badge-live">V živo</span>
+          <span class="badge badge--pink">Pink</span><span class="badge badge--teal">Teal</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="section--tight">
+      <div class="container">
+        <div class="grid-3" data-reveal-stagger>
+          <article class="card card--hover" data-reveal>
+            <span class="icon-bubble"><i data-icon="waves"></i></span>
+            <h3 class="card-title">Steklena kartica</h3>
+            <p class="muted">Kartica z učinkom reflektorja, ki sledi kazalcu miške.</p>
+            <div class="card-footer"><span class="badge badge--aqua">Oznaka</span><a class="btn btn--link" href="#">Več</a></div>
+          </article>
+          <article class="card card--media card--hover" data-reveal>
+            <div class="card-media"><img src="assets/img/photos/bazen-hala-sm.jpg" alt="" loading="lazy" width="720" height="480"><span class="badge">Klub</span></div>
+            <div class="card-body">
+              <div class="card-meta"><span><i data-icon="calendar" class="icon--sm"></i>14. oktober 2026</span><span><i data-icon="clock" class="icon--sm"></i>2 min</span></div>
+              <h3 class="card-title"><a href="#">Kartica s sliko in povezavo čez celo kartico</a></h3>
+              <p class="muted small">Klik kjerkoli na kartici odpre povezavo.</p>
+            </div>
+          </article>
+          <article class="card" data-reveal>
+            <div class="stat"><span class="stat-value" data-count-to="50" data-count-suffix=" m">0</span><span class="stat-label">Števec ob prikazu</span></div>
+            <div class="progress" style="--value:68%"><span></span></div>
+            <ul class="list-check"><li>Seznam s kljukicami</li><li>Druga točka</li></ul>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section--tight">
+      <div class="container">
+        <div class="section-head">
+          <p class="eyebrow">Plošče in ploščice</p>
+          <h2>Stekleni panel <span class="gradient-text">z notranjimi ploščicami</span></h2>
+          <p class="lead">Kot nadzorna plošča: večji panel nad fotografijo, v njem temnejše ali svetlejše ploščice (<code>.tile</code>, <code>.tile--raised</code>) in kartica s fotografijo (<code>.photo-card</code>).</p>
+        </div>
+        <div class="split split--wide-left">
+          <div class="glass glass--strong" style="padding:1.25rem;display:grid;gap:.75rem;grid-template-columns:repeat(auto-fit,minmax(160px,1fr))">
+            <div class="tile"><div class="stat"><span class="small soft">Naslednji trening</span><span class="stat-value" style="font-size:2rem">17:00</span><span class="small muted">Rakci · Mali bazen</span></div></div>
+            <div class="tile"><div class="stat"><span class="small soft">Skupine danes</span><span class="stat-value" style="font-size:2rem">8</span><div class="stat-bar" style="--value:70%"><span></span></div></div></div>
+            <div class="tile tile--raised"><div class="stat"><span class="small soft">Do tekme</span><span class="stat-value" style="font-size:2rem">9 dni</span><span class="small muted">Zimsko DP · Kranj</span></div></div>
+            <div class="tile" style="display:flex;align-items:center;justify-content:space-between;gap:.5rem"><span class="small">Obvestila</span><label class="switch"><input type="checkbox" checked aria-label="Obvestila"></label></div>
+          </div>
+          <div class="photo-card" style="min-height:300px">
+            <img src="assets/img/photos/sola-otroci-sm.jpg" alt="" loading="lazy" width="720" height="481">
+            <div class="photo-card__glass"><strong>Plavalna šola</strong><p class="small" style="opacity:.85">Od 4. leta naprej · 6 skupin</p></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section--tight">
+      <div class="container split">
+        <div data-tabs>
+          <div class="tabs-list" role="tablist" aria-label="Primer zavihkov">
+            <button class="tab" role="tab" id="t-1" aria-controls="p-1" aria-selected="true">Prvi</button>
+            <button class="tab" role="tab" id="t-2" aria-controls="p-2">Drugi</button>
+            <button class="tab" role="tab" id="t-3" aria-controls="p-3">Tretji</button>
+          </div>
+          <div id="p-1" class="tab-panel card">Vsebina prvega zavihka.</div>
+          <div id="p-2" class="tab-panel card">Vsebina drugega zavihka.</div>
+          <div id="p-3" class="tab-panel card">Vsebina tretjega zavihka.</div>
+        </div>
+        <div class="accordion">
+          <details class="accordion-item" open><summary>Harmonika — odprta</summary><div class="accordion-body"><p>Uporablja izvorna elementa &lt;details&gt; in &lt;summary&gt;.</p></div></details>
+          <details class="accordion-item"><summary>Druga postavka</summary><div class="accordion-body"><p>Besedilo odgovora.</p></div></details>
+        </div>
+      </div>
+    </section>
+
+    <section class="section--tight">
+      <div class="container split">
+        <form class="card stack" id="demo-form">
+          <h3>Obrazec z validacijo</h3>
+          <div class="field-row">
+            <div class="field"><label class="label" for="f-name">Ime in priimek <span class="req">*</span></label><input class="input" id="f-name" name="name" required minlength="3" autocomplete="name"></div>
+            <div class="field"><label class="label" for="f-email">E-pošta <span class="req">*</span></label><input class="input" id="f-email" name="email" type="email" required autocomplete="email"></div>
+          </div>
+          <div class="field"><label class="label" for="f-sel">Skupina <span class="opt">(neobvezno)</span></label><select class="select" id="f-sel" name="g"><option value="">Izberite …</option><option>Rakci</option></select></div>
+          <div class="field"><label class="label" for="f-msg">Sporočilo <span class="req">*</span></label><textarea class="textarea" id="f-msg" name="msg" required minlength="10"></textarea><p class="hint">Vsaj 10 znakov.</p></div>
+          <div class="field"><label class="check"><input type="checkbox" name="ok" required> Strinjam se s pogoji.</label></div>
+          <div class="grid-2" style="grid-template-columns:1fr 1fr">
+            <label class="option-card"><input type="radio" name="opt" value="a" checked><span class="option-card__body"><strong>Možnost A</strong><span class="small muted">Opis</span></span></label>
+            <label class="option-card"><input type="radio" name="opt" value="b"><span class="option-card__body"><strong>Možnost B</strong><span class="small muted">Opis</span></span></label>
+          </div>
+          <label class="switch"><input type="checkbox"> Stikalo</label>
+          <button class="btn btn--primary" type="submit">Pošlji</button>
+        </form>
+        <div class="table-wrap">
+          <table class="table">
+            <thead><tr><th scope="col" aria-sort="ascending"><button type="button">Plavalec</button></th><th scope="col">Disciplina</th><th scope="col" class="num">Čas</th></tr></thead>
+            <tbody>
+              <tr><td>Ana Kos</td><td>100 m hrbtno</td><td class="num">1:06,84</td></tr>
+              <tr><td>Tim Golob</td><td>200 m prosto</td><td class="num">1:58,64</td></tr>
+              <tr><td>Nik Kralj</td><td>50 m prosto</td><td class="num">30,12</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <div class="cta-band glass glass--strong" data-reveal="zoom">
+          <p class="eyebrow">CTA pas</p>
+          <h2>Pridruži se nam v vodi</h2>
+          <p class="lead" style="margin-inline:auto">Prvi trening je poskusni.</p>
+          <div class="cluster mt-6" style="justify-content:center"><a class="btn btn--primary btn--lg" href="vpis.html">Vpis</a></div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer data-site-footer></footer>
+  <script>
+    document.addEventListener("pkb:ready", function () {});
+    window.addEventListener("DOMContentLoaded", function () {
+      document.getElementById("demo-toast").addEventListener("click", function () { PKB.toast({ type: "success", title: "Uspeh", message: "To je obvestilo." }); });
+      document.getElementById("demo-modal").addEventListener("click", function () { PKB.modal.open({ title: "Modalno okno", content: "<p>Vsebina modalnega okna.</p>", footer: '<button class="btn" data-modal-close>Zapri</button>' }); });
+      PKB.initForm(document.getElementById("demo-form"), { onSubmit: function () { PKB.toast({ type: "success", message: "Obrazec je veljaven." }); } });
+    });
+  </script>
+</body>
+</html>
