@@ -1,0 +1,326 @@
+<!doctype html>
+<html lang="sl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Programi · PK Branik Maribor</title>
+  <meta name="description" content="Plavalna šola od 4. leta, tekmovalne skupine in plavanje za odrasle: primerjava skupin, termini, cenik, izbirnik skupine in pogosta vprašanja.">
+  <meta name="theme-color" content="#0e1013">
+  <meta property="og:title" content="Programi · PK Branik Maribor">
+  <meta property="og:description" content="Plavalna šola, tekmovalno plavanje in plavanje za odrasle na Kopališču Pristan. Poiščite pravo skupino v treh korakih.">
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="sl_SI">
+  <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Manrope:wght@500;600;700&display=swap">
+  <link rel="stylesheet" href="assets/css/style.css">
+  <link rel="stylesheet" href="assets/css/pages/programi.css">
+  <script>(function(){try{var t=localStorage.getItem("pkb-theme");}catch(e){}document.documentElement.setAttribute("data-theme",t||(matchMedia("(prefers-color-scheme: light)").matches?"light":"dark"));})();</script>
+  <script src="assets/js/data.js" defer></script>
+  <script src="assets/js/site.js" defer></script>
+  <script src="assets/js/pages/programi.js" defer></script>
+</head>
+<body data-page="programi">
+  <a class="skip-link" href="#main">Preskoči na vsebino</a>
+  <header data-site-header></header>
+  <main id="main" class="prog">
+
+    <!-- ============ HERO ============ -->
+    <section class="page-hero prog-hero" aria-labelledby="prog-title">
+      <div class="container">
+        <div class="page-hero__panel glass glass--strong" data-reveal>
+          <div class="prog-hero__grid">
+            <div class="prog-hero__text">
+              <ol class="breadcrumb" aria-label="Drobtinice"><li><a href="index.html">Domov</a></li><li><span aria-current="page">Programi</span></li></ol>
+              <p class="eyebrow">Programi in skupine</p>
+              <h1 id="prog-title">Programi <span class="gradient-text">za vsako starost in znanje</span></h1>
+              <p class="lead">Plavalna šola od 4.&nbsp;leta, tekmovalne skupine in plavanje za odrasle — vse na Kopališču Pristan. Primerjajte skupine, preverite termine in cene ali pa v treh korakih poiščite skupino, ki vam ustreza.</p>
+              <div class="page-hero__actions cluster">
+                <a class="btn btn--primary btn--lg" href="#izbirnik">Poiščite pravo skupino <i data-icon="arrow-right" class="icon--move"></i></a>
+                <a class="btn btn--lg" href="urnik.html"><i data-icon="calendar"></i>Urnik treningov</a>
+              </div>
+            </div>
+            <figure class="photo-card prog-hero__photo">
+              <img src="assets/img/photos/sola-ucenje-sm.jpg" srcset="assets/img/photos/sola-ucenje-sm.jpg 720w, assets/img/photos/sola-ucenje.jpg 1920w" sizes="(min-width: 900px) 460px, 100vw" alt="Trener v vodi pomaga otroku pri prvih zavesljajih" width="720" height="480" loading="lazy" decoding="async">
+              <figcaption class="photo-card__glass prog-hero__caption">
+                <span class="prog-hero__caption-text"><strong>Prvi trening je poskusni</strong><span class="small">Spoznajte skupino in trenerja, nato se odločite.</span></span>
+                <span class="prog-round" aria-hidden="true"><i data-icon="waves"></i></span>
+              </figcaption>
+            </figure>
+          </div>
+
+          <nav class="prog-quick tile" aria-label="Na tej strani">
+            <ul class="prog-quick__list" role="list">
+              <li><a class="prog-quick__link" href="#izbirnik"><span class="prog-quick__value" data-quick="izbirnik">3 koraki</span><span class="prog-quick__label">Izbirnik skupine</span><i data-icon="arrow-up-right" class="prog-quick__arrow"></i></a></li>
+              <li><a class="prog-quick__link" href="#primerjava"><span class="prog-quick__value" data-quick="primerjava">6 skupin</span><span class="prog-quick__label">Primerjava plavalne šole</span><i data-icon="arrow-up-right" class="prog-quick__arrow"></i></a></li>
+              <li><a class="prog-quick__link" href="#cenik"><span class="prog-quick__value" data-quick="cenik">od 55 €</span><span class="prog-quick__label">Cenik in članarine</span><i data-icon="arrow-up-right" class="prog-quick__arrow"></i></a></li>
+              <li><a class="prog-quick__link" href="#faq"><span class="prog-quick__value" data-quick="faq">9 odgovorov</span><span class="prog-quick__label">Pogosta vprašanja</span><i data-icon="arrow-up-right" class="prog-quick__arrow"></i></a></li>
+            </ul>
+          </nav>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ PROGRAMI ============ -->
+    <section class="section prog-section" id="skupine" aria-labelledby="skupine-title">
+      <div class="container">
+        <div class="section-head section-head--split prog-halo" data-reveal>
+          <div>
+            <p class="eyebrow">Programi</p>
+            <h2 id="skupine-title">Od prvih zavesljajev <span class="gradient-text">do tekmovalnih prog</span></h2>
+            <p class="lead">Programi so razdeljeni v tri kategorije. Pri vsakem odprite podrobnosti — tam so cilji, pogoji za vključitev, tedenski termini in trenerji.</p>
+          </div>
+          <p class="prog-status small soft" aria-live="polite" data-prog-status></p>
+        </div>
+
+        <div class="prog-toolbar" data-prog-toolbar>
+          <div class="prog-seg tabs-list" role="group" aria-label="Kategorija programov" data-prog-filter>
+            <button type="button" class="tab" data-cat="all" aria-pressed="true">Vsi <span class="prog-seg__count" data-count="all"></span></button>
+            <button type="button" class="tab" data-cat="sola" aria-pressed="false"><span class="prog-seg__long">Plavalna šola</span><span class="prog-seg__short" aria-hidden="true">Šola</span> <span class="prog-seg__count" data-count="sola"></span></button>
+            <button type="button" class="tab" data-cat="tekmovalno" aria-pressed="false">Tekmovalno <span class="prog-seg__count" data-count="tekmovalno"></span></button>
+            <button type="button" class="tab" data-cat="odrasli" aria-pressed="false">Odrasli <span class="prog-seg__count" data-count="odrasli"></span></button>
+          </div>
+        </div>
+
+        <div class="prog-groups" data-prog-groups>
+          <noscript>
+            <div class="prog-noscript tile">
+              <p>Za prikaz programov in filtrov omogočite JavaScript. Vse skupine in termini so tudi v <a href="urnik.html">tedenskem urniku</a>, prijava pa na strani <a href="vpis.html">Vpis</a>.</p>
+            </div>
+          </noscript>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ IZBIRNIK ============ -->
+    <section class="section prog-section" id="izbirnik" aria-labelledby="izbirnik-title">
+      <div class="container">
+        <div class="section-head prog-halo" data-reveal>
+          <p class="eyebrow">Izbirnik skupine</p>
+          <h2 id="izbirnik-title">Katera skupina je prava? <span class="gradient-text">Trije koraki do odgovora.</span></h2>
+          <p class="lead">Vnesite starost, izberite znanje in cilj — predlagali bomo skupino in pojasnili, zakaj. Na poskusnem treningu trener preveri znanje in potrdi izbiro.</p>
+        </div>
+
+        <div class="prog-quiz glass glass--strong glass--lg" data-reveal data-quiz>
+          <aside class="prog-quiz__aside tile" aria-label="Napredek izbirnika">
+            <ol class="prog-steps" role="list" data-quiz-steps>
+              <li class="prog-step" data-step-ind="1"><button type="button" class="prog-step__btn" data-goto="1" disabled><span class="prog-step__num" aria-hidden="true">1</span><span class="prog-step__text"><span class="prog-step__title">Starost</span><span class="prog-step__value" data-step-value="1">Še ni izbrano</span></span></button></li>
+              <li class="prog-step" data-step-ind="2"><button type="button" class="prog-step__btn" data-goto="2" disabled><span class="prog-step__num" aria-hidden="true">2</span><span class="prog-step__text"><span class="prog-step__title">Znanje</span><span class="prog-step__value" data-step-value="2">Še ni izbrano</span></span></button></li>
+              <li class="prog-step" data-step-ind="3"><button type="button" class="prog-step__btn" data-goto="3" disabled><span class="prog-step__num" aria-hidden="true">3</span><span class="prog-step__text"><span class="prog-step__title">Cilj</span><span class="prog-step__value" data-step-value="3">Še ni izbrano</span></span></button></li>
+            </ol>
+            <div class="prog-quiz__progress">
+              <div class="progress" role="progressbar" aria-label="Napredek izbirnika" aria-valuemin="0" aria-valuemax="3" aria-valuenow="0" data-quiz-progress><span></span></div>
+              <p class="tiny soft" data-quiz-progress-label>Korak 1 od 3</p>
+            </div>
+            <p class="prog-quiz__note tiny soft"><i data-icon="lock" class="icon--sm"></i><span>Odgovori ostanejo samo v vašem brskalniku.</span></p>
+          </aside>
+
+          <div class="prog-quiz__main">
+            <form class="prog-quiz__form" novalidate data-quiz-form>
+              <!-- Korak 1: starost -->
+              <fieldset class="prog-qstep" data-qstep="1">
+                <legend class="prog-qstep__legend" tabindex="-1">
+                  <span class="prog-qstep__kicker">Korak 1 od 3</span>
+                  <span class="prog-qstep__q">Koliko je star plavalec?</span>
+                </legend>
+                <div class="prog-age">
+                  <output class="prog-age__out" for="quiz-age quiz-age-range" data-age-out aria-hidden="true">7 let</output>
+                  <div class="prog-age__controls">
+                    <button type="button" class="btn btn--icon" data-age-step="-1" aria-label="Zmanjšaj starost"><i data-icon="minus"></i></button>
+                    <div class="prog-age__track">
+                      <input class="prog-range" type="range" id="quiz-age-range" min="3" max="25" step="0.5" value="7" aria-label="Starost (drsnik)" aria-valuetext="7 let" data-age-range>
+                      <div class="prog-age__scale" aria-hidden="true"><span style="--p:0">3</span><span style="--p:.1818">7</span><span style="--p:.4091">12</span><span style="--p:.6818">18</span><span style="--p:1">25+</span></div>
+                    </div>
+                    <button type="button" class="btn btn--icon" data-age-step="1" aria-label="Povečaj starost"><i data-icon="plus"></i></button>
+                  </div>
+                  <div class="field prog-age__field">
+                    <label class="label" for="quiz-age">Starost v letih</label>
+                    <input class="input prog-age__input" type="number" id="quiz-age" name="age" inputmode="decimal" min="1" max="99" step="any" value="7" required data-msg="Vnesite starost med 1 in 99 let." aria-describedby="quiz-age-hint" data-age-input>
+                    <p class="hint" id="quiz-age-hint" data-age-hint>V plavalno šolo vpisujemo od 4. leta, plavanje za odrasle je namenjeno starejšim od 18 let.</p>
+                  </div>
+                </div>
+              </fieldset>
+
+              <!-- Korak 2: znanje -->
+              <fieldset class="prog-qstep" data-qstep="2" hidden>
+                <legend class="prog-qstep__legend" tabindex="-1">
+                  <span class="prog-qstep__kicker">Korak 2 od 3</span>
+                  <span class="prog-qstep__q">Koliko plavalec že zna?</span>
+                </legend>
+                <div class="field prog-options prog-options--skill" data-skill-options></div>
+              </fieldset>
+
+              <!-- Korak 3: cilj -->
+              <fieldset class="prog-qstep" data-qstep="3" hidden>
+                <legend class="prog-qstep__legend" tabindex="-1">
+                  <span class="prog-qstep__kicker">Korak 3 od 3</span>
+                  <span class="prog-qstep__q">Kaj je glavni cilj?</span>
+                </legend>
+                <div class="field prog-options prog-options--goal" data-goal-options></div>
+              </fieldset>
+
+              <div class="prog-quiz__nav" data-quiz-nav>
+                <button type="button" class="btn btn--ghost" data-quiz-back hidden><i data-icon="arrow-left"></i>Nazaj</button>
+                <button type="submit" class="btn btn--primary" data-quiz-next>Naprej <i data-icon="arrow-right" class="icon--move"></i></button>
+              </div>
+            </form>
+
+            <div class="prog-result" data-quiz-result hidden tabindex="-1" aria-labelledby="quiz-result-title"></div>
+          </div>
+          <noscript><p class="prog-noscript">Izbirnik deluje z omogočenim JavaScriptom. Pomagamo vam lahko tudi po telefonu ali e-pošti — glejte stran <a href="kontakt.html">Kontakt</a>.</p></noscript>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ PRIMERJAVA ============ -->
+    <section class="section prog-section" id="primerjava" aria-labelledby="primerjava-title">
+      <div class="container">
+        <div class="section-head section-head--split prog-halo" data-reveal>
+          <div>
+            <p class="eyebrow">Primerjava</p>
+            <h2 id="primerjava-title">Plavalna šola <span class="gradient-text">na enem mestu</span></h2>
+            <p class="lead">Skupine si sledijo po znanju — vsaka gradi na tistem, kar otrok osvoji v prejšnji. Od skupine do skupine raste tudi čas v vodi.</p>
+          </div>
+          <p class="prog-compare__hint small soft"><i data-icon="arrow-right" class="icon--sm"></i>Tabelo povlecite vstran za vse skupine.</p>
+        </div>
+        <div class="table-wrap prog-compare" role="region" aria-labelledby="primerjava-title" tabindex="0" data-reveal data-compare>
+          <noscript><p class="prog-noscript">Za prikaz primerjalne tabele omogočite JavaScript.</p></noscript>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ CENIK ============ -->
+    <section class="section prog-section" id="cenik" aria-labelledby="cenik-title">
+      <div class="container">
+        <div class="section-head section-head--split prog-halo" data-reveal>
+          <div>
+            <p class="eyebrow">Cenik</p>
+            <h2 id="cenik-title">Mesečna članarina <span class="gradient-text">plavalne šole</span></h2>
+            <p class="lead" data-pricing-lead>Mesečna članarina za prvega otroka. Za tekmovalne skupine in odrasle velja ločen cenik — pišite nam.</p>
+          </div>
+          <a class="btn" href="vpis.html"><i data-icon="euro"></i>Izračun članarine ob vpisu</a>
+        </div>
+        <div class="prog-pricing glass glass--strong glass--lg" data-reveal>
+          <div class="prog-pricing__tiles" data-pricing-tiles>
+            <noscript>
+              <ul class="prog-noscript">
+                <li>Morske zvezdice: 55 € / mesec</li>
+                <li>Rakci: 60 € / mesec</li>
+                <li>Ostale skupine plavalne šole: 70 € / mesec</li>
+              </ul>
+            </noscript>
+          </div>
+          <ul class="prog-pricing__notes" role="list" data-pricing-notes></ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ OPREMA ============ -->
+    <section class="section prog-section" id="oprema" aria-labelledby="oprema-title">
+      <div class="container">
+        <div class="prog-gear">
+          <figure class="photo-card prog-gear__photo" data-reveal="fade">
+            <img src="assets/img/photos/sola-otroci-sm.jpg" srcset="assets/img/photos/sola-otroci-sm.jpg 720w, assets/img/photos/sola-otroci.jpg 1920w" sizes="(min-width: 960px) 40vw, 100vw" alt="Otroci s plavalnimi očali in kapami ob robu bazena čakajo na začetek vadbe" width="720" height="481" loading="lazy" decoding="async">
+            <figcaption class="photo-card__glass">
+              <strong>Pripravljeni na vodo</strong>
+              <span class="small prog-gear__cap">Kapa, očala in kopalke — in trening se lahko začne.</span>
+            </figcaption>
+          </figure>
+
+          <div class="prog-gear__panel glass glass--strong glass--lg" data-reveal>
+            <p class="eyebrow">Priprava na trening</p>
+            <h2 id="oprema-title">Kaj potrebujem <span class="gradient-text">na treningu?</span></h2>
+            <p class="muted prog-gear__lead">Preverite, ali je v torbi vse potrebno. Kljukice si zapomnimo v vašem brskalniku, zato lahko seznam uporabite pred vsakim treningom.</p>
+
+            <div class="prog-gear__status tile">
+              <div class="prog-gear__meter">
+                <p class="prog-gear__count"><span class="prog-gear__num" data-gear-num>0</span><span class="prog-gear__of" data-gear-of>/ 6</span></p>
+                <p class="small muted" aria-live="polite" data-gear-status>Torba je še prazna.</p>
+              </div>
+              <button type="button" class="btn btn--sm" data-gear-reset><i data-icon="refresh"></i>Ponastavi</button>
+              <div class="progress prog-gear__bar" role="progressbar" aria-label="Pripravljena oprema" aria-valuemin="0" aria-valuemax="6" aria-valuenow="0" data-gear-progress><span></span></div>
+            </div>
+
+            <ul class="prog-gear__list" role="list" data-gear-list>
+              <li><label class="prog-gear__item"><input type="checkbox" value="kopalke"><span class="prog-gear__box" aria-hidden="true"></span><span class="prog-gear__text"><span class="prog-gear__name">Kopalke</span><span class="prog-gear__hint">Udobne, dobro prilegajoče se kopalke.</span></span></label></li>
+              <li><label class="prog-gear__item"><input type="checkbox" value="kapa"><span class="prog-gear__box" aria-hidden="true"></span><span class="prog-gear__text"><span class="prog-gear__name">Plavalna kapa</span><span class="prog-gear__hint">Dolgi lasje naj bodo speti pod kapo.</span></span></label></li>
+              <li><label class="prog-gear__item"><input type="checkbox" value="ocala"><span class="prog-gear__box" aria-hidden="true"></span><span class="prog-gear__text"><span class="prog-gear__name">Plavalna očala</span><span class="prog-gear__hint">Preizkusite jih doma, da dobro tesnijo.</span></span></label></li>
+              <li><label class="prog-gear__item"><input type="checkbox" value="brisaca"><span class="prog-gear__box" aria-hidden="true"></span><span class="prog-gear__text"><span class="prog-gear__name">Brisača</span><span class="prog-gear__hint">Ali kopalni plašč za po treningu.</span></span></label></li>
+              <li><label class="prog-gear__item"><input type="checkbox" value="natikaci"><span class="prog-gear__box" aria-hidden="true"></span><span class="prog-gear__text"><span class="prog-gear__name">Natikači</span><span class="prog-gear__hint">Za varno hojo ob bazenu in v garderobi.</span></span></label></li>
+              <li><label class="prog-gear__item"><input type="checkbox" value="voda"><span class="prog-gear__box" aria-hidden="true"></span><span class="prog-gear__text"><span class="prog-gear__name">Plastenka vode</span><span class="prog-gear__hint">Tudi v vodi se potimo — pijemo med odmori.</span></span></label></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ FAQ ============ -->
+    <section class="section prog-section" id="faq" aria-labelledby="faq-title">
+      <div class="container">
+        <div class="prog-faq">
+          <div class="prog-faq__side glass glass--strong glass--lg" data-reveal>
+            <div class="section-head">
+              <p class="eyebrow">Pogosta vprašanja</p>
+              <h2 id="faq-title">Odgovori <span class="gradient-text">na pogosta vprašanja</span></h2>
+              <p class="lead">Vse, kar starše in plavalce najpogosteje zanima — od vpisa do opreme.</p>
+            </div>
+            <div class="prog-faq__search">
+              <div class="field">
+                <label class="label" for="faq-search">Poiščite odgovor</label>
+                <div class="input-icon prog-faq__input-wrap">
+                  <i data-icon="search"></i>
+                  <input class="input" type="search" id="faq-search" placeholder="npr. poskusni trening, plačilo, oprema …" autocomplete="off" spellcheck="false" aria-describedby="faq-count" data-faq-search>
+                  <button type="button" class="prog-faq__clear" aria-label="Počisti iskanje" data-faq-clear hidden><i data-icon="x" class="icon--sm"></i></button>
+                </div>
+              </div>
+              <p class="small soft prog-faq__count" id="faq-count" aria-live="polite" data-faq-count></p>
+            </div>
+            <div class="tile prog-faq__help">
+              <span class="icon-bubble icon-bubble--sm"><i data-icon="message-circle"></i></span>
+              <div>
+                <p class="prog-faq__help-title">Niste našli odgovora?</p>
+                <p class="small muted">Pišite nam ali pokličite — z veseljem pomagamo pri izbiri skupine.</p>
+                <div class="cluster prog-faq__help-actions">
+                  <a class="btn btn--sm" href="kontakt.html?zadeva=splosno#obrazec"><i data-icon="mail"></i>Pišite nam</a>
+                  <a class="btn btn--sm btn--ghost" href="tel:+38641682016" data-faq-phone><i data-icon="phone"></i><span data-faq-phone-text>+386 41 682 016</span></a>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="prog-faq__main">
+            <div class="accordion prog-faq__list" data-faq-list>
+              <noscript><p class="prog-noscript">Za prikaz pogostih vprašanj omogočite JavaScript ali nam pišite prek strani <a href="kontakt.html">Kontakt</a>.</p></noscript>
+            </div>
+            <div class="empty-state glass prog-faq__empty" data-faq-empty hidden>
+              <span class="icon-bubble"><i data-icon="search"></i></span>
+              <p class="prog-faq__empty-title" data-faq-empty-text>Ni zadetkov.</p>
+              <p class="small soft">Poskusite z drugo besedo ali nam zastavite vprašanje.</p>
+              <div class="cluster prog-faq__empty-actions">
+                <button type="button" class="btn btn--sm" data-faq-reset><i data-icon="x"></i>Počisti iskanje</button>
+                <a class="btn btn--sm btn--primary" href="kontakt.html?zadeva=splosno#obrazec">Vprašajte nas <i data-icon="arrow-right" class="icon--move"></i></a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ CTA ============ -->
+    <section class="section prog-section prog-cta-section" aria-labelledby="prog-cta-title">
+      <div class="container">
+        <div class="cta-band glass glass--strong" data-reveal="zoom">
+          <p class="eyebrow">Prvi korak</p>
+          <h2 id="prog-cta-title">Prvi trening <span class="gradient-text">je poskusni</span></h2>
+          <p class="lead">Pridite na Pristan, spoznajte skupino in trenerja — za vpis se odločite šele po treningu.</p>
+          <div class="cluster prog-cta__actions">
+            <a class="btn btn--primary btn--lg" href="vpis.html">Prijava na vpis <i data-icon="arrow-right" class="icon--move"></i></a>
+            <a class="btn btn--lg" href="kontakt.html?zadeva=vpis#obrazec"><i data-icon="mail"></i>Vprašanje o skupinah</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+  <footer data-site-footer></footer>
+</body>
+</html>

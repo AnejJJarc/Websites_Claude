@@ -1,0 +1,296 @@
+<!doctype html>
+<html lang="sl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Tekmovanja · PK Branik Maribor</title>
+  <meta name="description" content="Koledar tekmovanj, rezultati in klubski rekordi PK Branik Maribor – mitingi, državna prvenstva in domači mitingi na Kopališču Pristan.">
+  <meta name="theme-color" content="#0e1013">
+  <meta property="og:title" content="Tekmovanja · PK Branik Maribor">
+  <meta property="og:description" content="Koledar tekem sezone 2026/2027, rezultati naših plavalcev in klubski rekordi na enem mestu.">
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="sl_SI">
+  <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Manrope:wght@500;600;700&display=swap">
+  <link rel="stylesheet" href="assets/css/style.css">
+  <link rel="stylesheet" href="assets/css/pages/tekmovanja.css">
+  <script>(function(){try{var t=localStorage.getItem("pkb-theme");}catch(e){}document.documentElement.setAttribute("data-theme",t||(matchMedia("(prefers-color-scheme: light)").matches?"light":"dark"));})();</script>
+  <script src="assets/js/data.js" defer></script>
+  <script src="assets/js/site.js" defer></script>
+  <script src="assets/js/pages/tekmovanja.js" defer></script>
+</head>
+<body data-page="tekmovanja">
+  <a class="skip-link" href="#main">Preskoči na vsebino</a>
+  <header data-site-header></header>
+  <main id="main" class="comp">
+
+    <!-- ============ HERO: naslednja tekma + sezona v številkah ============ -->
+    <section class="page-hero" aria-labelledby="comp-title">
+      <div class="container">
+        <div class="page-hero__panel glass glass--strong comp-hero" data-reveal>
+          <div class="comp-hero__grid">
+            <div class="comp-hero__text">
+              <ol class="breadcrumb" aria-label="Drobtinice"><li><a href="index.html">Domov</a></li><li><span aria-current="page">Tekmovanja</span></li></ol>
+              <p class="eyebrow" data-season-eyebrow>Tekmovanja · sezona 2026/2027</p>
+              <h1 id="comp-title">Tekme, rezultati <span class="gradient-text">in klubski rekordi</span></h1>
+              <p class="lead">Koledar mitingov in državnih prvenstev, rezultati naših plavalk in plavalcev ter lestvica klubskih rekordov – vse na enem mestu. Tekme dodajte v svoj koledar in spremljajte, kako napreduje ekipa.</p>
+              <div class="page-hero__actions cluster">
+                <a class="btn btn--primary" href="#koledar">Koledar tekem <i data-icon="arrow-right" class="icon--move"></i></a>
+                <a class="btn" href="#rezultati"><i data-icon="medal"></i>Rezultati</a>
+                <a class="btn btn--ghost" href="#rekordi"><i data-icon="timer"></i>Klubski rekordi</a>
+              </div>
+            </div>
+
+            <aside class="tile comp-next" aria-labelledby="comp-next-label" data-next>
+              <div class="comp-next__top">
+                <span class="comp-next__label" id="comp-next-label">Naslednja tekma</span>
+                <span class="comp-next__badges" data-next-badges></span>
+              </div>
+              <div class="comp-next__body" data-next-body>
+                <noscript><p class="small muted">Odštevanje do naslednje tekme deluje z omogočenim JavaScriptom. Vse tekme so navedene v koledarju spodaj.</p></noscript>
+              </div>
+            </aside>
+          </div>
+
+          <ul class="comp-stats" role="list" aria-label="Sezona v številkah">
+            <li class="comp-stat"><span class="comp-stat__value" data-stat="comps" data-count-to="10">10</span><span class="comp-stat__label" data-stat-label="comps">tekem v sezoni</span><span class="comp-stat__bar" aria-hidden="true"></span></li>
+            <li class="comp-stat"><span class="comp-stat__value" data-stat="host" data-count-to="3">3</span><span class="comp-stat__label" data-stat-label="host">domači mitingi na Pristanu</span><span class="comp-stat__bar" aria-hidden="true"></span></li>
+            <li class="comp-stat"><span class="comp-stat__value" data-stat="medals" data-count-to="20">20</span><span class="comp-stat__label" data-stat-label="medals">medalj v tej sezoni</span><span class="comp-stat__bar" aria-hidden="true"></span></li>
+            <li class="comp-stat"><span class="comp-stat__value" data-stat="pb" data-count-to="15">15</span><span class="comp-stat__label" data-stat-label="pb">osebnih rekordov</span><span class="comp-stat__bar" aria-hidden="true"></span></li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ KOLEDAR ============ -->
+    <section class="section comp-section" id="koledar" aria-labelledby="koledar-title">
+      <div class="container">
+        <div class="section-head section-head--split">
+          <div>
+            <p class="eyebrow">Koledar</p>
+            <h2 id="koledar-title">Koledar <span class="gradient-text">tekmovanj</span></h2>
+            <p class="lead">Mitingi, pokalna tekmovanja in državna prvenstva, na katerih nastopajo naše plavalke in plavalci. Domače mitinge gostimo na Kopališču Pristan – pridite navijat.</p>
+          </div>
+          <button type="button" class="btn" data-export-all><i data-icon="calendar-plus"></i>Prihajajoče v koledar (.ics)</button>
+        </div>
+
+        <div class="glass comp-toolbar" role="group" aria-label="Filtri koledarja">
+          <div class="tabs-list comp-seg" role="group" aria-label="Obdobje" data-when-group>
+            <button type="button" class="tab" data-when="upcoming" aria-pressed="true">Prihajajoča <span class="comp-seg__n" data-when-n="upcoming"></span></button>
+            <button type="button" class="tab" data-when="past" aria-pressed="false">Pretekla <span class="comp-seg__n" data-when-n="past"></span></button>
+            <button type="button" class="tab" data-when="all" aria-pressed="false">Vse <span class="comp-seg__n" data-when-n="all"></span></button>
+          </div>
+          <span class="comp-toolbar__sep" aria-hidden="true"></span>
+          <div class="chip-group comp-levels" role="group" aria-label="Raven tekmovanja" data-levels></div>
+          <p class="comp-toolbar__count small muted" aria-live="polite" aria-atomic="true" data-cal-count></p>
+        </div>
+
+        <div class="comp-cal-layout">
+          <div class="comp-list" data-list>
+            <noscript>
+              <div class="glass comp-noscript">
+                <p>Za prikaz koledarja tekmovanj omogočite JavaScript. Informacije o tekmah dobite tudi v pisarni kluba na +386 41 682 016.</p>
+              </div>
+            </noscript>
+          </div>
+
+          <aside class="comp-cal-aside" aria-labelledby="comp-cal-title">
+            <div class="glass comp-cal" data-cal>
+              <div class="comp-cal__head">
+                <div>
+                  <h3 class="comp-cal__title" id="comp-cal-title">Mesečni pregled</h3>
+                  <p class="comp-cal__month" id="comp-cal-month" aria-live="polite" data-cal-month>November 2026</p>
+                </div>
+                <div class="comp-cal__nav">
+                  <button type="button" class="btn btn--icon" data-cal-prev aria-label="Prejšnji mesec"><i data-icon="chevron-left"></i></button>
+                  <button type="button" class="btn btn--icon" data-cal-next aria-label="Naslednji mesec"><i data-icon="chevron-right"></i></button>
+                </div>
+              </div>
+              <table class="comp-cal__grid" role="grid" aria-labelledby="comp-cal-month" aria-describedby="comp-cal-help">
+                <thead>
+                  <tr>
+                    <th scope="col" abbr="ponedeljek">Pon</th><th scope="col" abbr="torek">Tor</th><th scope="col" abbr="sreda">Sre</th><th scope="col" abbr="četrtek">Čet</th><th scope="col" abbr="petek">Pet</th><th scope="col" abbr="sobota">Sob</th><th scope="col" abbr="nedelja">Ned</th>
+                  </tr>
+                </thead>
+                <tbody data-cal-body></tbody>
+              </table>
+              <div class="comp-cal__foot">
+                <ul class="comp-cal__legend" role="list">
+                  <li><span class="comp-cal__key comp-cal__key--comp" aria-hidden="true"></span>Dan tekme</li>
+                  <li><span class="comp-cal__key comp-cal__key--today" aria-hidden="true"></span>Danes</li>
+                </ul>
+                <button type="button" class="btn btn--sm btn--ghost" data-cal-today>Danes</button>
+              </div>
+              <p class="visually-hidden" id="comp-cal-help">S puščicami se premikate po dnevih, s tipkama Page Up in Page Down po mesecih. Tipka Enter na dnevu tekme prikaže tekmo v seznamu.</p>
+              <div class="comp-cal__month-list">
+                <h4 class="comp-cal__sub">Ta mesec</h4>
+                <ul class="comp-cal__list" role="list" data-cal-list></ul>
+              </div>
+            </div>
+          </aside>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ REZULTATI ============ -->
+    <section class="section comp-section" id="rezultati" aria-labelledby="rezultati-title">
+      <div class="container">
+        <div class="section-head section-head--split">
+          <div>
+            <p class="eyebrow">Rezultati</p>
+            <h2 id="rezultati-title" tabindex="-1">Rezultati <span class="gradient-text">naših plavalcev</span></h2>
+            <p class="lead">Uvrstitve in časi z letošnjih tekem. Izberite tekmo, kategorijo ali spol, poiščite plavalca in rezultate izvozite v preglednico.</p>
+          </div>
+          <button type="button" class="btn" data-csv><i data-icon="download"></i>Izvozi CSV</button>
+        </div>
+
+        <div class="glass glass--strong comp-results">
+          <form class="comp-filters" role="search" aria-label="Filtri rezultatov" data-res-filters>
+            <div class="field comp-filters__comp">
+              <label class="label" for="res-comp">Tekma</label>
+              <select class="select" id="res-comp" name="tekma" data-res-comp>
+                <option value="">Vse tekme</option>
+              </select>
+            </div>
+            <div class="field comp-filters__cat">
+              <label class="label" for="res-cat">Kategorija</label>
+              <select class="select" id="res-cat" name="kategorija" data-res-cat>
+                <option value="">Vse kategorije</option>
+              </select>
+            </div>
+            <div class="field comp-filters__gender">
+              <span class="label" id="res-gender-label">Spol</span>
+              <div class="tabs-list comp-seg comp-seg--fill" role="group" aria-labelledby="res-gender-label" data-res-gender>
+                <button type="button" class="tab" data-gender="" aria-pressed="true">Vsi</button>
+                <button type="button" class="tab" data-gender="M" aria-pressed="false" aria-label="Moški">M</button>
+                <button type="button" class="tab" data-gender="Ž" aria-pressed="false" aria-label="Ženske">Ž</button>
+              </div>
+            </div>
+            <div class="field comp-filters__q">
+              <label class="label" for="res-q">Plavalec</label>
+              <div class="input-icon">
+                <i data-icon="search"></i>
+                <input class="input" type="search" id="res-q" name="plavalec" placeholder="Ime ali priimek" autocomplete="off" spellcheck="false" enterkeyhint="search" data-res-q>
+              </div>
+            </div>
+          </form>
+
+          <div class="comp-res-bar">
+            <p class="comp-res-bar__count small muted" aria-live="polite" aria-atomic="true" data-res-count></p>
+            <div class="comp-res-bar__actions">
+              <div class="comp-sort-mobile">
+                <label class="visually-hidden" for="res-sort">Razvrsti rezultate</label>
+                <select class="select comp-sort-mobile__select" id="res-sort" data-res-sort></select>
+              </div>
+              <button type="button" class="btn btn--sm btn--ghost" data-res-clear disabled><i data-icon="x"></i>Počisti filtre</button>
+            </div>
+          </div>
+
+          <ul class="comp-sum" role="list" aria-label="Povzetek izbranih rezultatov">
+            <li class="tile comp-sum__tile comp-sum__tile--gold"><span class="comp-sum__label"><span class="comp-sum__dot" aria-hidden="true"></span>Zlate medalje</span><span class="comp-sum__value" data-sum="gold">0</span><span class="stat-bar" aria-hidden="true"><span data-sum-bar="gold"></span></span></li>
+            <li class="tile comp-sum__tile comp-sum__tile--silver"><span class="comp-sum__label"><span class="comp-sum__dot" aria-hidden="true"></span>Srebrne medalje</span><span class="comp-sum__value" data-sum="silver">0</span><span class="stat-bar" aria-hidden="true"><span data-sum-bar="silver"></span></span></li>
+            <li class="tile comp-sum__tile comp-sum__tile--bronze"><span class="comp-sum__label"><span class="comp-sum__dot" aria-hidden="true"></span>Bronaste medalje</span><span class="comp-sum__value" data-sum="bronze">0</span><span class="stat-bar" aria-hidden="true"><span data-sum-bar="bronze"></span></span></li>
+            <li class="tile comp-sum__tile comp-sum__tile--pb"><span class="comp-sum__label"><span class="comp-sum__dot" aria-hidden="true"></span>Osebni rekordi</span><span class="comp-sum__value" data-sum="pb">0</span><span class="stat-bar" aria-hidden="true"><span data-sum-bar="pb"></span></span></li>
+          </ul>
+
+          <noscript><p class="small muted comp-noscript-note">Za prikaz in filtriranje rezultatov omogočite JavaScript.</p></noscript>
+          <div class="comp-table-wrap" data-res-wrap>
+            <table class="table comp-table" role="table">
+              <caption class="visually-hidden" data-res-caption>Rezultati plavalcev PK Branik</caption>
+              <thead role="rowgroup">
+                <tr role="row">
+                  <th scope="col" role="columnheader" aria-sort="none" data-sort-col="athlete"><button type="button">Plavalec</button></th>
+                  <th scope="col" role="columnheader" aria-sort="none" data-sort-col="event"><button type="button">Disciplina</button></th>
+                  <th scope="col" role="columnheader" aria-sort="none" data-sort-col="time" class="num"><button type="button">Čas</button></th>
+                  <th scope="col" role="columnheader" aria-sort="none" data-sort-col="place"><button type="button">Mesto</button></th>
+                  <th scope="col" role="columnheader" aria-sort="descending" data-sort-col="competition"><button type="button">Tekma</button></th>
+                </tr>
+              </thead>
+              <tbody role="rowgroup" data-res-body></tbody>
+            </table>
+          </div>
+          <div class="empty-state comp-empty" data-res-empty hidden>
+            <span class="icon-bubble"><i data-icon="search"></i></span>
+            <p class="comp-empty__title" data-res-empty-title>Ni rezultatov za izbrane filtre</p>
+            <p class="small muted" data-res-empty-text>Poskusite z drugo tekmo, kategorijo ali imenom.</p>
+            <button type="button" class="btn btn--sm" data-res-reset>Počisti filtre</button>
+          </div>
+          <p class="comp-results__note tiny soft"><i data-icon="info" class="icon--sm"></i><span><span class="comp-or comp-or--inline" aria-hidden="true">OR</span> označuje osebni rekord plavalca. Kliknite naslov stolpca, da razvrstite tabelo.</span></p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ KLUBSKI REKORDI ============ -->
+    <section class="section comp-section" id="rekordi" aria-labelledby="rekordi-title">
+      <div class="container">
+        <div class="section-head">
+          <p class="eyebrow">Klubski rekordi</p>
+          <h2 id="rekordi-title">Najhitrejši <span class="gradient-text">v zgodovini kluba</span></h2>
+          <p class="lead" data-rec-lead>Najboljši časi plavalk in plavalcev PK Branik na 50-metrskem bazenu. Rekordi, postavljeni v tekoči sezoni, so označeni z oznako »Nov«.</p>
+        </div>
+
+        <div class="comp-rec-layout">
+          <div class="glass comp-records" data-tabs data-rec-tabs>
+            <noscript><p class="small muted comp-noscript-note">Za prikaz klubskih rekordov omogočite JavaScript.</p></noscript>
+            <div class="comp-records__head">
+              <div class="tabs-list" role="tablist" aria-label="Rekordi po spolu">
+                <button type="button" class="tab" role="tab" id="rec-tab-m" aria-controls="rec-m" aria-selected="true">Moški <span class="comp-seg__n" data-rec-n="M"></span></button>
+                <button type="button" class="tab" role="tab" id="rec-tab-z" aria-controls="rec-z" aria-selected="false">Ženske <span class="comp-seg__n" data-rec-n="Ž"></span></button>
+              </div>
+              <span class="badge"><i data-icon="waves" class="icon--sm"></i>50 m bazen</span>
+            </div>
+            <div class="tab-panel comp-rec-panel" id="rec-m">
+              <div class="comp-table-wrap">
+                <table class="table comp-rec-table">
+                  <caption class="visually-hidden">Klubski rekordi – moški</caption>
+                  <thead><tr><th scope="col">Disciplina</th><th scope="col" class="num">Čas</th><th scope="col">Plavalec</th><th scope="col" class="num">Leto</th></tr></thead>
+                  <tbody data-rec-body="M"></tbody>
+                </table>
+              </div>
+            </div>
+            <div class="tab-panel comp-rec-panel" id="rec-z" hidden>
+              <div class="comp-table-wrap">
+                <table class="table comp-rec-table">
+                  <caption class="visually-hidden">Klubski rekordi – ženske</caption>
+                  <thead><tr><th scope="col">Disciplina</th><th scope="col" class="num">Čas</th><th scope="col">Plavalka</th><th scope="col" class="num">Leto</th></tr></thead>
+                  <tbody data-rec-body="Ž"></tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+
+          <aside class="comp-rec-aside" aria-label="Rekordi na kratko">
+            <div class="glass comp-rec-summary" data-rec-summary>
+              <div class="tile tile--raised comp-rec-tile">
+                <span class="comp-rec-tile__label" data-rec-new-label>Novi rekordi v sezoni</span>
+                <span class="comp-rec-tile__value" data-rec-new>0</span>
+                <ul class="comp-rec-tile__list" role="list" data-rec-new-list></ul>
+              </div>
+              <div class="tile comp-rec-tile">
+                <span class="comp-rec-tile__label">Najdlje veljaven rekord</span>
+                <span class="comp-rec-tile__value comp-rec-tile__value--sm" data-rec-old-time>–</span>
+                <span class="small muted" data-rec-old-meta></span>
+              </div>
+            </div>
+
+            <article class="glass comp-olymp">
+              <div class="comp-olymp__media">
+                <img src="assets/img/photos/startni-bloki-hala-sm.jpg" alt="" width="560" height="702" loading="lazy" decoding="async">
+              </div>
+              <div class="comp-olymp__body">
+                <p class="comp-olymp__eyebrow">Olimpijska tradicija</p>
+                <h3 class="comp-olymp__title"><a href="o-klubu.html#olimpijci">Branik na olimpijskih igrah</a></h3>
+                <p class="small muted">Matjaž Kozelj je nastopil v Seulu 1988 in Barceloni 1992, Metka Sparavec pa v Atlanti 1996.</p>
+                <span class="comp-olymp__more" aria-hidden="true">Naša olimpijca <i data-icon="arrow-right" class="icon--sm icon--move"></i></span>
+              </div>
+            </article>
+          </aside>
+        </div>
+      </div>
+    </section>
+  </main>
+  <footer data-site-footer></footer>
+</body>
+</html>
