@@ -509,6 +509,42 @@
   /* ------------------------------------------------------------------
      5. Background scene
      ------------------------------------------------------------------ */
+  /* ------------------------------------------------------------------
+     Liquid glass refraction: SVG displacement "lens" used by backdrop-filter.
+     Only Chromium renders url() backdrop filters, so other engines keep the blur fallback.
+     ------------------------------------------------------------------ */
+  function lensMap() {
+    // R = horizontal, G = vertical displacement; neutral grey (128) in the middle, pushed at the edges
+    var svg = "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100' preserveAspectRatio='none'>" +
+      "<defs><linearGradient id='x'><stop offset='0' stop-color='#000'/><stop offset='.09' stop-color='#808080'/><stop offset='.91' stop-color='#808080'/><stop offset='1' stop-color='#f00'/></linearGradient>" +
+      "<linearGradient id='y' x2='0' y2='1'><stop offset='0' stop-color='#000'/><stop offset='.13' stop-color='#808080'/><stop offset='.87' stop-color='#808080'/><stop offset='1' stop-color='#0f0'/></linearGradient></defs>" +
+      "<rect width='100' height='100' fill='#808080'/><rect width='100' height='100' fill='url(#x)'/>" +
+      "<rect width='100' height='100' fill='url(#y)' style='mix-blend-mode:lighten'/></svg>";
+    return "data:image/svg+xml;utf8," + encodeURIComponent(svg);
+  }
+  function setupLiquidGlass() {
+    var ua = navigator.userAgentData;
+    var chromium = !!(ua && ua.brands && ua.brands.some(function (b) { return /Chromium/i.test(b.brand); }));
+    var lowMemory = typeof navigator.deviceMemory === "number" && navigator.deviceMemory < 4;
+    var reduceTransparency = window.matchMedia && window.matchMedia("(prefers-reduced-transparency: reduce)").matches;
+    if (!chromium || lowMemory || reduceTransparency || PKB.params().get("lg") === "0") return;
+    var map = lensMap();
+    var ns = "http://www.w3.org/2000/svg";
+    var host = doc.createElementNS(ns, "svg");
+    host.setAttribute("width", "0"); host.setAttribute("height", "0"); host.setAttribute("aria-hidden", "true");
+    host.setAttribute("style", "position:absolute;width:0;height:0;overflow:hidden");
+    host.innerHTML =
+      '<filter id="pkb-lens" x="0" y="0" width="100%" height="100%" color-interpolation-filters="sRGB">' +
+        '<feImage href="' + map + '" x="0" y="0" width="100%" height="100%" preserveAspectRatio="none" result="map"/>' +
+        '<feDisplacementMap in="SourceGraphic" in2="map" scale="38" xChannelSelector="R" yChannelSelector="G"/></filter>' +
+      '<filter id="pkb-lens-sm" x="0" y="0" width="100%" height="100%" color-interpolation-filters="sRGB">' +
+        '<feImage href="' + map + '" x="0" y="0" width="100%" height="100%" preserveAspectRatio="none" result="map"/>' +
+        '<feDisplacementMap in="SourceGraphic" in2="map" scale="12" xChannelSelector="R" yChannelSelector="G"/></filter>';
+    doc.body.insertBefore(host, doc.body.firstChild);
+    root.classList.add("lg-refract");
+  }
+  PKB.setupLiquidGlass = setupLiquidGlass;
+
   /** Full-bleed photo behind the frosted glass. Photo = body[data-photo] || pagePhotos[page] || default. */
   function renderBackground() {
     if (qs(".bg-scene")) return;
@@ -928,6 +964,23 @@
     var tabs = qsa('[role="tab"]', container).filter(function (t) { return t.closest("[data-tabs]") === container; });
     if (!tabs.length) return;
     var useHash = container.hasAttribute("data-tabs-hash");
+    var list = tabs[0].closest(".tabs-list");
+    var lens = null;
+    if (list && !qs(":scope > .tabs-lens", list)) {
+      lens = doc.createElement("span");
+      lens.className = "tabs-lens";
+      lens.setAttribute("aria-hidden", "true");
+      list.insertBefore(lens, list.firstChild);
+      list.classList.add("has-lens");
+    }
+    function moveLens() {
+      if (!lens) return;
+      var cur = tabs.filter(function (t) { return t.getAttribute("aria-selected") === "true"; })[0];
+      if (!cur || !cur.offsetWidth) return;
+      lens.style.width = cur.offsetWidth + "px";
+      lens.style.transform = "translateX(" + cur.offsetLeft + "px)";
+    }
+    if (lens && "ResizeObserver" in window) new ResizeObserver(moveLens).observe(list);
     function select(tab, focus, silent) {
       tabs.forEach(function (t) {
         var on = t === tab;
@@ -940,6 +993,7 @@
         }
       });
       if (focus) tab.focus();
+      moveLens();
       var pid = tab.getAttribute("aria-controls");
       if (useHash && !silent && history.replaceState) history.replaceState(null, "", "#" + pid);
       container.dispatchEvent(new CustomEvent("tabchange", { bubbles: true, detail: { tab: tab, panel: doc.getElementById(pid), id: pid } }));
@@ -993,7 +1047,7 @@
       if (raf) return;
       raf = requestAnimationFrame(function () {
         raf = 0;
-        var card = e.target.closest && e.target.closest(".card");
+        var card = e.target.closest && e.target.closest(".card, .btn, .glass");
         if (!card) return;
         var r = card.getBoundingClientRect();
         card.style.setProperty("--mx", (e.clientX - r.left) + "px");
@@ -1198,6 +1252,7 @@
      13. Boot
      ------------------------------------------------------------------ */
   function boot() {
+    setupLiquidGlass();
     renderBackground();
     renderHeader();
     renderFooter();

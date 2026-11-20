@@ -26,6 +26,17 @@
   --divider: rgba(255, 255, 255, .13);
   --success: #8fdcb8;
   --focus-ring: 0 0 0 2px rgba(17, 19, 24, .9), 0 0 0 4px rgba(255, 255, 255, .9);
+  --glass-bg-solid: rgba(32, 35, 40, .94);
+  /* liquid-glass tokens for the dark island */
+  --glass-border-lit: rgba(255, 255, 255, .42) rgba(255, 255, 255, .15) rgba(255, 255, 255, .07) rgba(255, 255, 255, .24);
+  --glass-edge: inset 0 1px 0 rgba(255, 255, 255, .34), inset 1px 0 0 rgba(255, 255, 255, .06), inset 0 22px 34px -28px rgba(255, 255, 255, .42), inset 0 -24px 34px -30px rgba(0, 0, 0, .58);
+  --glass-edge-sm: inset 0 1px 0 rgba(255, 255, 255, .42), inset 0 10px 14px -11px rgba(255, 255, 255, .5), inset 0 -8px 12px -9px rgba(0, 0, 0, .5);
+  --btn-primary-fill: linear-gradient(180deg, #ffffff 0%, #eef1f5 100%);
+  --btn-primary-fill-hover: linear-gradient(180deg, #ffffff 0%, #e2e7ee 100%);
+  --btn-primary-shadow: inset 0 1px 0 #fff, inset 0 -3px 6px rgba(0, 0, 0, .09), 0 12px 26px -12px rgba(0, 0, 0, .65);
+  --glare: rgba(255, 255, 255, .16);
+  --spotlight: rgba(255, 255, 255, .1);
+  --focus-color: #ffffff;
   color: var(--text);
 }
 .home-dark ::selection { background: rgba(255, 255, 255, .3); color: #fff; }
