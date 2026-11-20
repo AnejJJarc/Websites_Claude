@@ -331,8 +331,8 @@
           '<span class="brand-text"><span class="brand-name">PK Branik</span> <span class="brand-sub">Maribor</span></span></a>' +
         '<nav class="nav-primary" aria-label="Glavna navigacija"><ul class="nav-links" role="list">' + links + "</ul></nav>" +
         '<div class="nav-actions">' +
-          '<button type="button" class="btn btn--icon search-btn" data-search-open aria-label="Iskanje po strani" aria-keyshortcuts="Control+K">' +
-            PKB.icon("search") + '<span class="search-btn__label">Iskanje</span><kbd class="search-btn__kbd" aria-hidden="true">Ctrl K</kbd></button>' +
+          '<button type="button" class="btn btn--icon search-btn" data-search-open aria-keyshortcuts="Control+K">' +
+            PKB.icon("search") + '<span class="search-btn__label">Iskanje<span class="visually-hidden"> po strani</span></span><kbd class="search-btn__kbd" aria-hidden="true">Ctrl K</kbd></button>' +
           '<button type="button" class="btn btn--icon theme-toggle" data-theme-toggle>' +
             PKB.icon("moon", "icon-moon") + PKB.icon("sun", "icon-sun") + "</button>" +
           '<a class="btn btn--primary btn--sm nav-cta" href="' + CTA.href + '"' + (currentPage === "vpis" ? ' aria-current="page"' : "") + ">" + CTA.label + PKB.icon("arrow-right", "icon--move") + "</a>" +
@@ -1201,7 +1201,7 @@
       if (it.action === "theme") { m.close(); PKB.theme.toggle(); return; }
       if (it.action === "copy-email") { m.close(); PKB.copy(C.email, "E-poštni naslov je kopiran."); return; }
       m.close();
-      var url = new URL(it.href, window.location.href);
+      var url = new URL(it.href, doc.baseURI);
       var samePage = url.pathname === window.location.pathname && url.search === window.location.search;
       window.location.href = it.href;
       if (samePage && url.hash) {
@@ -1259,6 +1259,25 @@
     });
   }
 
+  /* Pages with <base href> (404.html) would resolve "#main" against the base, i.e. leave the page.
+     Keep in-page fragment links (skip link, "Na vrh") on the current URL. */
+  function setupBaseHashLinks() {
+    if (!qs("base[href]")) return;
+    doc.addEventListener("click", function (e) {
+      if (e.defaultPrevented || e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+      var a = e.target.closest && e.target.closest('a[href^="#"]');
+      if (!a) return;
+      var id = a.getAttribute("href").slice(1);
+      var target = id ? doc.getElementById(id) : null;
+      e.preventDefault();
+      if (history.replaceState) history.replaceState(history.state, "", window.location.pathname + window.location.search + (id ? "#" + id : ""));
+      if (!target) { window.scrollTo({ top: 0 }); return; }
+      if (!target.matches("a[href], button, input, select, textarea, [tabindex]")) target.setAttribute("tabindex", "-1");
+      target.focus({ preventScroll: true });
+      target.scrollIntoView({ block: "start", behavior: PKB.prefersReducedMotion() ? "auto" : "smooth" });
+    });
+  }
+
   /* ------------------------------------------------------------------
      13. Boot
      ------------------------------------------------------------------ */
@@ -1276,6 +1295,7 @@
     setupReveal(doc);
     setupCounters(doc);
     qsa("[data-tabs]").forEach(PKB.initTabs);
+    setupBaseHashLinks();
 
     // Auto-handle dynamically inserted content
     if ("MutationObserver" in window) {

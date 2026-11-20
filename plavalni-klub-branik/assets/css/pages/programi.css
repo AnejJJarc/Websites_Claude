@@ -135,7 +135,7 @@ body:has(.site-header.is-hidden) .prog-toolbar { top: 12px; }
 /* sticky over content: strong glass with the shared rim + thickness */
 .prog-seg {
   pointer-events: auto; padding: 5px;
-  background: var(--glass-bg-strong);
+  background: var(--glass-bg-bar);
   -webkit-backdrop-filter: blur(24px) saturate(170%); backdrop-filter: var(--glass-filter-strong);
   border: 1px solid transparent; border-color: var(--glass-border-lit);
   box-shadow: var(--glass-shadow), var(--glass-edge-sm);

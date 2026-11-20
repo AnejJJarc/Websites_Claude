@@ -185,7 +185,7 @@ window.PKB_DATA = {
     validFrom: "2024-09-01",
     enrollmentFee: 25,          // TODO: preveri vpisnino v veljavnem ceniku
     siblingDiscount: 0.1,       // TODO: preveri popust za drugega otroka
-    note: "Mesečna članarina za prvega otroka. Za tekmovalne skupine in odrasle velja ločen cenik – pišite nam.",
+    note: "Mesečna članarina za prvega otroka. Tekmovalne skupine in odrasli plačujejo po ceniku sekcije – pišite nam.",
     paymentNote: "Članarina se poravna mesečno do 15. v mesecu na TRR kluba."
   },
 

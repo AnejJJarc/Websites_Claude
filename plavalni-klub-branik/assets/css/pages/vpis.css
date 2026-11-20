@@ -5,7 +5,7 @@
    ========================================================================== */
 
 .enr { --enr-ctrl-border: var(--glass-border-strong); }
-:root[data-theme="light"] .enr { --enr-ctrl-border: rgba(15, 20, 30, .3); --danger: #9c2a23; } /* deeper danger: small asterisks/errors ≥ 4.5:1 on milky glass */
+:root[data-theme="light"] .enr { --enr-ctrl-border: rgba(15, 20, 30, .3); }
 .enr fieldset { border: 0; padding: 0; margin: 0; min-width: 0; }
 /* light theme: checkbox / radio outlines were white-on-milky-glass (shared request) */
 .enr .check input { border-color: var(--enr-ctrl-border); }
@@ -572,8 +572,6 @@
 /* the eyebrow sits in the corner where the radial shade fades out: the muted token (as in the light theme) keeps it ≥ 4.5:1 */
 .enr-faq__head .eyebrow { color: var(--text-muted); }
 .enr-faq__head h2 { text-wrap: balance; }
-/* .accordion-item clips overflow: draw the shared outline ring inside the summary so it stays visible */
-.enr .accordion-item > summary:focus-visible { outline: 2px solid var(--focus-color); outline-offset: -4px; }
 .enr-faq__head .lead { margin-top: .85rem; }
 
 /* ==========================================================================

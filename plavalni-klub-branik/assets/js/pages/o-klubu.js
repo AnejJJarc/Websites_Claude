@@ -600,7 +600,7 @@
       var card = doc.getElementById("trener-" + id);
       if (card && card.hidden) applyFilter("vsi", false);
       if (fromHash && card) {
-        card.scrollIntoView({ block: "center", behavior: "auto" });
+        card.scrollIntoView({ block: "center", behavior: "instant" });
         var btn = qs(".club-coach__btn", card);
         if (btn) btn.focus({ preventScroll: true });
       }
@@ -629,6 +629,20 @@
         }
       });
       openState = { id: id, m: m };
+      // Opened from a deep link while the page is still loading: the browser's load-time
+      // fragment handling moves focus back to <body>. Put it back inside the dialog once settled.
+      if (fromHash) {
+        var refocus = function () {
+          if (!m.dialog.open) return;
+          var ae = doc.activeElement;
+          if (ae && m.dialog.contains(ae)) return; // outside a modal dialog nothing else can hold focus
+          var first = qs("[data-modal-close]", m.dialog);
+          if (first) first.focus({ preventScroll: true });
+        };
+        window.requestAnimationFrame(refocus);
+        if (doc.readyState === "complete") window.setTimeout(refocus, 60);
+        else window.addEventListener("load", function () { window.setTimeout(refocus, 60); }, { once: true });
+      }
       var copyBtn = qs("[data-coach-copy]", m.dialog);
       if (copyBtn) copyBtn.addEventListener("click", function () {
         PKB.copy(window.location.origin + window.location.pathname + targetHash, "Povezava do predstavitve trenerja je kopirana.");

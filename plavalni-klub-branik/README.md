@@ -15,7 +15,10 @@ python3 -m http.server 8765
 Any static host works (GitHub Pages, Netlify, an Apache/Nginx folder). All paths are relative.
 Configure `404.html` as the server's error page (e.g. `ErrorDocument 404 /404.html` on Apache,
 `error_page 404 /404.html;` on Nginx; Netlify and GitHub Pages pick it up automatically when the site is
-served from this folder's root).
+served from this folder's root). Because the server shows `404.html` at whatever URL was missing
+(e.g. `/novice/stara-objava/`), that one page has `<base href="/">` so its styles, scripts and links load
+from the site root. If you host the site in a subfolder, change it to that folder,
+e.g. `<base href="/plavalni-klub-branik/">`.
 
 ## Pages
 

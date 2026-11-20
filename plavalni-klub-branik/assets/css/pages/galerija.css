@@ -12,8 +12,6 @@
   --gal-shimmer: rgba(255, 255, 255, .6);
 }
 /* (no local dark-theme dimming: the shared graphite glass + text tokens keep small text >= 4.5:1 here) */
-/* light theme: this page's photo is brighter than most – the shared footer kicker (--text-soft) drops to 4.3:1 */
-:root[data-theme="light"] .site-footer .footer-title { color: var(--text-muted); }
 
 /* page width: shared .container--wide (1280px, same as the header) */
 /* Overlays that sit directly on photographs (tags, lightbox discs) use the dark-theme liquid rim in both themes */

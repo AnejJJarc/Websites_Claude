@@ -54,6 +54,7 @@
 body:has(.site-header.is-hidden) .club-quicknav { top: 12px; }
 .club-quicknav__bar {
   pointer-events: auto; max-width: 100%; padding: 0; overflow: hidden;
+  background: var(--glass-bg-bar);
 }
 /* the list scrolls inside the pill; its padding leaves room for the focus outline */
 .club-quicknav__list {

@@ -4,8 +4,6 @@
    frosted contact strip, form panel, click-to-load map, FAQ.
    ========================================================================== */
 
-/* light theme: required asterisks and error text are small — a deeper shade of the shared danger tone keeps them ≥ 4.5:1 on milky glass */
-:root[data-theme="light"] .contact, :root[data-theme="light"] .contact-modal { --danger: #9c2a23; }
 .contact .btn--sm { min-height: 40px; }
 .contact h2 { text-wrap: balance; }
 .contact-req { color: var(--danger); font-weight: 600; }
@@ -314,8 +312,6 @@
 .contact-faq__more { margin-top: 1.25rem; white-space: normal; text-align: left; line-height: 1.35; }
 .contact-way__link { white-space: normal; text-align: left; }
 .contact-faq .accordion-item > summary { min-height: 56px; }
-/* the accordion item clips overflow: draw the shared outline ring inside the summary */
-.contact-faq .accordion-item > summary:focus-visible { outline: 2px solid var(--focus-color); outline-offset: -4px; }
 .contact-faq__tag {
   display: inline-block; margin-right: .5rem; padding: .08rem .5rem; border-radius: var(--radius-pill);
   font-family: var(--font-body); font-size: .68rem; font-weight: 600; letter-spacing: .06em; text-transform: uppercase;

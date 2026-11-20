@@ -845,8 +845,7 @@
     var notesHost = qs("[data-pricing-notes]");
     var P = D.pricing || {};
     var lead = qs("[data-pricing-lead]");
-    // data note still says "ločen cenik"; the static lead uses the site-wide "po ceniku sekcije" wording
-    if (lead && P.note && !/ločen cenik/i.test(P.note)) lead.textContent = P.note;
+    if (lead && P.note) lead.textContent = P.note;
     if (host) {
       var priced = programs.filter(function (p) { return typeof p.price === "number"; });
       var byPrice = {};
