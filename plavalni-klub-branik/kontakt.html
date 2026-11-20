@@ -1,0 +1,395 @@
+<!doctype html>
+<html lang="sl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Kontakt · PK Branik Maribor</title>
+  <meta name="description" content="Kontakt PK Branik Maribor: Kopališče Pristan, Koroška cesta 33, Maribor. Telefon, e-pošta, uradne ure pisarne, kontaktni obrazec in zemljevid.">
+  <meta name="theme-color" content="#0e1013">
+  <meta property="og:title" content="Kontakt · PK Branik Maribor">
+  <meta property="og:description" content="Pišite nam, pokličite ali se oglasite v klubski pisarni na Kopališču Pristan v Mariboru.">
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="sl_SI">
+  <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Manrope:wght@500;600;700&display=swap">
+  <link rel="stylesheet" href="assets/css/style.css">
+  <link rel="stylesheet" href="assets/css/pages/kontakt.css">
+  <script>(function(){try{var t=localStorage.getItem("pkb-theme");}catch(e){}document.documentElement.setAttribute("data-theme",t||(matchMedia("(prefers-color-scheme: light)").matches?"light":"dark"));})();</script>
+  <script src="assets/js/data.js" defer></script>
+  <script src="assets/js/site.js" defer></script>
+  <script src="assets/js/pages/kontakt.js" defer></script>
+</head>
+<body data-page="kontakt">
+  <a class="skip-link" href="#main">Preskoči na vsebino</a>
+  <header data-site-header></header>
+  <main id="main" class="contact">
+
+    <!-- ============ HERO: besedilo + stanje pisarne + hitri kontakti ============ -->
+    <section class="page-hero contact-hero-section" aria-labelledby="contact-title">
+      <div class="container">
+        <div class="page-hero__panel glass glass--strong contact-hero" data-reveal>
+          <div class="contact-hero__grid">
+            <div class="contact-hero__text">
+              <ol class="breadcrumb" aria-label="Drobtinice"><li><a href="index.html">Domov</a></li><li><span aria-current="page">Kontakt</span></li></ol>
+              <p class="eyebrow">Kontakt · Kopališče Pristan</p>
+              <h1 id="contact-title">Pišite nam <span class="gradient-text">ali se oglasite na Pristanu.</span></h1>
+              <p class="lead">Vprašanja o vpisu, urniku, tekmovanjih ali sodelovanju? Pišite nam prek obrazca, pokličite ali se oglasite v klubski pisarni na Kopališču Pristan.</p>
+              <div class="page-hero__actions cluster">
+                <a class="btn btn--primary" href="#obrazec" data-goto-form>Napišite sporočilo <i data-icon="arrow-right" class="icon--move"></i></a>
+                <a class="btn" href="tel:+38641682016" data-club-tel><i data-icon="phone"></i>Pokličite nas</a>
+              </div>
+            </div>
+
+            <aside class="tile contact-office" aria-labelledby="contact-office-title" data-office>
+              <div class="contact-office__top">
+                <span class="badge contact-office__badge" data-office-badge>Uradne ure</span>
+                <span class="small soft num" data-office-clock></span>
+              </div>
+              <h2 class="contact-office__title" id="contact-office-title" data-office-title>Uradne ure pisarne</h2>
+              <p class="contact-office__sub" data-office-sub>Ponedeljek – petek od 16:00 do 19:00.</p>
+              <div class="contact-office__progress" data-office-progress hidden>
+                <div class="progress" aria-hidden="true"><span data-office-bar></span></div>
+                <div class="contact-office__scale small soft num" aria-hidden="true"><span data-office-from>16:00</span><span data-office-to>19:00</span></div>
+              </div>
+              <ol class="contact-week" role="list" aria-hidden="true" data-office-week></ol>
+              <table class="contact-hours" data-office-table>
+                <caption class="visually-hidden">Uradne ure klubske pisarne</caption>
+                <tbody>
+                  <tr><th scope="row">Ponedeljek – petek</th><td>16:00 – 19:00</td></tr>
+                  <tr><th scope="row">Sobota</th><td>po dogovoru</td></tr>
+                  <tr><th scope="row">Nedelja in prazniki</th><td>zaprto</td></tr>
+                </tbody>
+              </table>
+              <p class="contact-office__note small soft" data-office-note>Pisarna je na Kopališču Pristan.</p>
+            </aside>
+          </div>
+
+          <ul class="contact-strip" role="list" aria-label="Kontaktni podatki">
+            <li class="contact-cell">
+              <span class="contact-cell__label"><i data-icon="phone" class="icon--sm"></i>Telefon</span>
+              <span class="contact-cell__value num" data-club="phone">+386 41 682 016</span>
+              <span class="contact-cell__actions">
+                <a class="btn btn--sm" href="tel:+38641682016" data-club-tel><i data-icon="phone"></i>Pokliči</a>
+                <button type="button" class="btn btn--sm" data-copy="phone" aria-label="Kopiraj telefonsko številko"><i data-icon="copy"></i><span>Kopiraj</span></button>
+              </span>
+            </li>
+            <li class="contact-cell">
+              <span class="contact-cell__label"><i data-icon="mail" class="icon--sm"></i>E-pošta</span>
+              <span class="contact-cell__value contact-cell__value--email" data-club="email">info@plavalniklub-branik.si</span>
+              <span class="contact-cell__actions">
+                <a class="btn btn--sm" href="mailto:info@plavalniklub-branik.si" data-club-mailto><i data-icon="send"></i>Napiši</a>
+                <button type="button" class="btn btn--sm" data-copy="email" aria-label="Kopiraj e-poštni naslov"><i data-icon="copy"></i><span>Kopiraj</span></button>
+              </span>
+            </li>
+            <li class="contact-cell">
+              <span class="contact-cell__label"><i data-icon="map-pin" class="icon--sm"></i>Naslov</span>
+              <span class="contact-cell__value"><span data-club="address">Koroška cesta 33</span><span class="contact-cell__sub"><span data-club="postal">2000 Maribor</span> · <span data-club="venue">Kopališče Pristan</span></span></span>
+              <span class="contact-cell__actions">
+                <a class="btn btn--sm" href="https://www.google.com/maps/search/?api=1&amp;query=Kopali%C5%A1%C4%8De%20Pristan%2C%20Koro%C5%A1ka%20cesta%2033%2C%202000%20Maribor" target="_blank" rel="noopener" data-club-maps aria-label="Odpri v Zemljevidih (Google Zemljevidi, nov zavihek)"><i data-icon="external"></i>Odpri v Zemljevidih</a>
+                <button type="button" class="btn btn--sm" data-copy="address" aria-label="Kopiraj naslov"><i data-icon="copy"></i><span>Kopiraj</span></button>
+              </span>
+            </li>
+            <li class="contact-cell contact-cell--social">
+              <span class="contact-cell__label"><i data-icon="heart" class="icon--sm"></i>Sledite nam</span>
+              <span class="contact-cell__value contact-cell__value--small">Novice, utrinki in rezultati</span>
+              <span class="contact-cell__actions" data-social>
+                <a class="btn btn--icon btn--sm" href="https://www.facebook.com/" target="_blank" rel="noopener" aria-label="Facebook (odpre se v novem zavihku)" data-tooltip="Facebook"><i data-icon="facebook"></i></a>
+                <a class="btn btn--icon btn--sm" href="https://www.instagram.com/" target="_blank" rel="noopener" aria-label="Instagram (odpre se v novem zavihku)" data-tooltip="Instagram"><i data-icon="instagram"></i></a>
+                <a class="btn btn--icon btn--sm" href="https://www.youtube.com/" target="_blank" rel="noopener" aria-label="YouTube (odpre se v novem zavihku)" data-tooltip="YouTube"><i data-icon="youtube"></i></a>
+              </span>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ KONTAKTNI OBRAZEC ============ -->
+    <section class="section contact-form-section" id="obrazec" aria-labelledby="contact-form-title">
+      <div class="container contact-form-grid">
+        <div class="glass glass--strong contact-formpanel" data-reveal data-formpanel>
+          <div class="contact-formpanel__head">
+            <p class="eyebrow">Kontaktni obrazec</p>
+            <h2 id="contact-form-title">Kako vam <span class="gradient-text">lahko pomagamo?</span></h2>
+            <p class="muted">Polja, označena z <span class="contact-req" aria-hidden="true">*</span><span class="visually-hidden">zvezdico</span>, so obvezna. Osnutek se sproti shranjuje na tej napravi, zato se nič ne izgubi.</p>
+          </div>
+
+          <div class="tile tile--raised contact-draft" data-draft-notice hidden>
+            <span class="icon-bubble icon-bubble--sm" aria-hidden="true"><i data-icon="refresh"></i></span>
+            <p class="contact-draft__text small"><strong>Obnovili smo vaš osnutek.</strong> <span data-draft-when></span></p>
+            <button type="button" class="btn btn--sm btn--ghost" data-draft-discard><i data-icon="x"></i>Zavrzi osnutek</button>
+          </div>
+
+          <form class="contact-form" id="contact-form" data-contact-form novalidate>
+            <div class="field-row">
+              <div class="field">
+                <label class="label" for="cf-name">Ime in priimek <span class="req" aria-hidden="true">*</span></label>
+                <input class="input" id="cf-name" name="ime" type="text" required minlength="2" maxlength="80" autocomplete="name" placeholder="npr. Ana Novak">
+              </div>
+              <div class="field">
+                <label class="label" for="cf-email">E-pošta <span class="req" aria-hidden="true">*</span></label>
+                <input class="input" id="cf-email" name="eposta" type="email" required maxlength="120" autocomplete="email" inputmode="email" placeholder="ime@domena.si">
+              </div>
+            </div>
+            <div class="field-row">
+              <div class="field">
+                <label class="label" for="cf-phone">Telefon <span class="opt">(neobvezno)</span></label>
+                <input class="input" id="cf-phone" name="telefon" type="tel" autocomplete="tel" inputmode="tel" maxlength="24" placeholder="npr. 041 123 456" pattern="\+?[0-9][0-9 \(\)\/\-]{5,22}" data-pattern-msg="Vnesite veljavno telefonsko številko, npr. 041 123 456 ali +386 41 123 456.">
+              </div>
+              <div class="field">
+                <label class="label" for="cf-topic">Zadeva</label>
+                <select class="select" id="cf-topic" name="zadeva" aria-describedby="cf-topic-hint">
+                  <option value="splosno">Splošno vprašanje</option>
+                  <option value="vpis">Vpis v plavalno šolo</option>
+                  <option value="tekmovanja">Tekmovanja</option>
+                  <option value="partnerstvo">Partnerstvo in sponzorstvo</option>
+                  <option value="mediji">Mediji in fotografije</option>
+                </select>
+              </div>
+            </div>
+            <p class="contact-topic-hint small" id="cf-topic-hint" data-topic-hint aria-live="polite"><i data-icon="info" class="icon--sm"></i><span>Za hitre odgovore preverite tudi <a href="#faq">pogosta vprašanja</a>.</span></p>
+
+            <div class="field">
+              <label class="label" for="cf-msg">Sporočilo <span class="req" aria-hidden="true">*</span></label>
+              <textarea class="textarea" id="cf-msg" name="sporocilo" rows="6" required minlength="20" maxlength="1500" placeholder="Napišite svoje vprašanje …" aria-describedby="cf-msg-count"></textarea>
+              <div class="contact-counter">
+                <div class="contact-counter__bar" aria-hidden="true"><span data-msg-bar></span></div>
+                <p class="contact-counter__text small num" id="cf-msg-count" data-msg-count>Vsaj 20 znakov · največ 1500</p>
+              </div>
+            </div>
+
+            <div class="field contact-consent">
+              <label class="check" for="cf-consent">
+                <input type="checkbox" id="cf-consent" name="soglasje" value="da" required>
+                <span>Strinjam se, da klub moje podatke uporabi za odgovor na to sporočilo, kot je opisano v <a href="zasebnost.html">politiki zasebnosti</a>. <span class="req" aria-hidden="true">*</span></span>
+              </label>
+            </div>
+
+            <div class="honeypot" aria-hidden="true">
+              <label for="cf-website">Spletna stran (pustite prazno)</label>
+              <input type="text" id="cf-website" name="website" tabindex="-1" autocomplete="off">
+            </div>
+
+            <div class="contact-form__foot">
+              <div class="cluster contact-form__buttons">
+                <button class="btn btn--primary btn--lg contact-submit" type="submit" data-submit><span class="contact-submit__spin" aria-hidden="true"></span><i data-icon="send"></i><span data-submit-label>Pošlji sporočilo</span></button>
+                <button class="btn btn--ghost" type="button" data-form-clear><i data-icon="refresh"></i>Počisti</button>
+              </div>
+              <p class="contact-form__status small soft" data-draft-status><i data-icon="lock" class="icon--sm"></i><span>Osnutek se samodejno shranjuje samo na tej napravi.</span></p>
+            </div>
+          </form>
+
+          <div class="contact-success" data-success hidden>
+            <div class="contact-success__head">
+              <span class="icon-bubble contact-success__icon" aria-hidden="true"><i data-icon="check-circle"></i></span>
+              <div>
+                <p class="eyebrow">Sporočilo oddano</p>
+                <h3 class="contact-success__title" tabindex="-1" data-success-title>Hvala!</h3>
+              </div>
+            </div>
+            <p class="muted" data-success-text></p>
+            <dl class="tile contact-summary" data-success-summary></dl>
+            <div class="cluster contact-success__actions">
+              <a class="btn btn--primary" href="mailto:info@plavalniklub-branik.si" data-success-mailto><i data-icon="mail"></i>Pošlji po e-pošti</a>
+              <button type="button" class="btn" data-success-copy><i data-icon="copy"></i><span>Kopiraj besedilo</span></button>
+              <button type="button" class="btn btn--ghost" data-success-new><i data-icon="plus"></i>Novo sporočilo</button>
+            </div>
+            <p class="small soft contact-success__note"><i data-icon="lock" class="icon--sm"></i><span>Kopija sporočila je shranjena samo na tej napravi. Izbrišete jo lahko kadarkoli na strani <a href="zasebnost.html#piskotki">Zasebnost</a>.</span></p>
+          </div>
+        </div>
+
+        <aside class="contact-aside" aria-label="Dodatne informacije">
+          <a class="photo-card contact-place" href="#zemljevid" data-reveal>
+            <img src="assets/img/photos/bazen-hala-sm.jpg" alt="" width="720" height="480" loading="lazy" decoding="async">
+            <span class="photo-card__glass contact-place__cap">
+              <span class="contact-place__text">
+                <strong>Vsa vadba poteka na Kopališču Pristan</strong>
+                <span class="small">Koroška cesta 33, Maribor · zemljevid in prihod</span>
+              </span>
+              <span class="contact-place__go" aria-hidden="true"><i data-icon="arrow-up-right"></i></span>
+            </span>
+          </a>
+
+          <div class="glass contact-last" data-last hidden>
+            <div class="contact-last__head">
+              <span class="icon-bubble icon-bubble--sm" aria-hidden="true"><i data-icon="message-circle"></i></span>
+              <div>
+                <h3 class="contact-last__title">Vaše zadnje sporočilo</h3>
+                <p class="small soft" data-last-meta></p>
+              </div>
+            </div>
+            <p class="small muted contact-last__excerpt" data-last-excerpt></p>
+            <div class="cluster contact-last__actions">
+              <button type="button" class="btn btn--sm" data-last-open><i data-icon="file-text"></i>Prikaži</button>
+              <button type="button" class="btn btn--sm btn--ghost" data-last-delete><i data-icon="x"></i>Izbriši kopijo</button>
+            </div>
+          </div>
+
+          <nav class="glass contact-quick" aria-labelledby="contact-quick-title" data-reveal>
+            <h3 class="contact-quick__title" id="contact-quick-title">Morda iščete</h3>
+            <ul class="contact-quick__list" role="list">
+              <li><a href="vpis.html"><span class="icon-bubble icon-bubble--sm" aria-hidden="true"><i data-icon="sparkles"></i></span><span class="contact-quick__text"><strong>Spletni vpis</strong><span>Prijava v plavalno šolo ali skupino</span></span><i data-icon="chevron-right" class="contact-quick__chev"></i></a></li>
+              <li><a href="urnik.html"><span class="icon-bubble icon-bubble--sm" aria-hidden="true"><i data-icon="calendar"></i></span><span class="contact-quick__text"><strong>Urnik treningov</strong><span>Termini vseh skupin na Pristanu</span></span><i data-icon="chevron-right" class="contact-quick__chev"></i></a></li>
+              <li><a href="programi.html#cenik"><span class="icon-bubble icon-bubble--sm" aria-hidden="true"><i data-icon="euro"></i></span><span class="contact-quick__text"><strong>Programi in cenik</strong><span>Skupine, cilji in članarine</span></span><i data-icon="chevron-right" class="contact-quick__chev"></i></a></li>
+              <li><a href="#faq"><span class="icon-bubble icon-bubble--sm" aria-hidden="true"><i data-icon="help-circle"></i></span><span class="contact-quick__text"><strong>Pogosta vprašanja</strong><span>Hitri odgovori pred prvim obiskom</span></span><i data-icon="chevron-right" class="contact-quick__chev"></i></a></li>
+            </ul>
+          </nav>
+        </aside>
+      </div>
+    </section>
+
+    <!-- ============ ZEMLJEVID IN PRIHOD ============ -->
+    <section class="section contact-map-section" id="zemljevid" aria-labelledby="contact-map-title">
+      <div class="container">
+        <div class="section-head section-head--split">
+          <div>
+            <p class="eyebrow">Lokacija</p>
+            <h2 id="contact-map-title">Kako do nas <span class="gradient-text">na Pristan</span></h2>
+            <p class="lead">Kopališče Pristan leži ob Koroški cesti, blizu mestnega središča in Drave. Vsa vadba in klubska pisarna sta na istem mestu.</p>
+          </div>
+          <a class="btn" href="https://www.google.com/maps/search/?api=1&amp;query=Kopali%C5%A1%C4%8De%20Pristan%2C%20Koro%C5%A1ka%20cesta%2033%2C%202000%20Maribor" target="_blank" rel="noopener" data-club-maps aria-label="Odpri v Google Zemljevidih (nov zavihek)"><i data-icon="external"></i>Odpri v Google Zemljevidih</a>
+        </div>
+
+        <div class="glass glass--strong contact-mapwrap" data-reveal>
+          <div class="contact-map" data-map>
+            <div class="contact-map__art" data-map-art aria-hidden="true">
+              <svg class="contact-map__svg" viewBox="0 0 960 420" preserveAspectRatio="xMidYMid slice" focusable="false">
+                <defs>
+                  <pattern id="contact-grid" width="40" height="40" patternUnits="userSpaceOnUse"><path d="M40 0H0V40" fill="none" stroke="currentColor" stroke-opacity=".06" stroke-width="1"/></pattern>
+                </defs>
+                <rect width="960" height="420" fill="url(#contact-grid)"/>
+                <!-- city blocks -->
+                <g fill="currentColor" fill-opacity=".045" stroke="currentColor" stroke-opacity=".12" stroke-width="1">
+                  <rect x="560" y="40" width="70" height="46" rx="6"/><rect x="644" y="40" width="96" height="46" rx="6"/><rect x="754" y="40" width="64" height="46" rx="6"/>
+                  <rect x="560" y="100" width="118" height="52" rx="6"/><rect x="692" y="100" width="62" height="52" rx="6"/><rect x="768" y="100" width="92" height="52" rx="6"/>
+                  <rect x="832" y="40" width="98" height="46" rx="6"/><rect x="874" y="100" width="56" height="52" rx="6"/>
+                  <rect x="120" y="44" width="88" height="54" rx="6"/><rect x="222" y="44" width="58" height="54" rx="6"/><rect x="40" y="44" width="66" height="54" rx="6"/>
+                </g>
+                <!-- streets -->
+                <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M-10 182 C 180 170, 340 176, 470 180 S 760 190, 970 172" stroke-opacity=".5" stroke-width="2.4"/>
+                  <path d="M548 20 V 168" stroke-opacity=".22" stroke-width="1.4"/>
+                  <path d="M300 18 C 304 70, 300 120, 306 176" stroke-opacity=".22" stroke-width="1.4"/>
+                  <path d="M548 92 H 950" stroke-opacity=".16" stroke-width="1.2"/>
+                  <path d="M20 112 H 300" stroke-opacity=".16" stroke-width="1.2"/>
+                  <path d="M760 186 L 790 330 L 800 430" stroke-opacity=".3" stroke-width="1.6"/>
+                  <path d="M660 300 C 700 340, 760 360, 970 370" stroke-opacity=".16" stroke-width="1.2"/>
+                </g>
+                <!-- river Drava -->
+                <path d="M-20 300 C 120 270, 220 250, 340 262 S 560 318, 700 300 S 880 240, 980 250" fill="none" stroke="currentColor" stroke-opacity=".08" stroke-width="54" stroke-linecap="round"/>
+                <path d="M-20 274 C 120 244, 220 224, 340 236 S 560 292, 700 274 S 880 214, 980 224" fill="none" stroke="currentColor" stroke-opacity=".4" stroke-width="1.4"/>
+                <path d="M-20 326 C 120 296, 220 276, 340 288 S 560 344, 700 326 S 880 266, 980 276" fill="none" stroke="currentColor" stroke-opacity=".4" stroke-width="1.4"/>
+                <path d="M60 300 c 14 -6 28 -6 42 0 M 470 300 c 14 -6 28 -6 42 0 M 820 262 c 14 -6 28 -6 42 0" fill="none" stroke="currentColor" stroke-opacity=".3" stroke-width="1.2" stroke-linecap="round"/>
+                <!-- bridge -->
+                <path d="M744 200 L 772 318" stroke="currentColor" stroke-opacity=".55" stroke-width="5" stroke-linecap="round" fill="none"/>
+                <!-- venue: pools outline -->
+                <g fill="none" stroke="currentColor" stroke-opacity=".55" stroke-width="1.4">
+                  <rect x="368" y="196" width="92" height="44" rx="5"/>
+                  <path d="M368 207 H 460 M368 218 H 460 M368 229 H 460" stroke-opacity=".25"/>
+                  <rect x="470" y="200" width="40" height="30" rx="4"/>
+                </g>
+                <!-- labels -->
+                <g fill="currentColor" font-family="Inter, sans-serif" font-size="13" font-weight="600" letter-spacing=".08em">
+                  <text x="180" y="166" fill-opacity=".62">KOROŠKA CESTA</text>
+                  <text x="228" y="336" fill-opacity=".5" font-style="italic" letter-spacing=".2em">DRAVA</text>
+                  <text x="628" y="216" fill-opacity=".55">CENTER →</text>
+                </g>
+                <!-- pin + label -->
+                <g class="contact-map__pin" transform="translate(414 220)">
+                  <ellipse class="contact-map__pulse" cx="0" cy="0" rx="26" ry="9"/>
+                  <ellipse class="contact-map__shadow" cx="0" cy="1" rx="9" ry="3"/>
+                  <path class="contact-map__pin-body" d="M0 0 C -6 -8 -16 -17 -16 -28 A 16 16 0 1 1 16 -28 C 16 -17 6 -8 0 0 Z"/>
+                  <circle class="contact-map__pin-dot" cx="0" cy="-28" r="5.6"/>
+                  <g class="contact-map__chip" transform="translate(24 -60)">
+                    <rect width="156" height="30" rx="15"/>
+                    <text x="78" y="19.5" text-anchor="middle" font-family="Inter, sans-serif" font-size="13.5" font-weight="600">Kopališče Pristan</text>
+                  </g>
+                </g>
+              </svg>
+              <span class="contact-map__scale">Shematski prikaz · ni v merilu</span>
+            </div>
+
+            <div class="contact-map__consent" data-map-consent>
+              <span class="icon-bubble icon-bubble--sm" aria-hidden="true"><i data-icon="map-pin"></i></span>
+              <div class="contact-map__consent-text">
+                <h3 class="contact-map__consent-title">Interaktivni zemljevid</h3>
+                <p class="small muted">Zemljevid Google naložimo šele, ko ga prikažete. Ob tem lahko Google nastavi piškotke in prejme vaš IP-naslov. <a href="zasebnost.html#piskotki">Več o zasebnosti</a></p>
+                <div class="contact-map__consent-actions">
+                  <button type="button" class="btn btn--primary btn--sm" data-map-load><i data-icon="map-pin"></i>Prikaži zemljevid</button>
+                  <label class="switch contact-map__remember"><input type="checkbox" data-map-remember><span class="small">Zapomni si izbiro</span></label>
+                </div>
+              </div>
+            </div>
+            <div class="contact-map__frame" data-map-frame hidden></div>
+          </div>
+
+          <div class="contact-map__bar">
+            <p class="small soft contact-map__bar-text" data-map-status aria-live="polite"><i data-icon="lock" class="icon--sm"></i><span>Zemljevid ni naložen — brez piškotkov tretjih oseb.</span></p>
+            <div class="cluster contact-map__bar-actions">
+              <button type="button" class="btn btn--sm btn--ghost" data-map-hide hidden><i data-icon="x"></i>Skrij zemljevid</button>
+              <button type="button" class="btn btn--sm" data-copy="address" aria-label="Kopiraj naslov"><i data-icon="copy"></i><span>Kopiraj naslov</span></button>
+              <a class="btn btn--sm" href="https://www.google.com/maps/search/?api=1&amp;query=Kopali%C5%A1%C4%8De%20Pristan%2C%20Koro%C5%A1ka%20cesta%2033%2C%202000%20Maribor" target="_blank" rel="noopener" data-club-maps aria-label="Odpri v Google Zemljevidih (nov zavihek)"><i data-icon="external"></i>Odpri v Google Zemljevidih</a>
+            </div>
+          </div>
+
+          <ul class="contact-ways" role="list" aria-label="Prihod na Kopališče Pristan" data-reveal-stagger="70">
+            <li class="tile contact-way" data-reveal>
+              <span class="icon-bubble icon-bubble--sm" aria-hidden="true"><i data-icon="navigation"></i></span>
+              <h3 class="contact-way__title">Peš</h3>
+              <p class="small muted">Kopališče Pristan leži ob Koroški cesti, blizu mestnega središča in Drave — iz središča mesta ste hitro tam.</p>
+              <a class="btn btn--link btn--sm contact-way__link" data-route="walking" href="https://www.google.com/maps/dir/?api=1&amp;destination=Kopali%C5%A1%C4%8De%20Pristan%2C%20Koro%C5%A1ka%20cesta%2033%2C%202000%20Maribor&amp;travelmode=walking" target="_blank" rel="noopener">Načrtuj pot peš <i data-icon="arrow-up-right" class="icon--sm"></i><span class="visually-hidden"> (nov zavihek)</span></a>
+            </li>
+            <li class="tile contact-way" data-reveal>
+              <span class="icon-bubble icon-bubble--sm" aria-hidden="true"><i data-icon="bike"></i></span>
+              <h3 class="contact-way__title">S kolesom</h3>
+              <p class="small muted">Do kopališča se lahko pripeljete s kolesom. Kolo vedno priklenite in ga ne puščajte na poteh za pešce.</p>
+              <a class="btn btn--link btn--sm contact-way__link" data-route="bicycling" href="https://www.google.com/maps/dir/?api=1&amp;destination=Kopali%C5%A1%C4%8De%20Pristan%2C%20Koro%C5%A1ka%20cesta%2033%2C%202000%20Maribor&amp;travelmode=bicycling" target="_blank" rel="noopener">Načrtuj pot s kolesom <i data-icon="arrow-up-right" class="icon--sm"></i><span class="visually-hidden"> (nov zavihek)</span></a>
+            </li>
+            <li class="tile contact-way" data-reveal>
+              <span class="icon-bubble icon-bubble--sm" aria-hidden="true"><i data-icon="car"></i></span>
+              <h3 class="contact-way__title">Z avtom</h3>
+              <p class="small muted">V navigacijo vnesite Koroška cesta 33, Maribor. Za parkiranje in promet v središču mesta si vzemite nekaj minut rezerve.</p>
+              <a class="btn btn--link btn--sm contact-way__link" data-route="driving" href="https://www.google.com/maps/dir/?api=1&amp;destination=Kopali%C5%A1%C4%8De%20Pristan%2C%20Koro%C5%A1ka%20cesta%2033%2C%202000%20Maribor&amp;travelmode=driving" target="_blank" rel="noopener">Načrtuj pot z avtom <i data-icon="arrow-up-right" class="icon--sm"></i><span class="visually-hidden"> (nov zavihek)</span></a>
+            </li>
+            <li class="tile contact-way" data-reveal>
+              <span class="icon-bubble icon-bubble--sm" aria-hidden="true"><i data-icon="bus"></i></span>
+              <h3 class="contact-way__title">Z avtobusom</h3>
+              <p class="small muted">Z mestnim avtobusom izberite postajališče blizu Koroške ceste. Linijo in vozni red preverite pri mestnem prevozniku.</p>
+              <a class="btn btn--link btn--sm contact-way__link" data-route="transit" href="https://www.google.com/maps/dir/?api=1&amp;destination=Kopali%C5%A1%C4%8De%20Pristan%2C%20Koro%C5%A1ka%20cesta%2033%2C%202000%20Maribor&amp;travelmode=transit" target="_blank" rel="noopener">Načrtuj pot z avtobusom <i data-icon="arrow-up-right" class="icon--sm"></i><span class="visually-hidden"> (nov zavihek)</span></a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ POGOSTA VPRAŠANJA ============ -->
+    <section class="section contact-faq-section" id="faq" aria-labelledby="contact-faq-title">
+      <div class="container contact-faq">
+        <div class="contact-faq__side">
+          <div class="section-head">
+            <p class="eyebrow">Pogosta vprašanja</p>
+            <h2 id="contact-faq-title">Hitri odgovori <span class="gradient-text">pred prvim obiskom</span></h2>
+            <p class="lead">Najpogostejša vprašanja o vpisu in lokaciji. Več odgovorov o skupinah in opremi je na strani Programi.</p>
+          </div>
+          <div class="tile tile--raised contact-faq__cta" data-reveal>
+            <p class="contact-faq__cta-title">Niste našli odgovora?</p>
+            <p class="small muted">Pišite nam ali pokličite — z veseljem pomagamo pri izbiri skupine in vpisu.</p>
+            <div class="cluster contact-faq__cta-actions">
+              <a class="btn btn--primary btn--sm" href="kontakt.html?zadeva=vpis#obrazec" data-topic-link="vpis">Vprašajte o vpisu <i data-icon="arrow-right" class="icon--move"></i></a>
+              <a class="btn btn--sm" href="programi.html#faq"><i data-icon="help-circle"></i>Vsa vprašanja</a>
+            </div>
+          </div>
+        </div>
+        <div class="contact-faq__list">
+          <div class="accordion" data-faq>
+            <noscript><p class="muted">Odgovore na pogosta vprašanja najdete tudi na strani <a href="programi.html#faq">Programi</a>.</p></noscript>
+          </div>
+          <a class="btn btn--link contact-faq__more" href="programi.html#faq">Več vprašanj in odgovorov na strani Programi <i data-icon="arrow-right" class="icon--move"></i></a>
+        </div>
+      </div>
+    </section>
+  </main>
+  <footer data-site-footer></footer>
+</body>
+</html>

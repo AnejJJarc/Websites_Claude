@@ -1,0 +1,163 @@
+<!doctype html>
+<html lang="sl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Novice · PK Branik Maribor</title>
+  <meta name="description" content="Novice Plavalnega kluba Branik Maribor: rezultati s tekem, obvestila plavalne šole in klubski dogodki na Kopališču Pristan.">
+  <meta name="theme-color" content="#0e1013">
+  <meta property="og:title" content="Novice · PK Branik Maribor">
+  <meta property="og:description" content="Rezultati s tekem, obvestila plavalne šole in dogodki PK Branik Maribor na enem mestu.">
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="sl_SI">
+  <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Manrope:wght@500;600;700&display=swap">
+  <link rel="stylesheet" href="assets/css/style.css">
+  <link rel="stylesheet" href="assets/css/pages/novice.css">
+  <script>(function(){try{var t=localStorage.getItem("pkb-theme");}catch(e){}document.documentElement.setAttribute("data-theme",t||(matchMedia("(prefers-color-scheme: light)").matches?"light":"dark"));})();</script>
+  <script src="assets/js/data.js" defer></script>
+  <script src="assets/js/site.js" defer></script>
+  <script src="assets/js/pages/novice.js" defer></script>
+</head>
+<body data-page="novice">
+  <a class="skip-link" href="#main">Preskoči na vsebino</a>
+  <header data-site-header></header>
+  <main id="main" class="news" data-news>
+
+    <!-- ============ HERO: naslov + izpostavljena novica ============ -->
+    <section class="page-hero news-hero-section" aria-labelledby="news-title">
+      <div class="news-container">
+        <div class="page-hero__panel glass glass--strong news-hero" data-reveal>
+          <div class="news-hero__text">
+            <div>
+              <ol class="breadcrumb" aria-label="Drobtinice"><li><a href="index.html">Domov</a></li><li><span aria-current="page">Novice</span></li></ol>
+              <p class="eyebrow">Aktualno v klubu</p>
+              <h1 id="news-title">Novice <span class="gradient-text">in obvestila.</span></h1>
+              <p class="lead">Rezultati s tekem, obvestila plavalne šole in dogodki na Pristanu. Poiščite novico, izberite rubriko ali prelistajte arhiv po mesecih.</p>
+              <div class="page-hero__actions cluster news-hero__actions">
+                <a class="btn btn--primary" href="#seznam" data-scroll-list>Vse novice <i data-icon="arrow-right" class="icon--move"></i></a>
+                <a class="btn" href="#nl-email" data-newsletter-focus><i data-icon="mail"></i>Novice po e-pošti</a>
+              </div>
+            </div>
+            <ul class="news-stats" role="list" aria-label="Novice v številkah" data-stats></ul>
+          </div>
+
+          <div class="news-feature-slot" id="izpostavljeno" data-feature>
+            <div class="news-feature news-feature--skeleton skeleton" aria-hidden="true"></div>
+            <noscript>
+              <div class="news-feature news-feature--static photo-card">
+                <img src="assets/img/photos/tekma-proge-sm.jpg" alt="" width="720" height="481">
+                <div class="photo-card__glass"><strong>Novice PK Branik</strong><p class="small">Za prikaz izpostavljene novice omogočite JavaScript.</p></div>
+              </div>
+            </noscript>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ SEZNAM NOVIC + STRANSKI STOLPEC ============ -->
+    <section class="section--tight news-main" id="seznam" aria-labelledby="news-list-title">
+      <div class="news-container news-layout">
+        <div class="news-layout__main">
+          <div class="glass news-toolbar" data-toolbar>
+            <div class="news-toolbar__top">
+              <div class="news-toolbar__heading">
+                <h2 class="news-toolbar__title" id="news-list-title">Vse novice</h2>
+                <p class="news-toolbar__count small muted" data-count aria-live="polite" aria-atomic="true">Novice kluba</p>
+              </div>
+              <div class="tabs-list news-views" role="group" aria-label="Prikaz novic">
+                <button type="button" class="tab" data-view="grid" aria-pressed="true"><i data-icon="grid"></i>Mreža</button>
+                <button type="button" class="tab" data-view="list" aria-pressed="false"><i data-icon="list"></i>Seznam</button>
+              </div>
+            </div>
+
+            <div class="news-toolbar__controls">
+              <div class="input-icon news-search">
+                <i data-icon="search"></i>
+                <label class="visually-hidden" for="news-q">Iskanje po novicah</label>
+                <input class="input" type="search" id="news-q" name="q" placeholder="Iščite po naslovu in besedilu …" autocomplete="off" spellcheck="false" enterkeyhint="search" data-search>
+                <button type="button" class="news-search__clear" data-search-clear aria-label="Počisti iskanje" hidden><i data-icon="x"></i></button>
+              </div>
+              <div class="news-sort">
+                <label class="visually-hidden" for="news-sort">Razvrsti novice</label>
+                <i data-icon="sort" class="news-sort__icon"></i>
+                <select class="select" id="news-sort" data-sort>
+                  <option value="new">Najnovejše</option>
+                  <option value="old">Najstarejše</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="news-toolbar__chips">
+              <span class="news-toolbar__label" id="news-cat-label">Rubrike</span>
+              <div class="chip-group chip-group--scroll news-chips" role="group" aria-labelledby="news-cat-label" data-cats></div>
+            </div>
+
+            <div class="news-active" data-active hidden>
+              <span class="news-toolbar__label">Filtri</span>
+              <div class="news-active__chips" data-active-chips></div>
+              <button type="button" class="btn btn--sm btn--ghost news-active__clear" data-clear><i data-icon="x"></i>Počisti filtre</button>
+            </div>
+          </div>
+
+          <div class="news-results" data-results>
+            <ul class="news-grid" role="list" data-list aria-labelledby="news-list-title">
+              <li class="news-skel" aria-hidden="true"><div class="skeleton news-skel__img"></div><div class="skeleton news-skel__line"></div><div class="skeleton news-skel__line news-skel__line--short"></div></li>
+              <li class="news-skel" aria-hidden="true"><div class="skeleton news-skel__img"></div><div class="skeleton news-skel__line"></div><div class="skeleton news-skel__line news-skel__line--short"></div></li>
+              <li class="news-skel" aria-hidden="true"><div class="skeleton news-skel__img"></div><div class="skeleton news-skel__line"></div><div class="skeleton news-skel__line news-skel__line--short"></div></li>
+            </ul>
+            <noscript>
+              <div class="glass empty-state">
+                <p>Za iskanje, filtriranje in branje novic omogočite JavaScript. Aktualna obvestila dobite tudi v pisarni kluba ali na telefonu +386 41 682 016.</p>
+              </div>
+            </noscript>
+            <div class="news-more" data-more-wrap hidden>
+              <div class="news-more__progress">
+                <span class="small soft" data-more-text></span>
+                <div class="news-more__bar" aria-hidden="true"><span data-more-bar></span></div>
+              </div>
+              <button type="button" class="btn news-more__btn" data-more>Naloži več <span class="news-more__n" data-more-n></span></button>
+            </div>
+          </div>
+        </div>
+
+        <aside class="news-side" aria-label="Dogodki in arhiv">
+          <section class="glass news-side__card news-events-card" id="dogodki" aria-labelledby="news-events-title">
+            <div class="news-side__head">
+              <span class="icon-bubble icon-bubble--sm"><i data-icon="trophy"></i></span>
+              <div class="news-side__titles">
+                <h2 class="news-side__title" id="news-events-title">Prihajajoči dogodki</h2>
+                <p class="news-side__sub">Naslednje tekme in mitingi</p>
+              </div>
+            </div>
+            <ol class="news-events" role="list" data-events>
+              <noscript><li><a href="tekmovanja.html#koledar">Odprite koledar tekmovanj</a></li></noscript>
+            </ol>
+            <a class="news-side__link" href="tekmovanja.html#koledar">Koledar tekmovanj <i data-icon="arrow-right"></i></a>
+          </section>
+
+          <section class="glass news-side__card news-archive-card" id="arhiv" aria-labelledby="news-archive-title">
+            <div class="news-side__head">
+              <span class="icon-bubble icon-bubble--sm"><i data-icon="calendar"></i></span>
+              <div class="news-side__titles">
+                <h2 class="news-side__title" id="news-archive-title">Arhiv</h2>
+                <p class="news-side__sub">Izberite mesec za filtriranje seznama</p>
+              </div>
+            </div>
+            <div class="news-archive" data-archive></div>
+          </section>
+
+          <section class="tile tile--raised news-side__card news-mail" aria-labelledby="news-mail-title">
+            <h2 class="news-mail__title" id="news-mail-title">Novice v vaš nabiralnik</h2>
+            <p class="small muted">Enkrat na mesec: rezultati, vpisi in dogodki — naravnost v vaš e-poštni predal.</p>
+            <a class="btn btn--sm news-mail__btn" href="#nl-email" data-newsletter-focus><i data-icon="send"></i>Prijava na e-novice</a>
+          </section>
+        </aside>
+      </div>
+    </section>
+  </main>
+  <footer data-site-footer></footer>
+</body>
+</html>

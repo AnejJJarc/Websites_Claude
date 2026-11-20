@@ -1,0 +1,382 @@
+<!doctype html>
+<html lang="sl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Vpis · PK Branik Maribor</title>
+  <meta name="description" content="Spletni vpis v plavalno šolo, tekmovalne skupine ali plavanje za odrasle PK Branik Maribor — v štirih korakih, s samodejnim shranjevanjem osnutka.">
+  <meta name="theme-color" content="#0e1013">
+  <meta property="og:title" content="Vpis · PK Branik Maribor">
+  <meta property="og:description" content="Izberite program, vpišite podatke plavalca in kontakt ter oddajte prijavo. Prvi trening je poskusni.">
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="sl_SI">
+  <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Manrope:wght@500;600;700&display=swap">
+  <link rel="stylesheet" href="assets/css/style.css">
+  <link rel="stylesheet" href="assets/css/pages/vpis.css">
+  <script>(function(){try{var t=localStorage.getItem("pkb-theme");}catch(e){}document.documentElement.setAttribute("data-theme",t||(matchMedia("(prefers-color-scheme: light)").matches?"light":"dark"));})();</script>
+  <script src="assets/js/data.js" defer></script>
+  <script src="assets/js/site.js" defer></script>
+  <script src="assets/js/pages/vpis.js" defer></script>
+</head>
+<body data-page="vpis">
+  <a class="skip-link" href="#main">Preskoči na vsebino</a>
+  <header data-site-header></header>
+  <main id="main" class="enr" data-enr>
+
+    <!-- ============ HERO ============ -->
+    <section class="page-hero enr-hero-section" aria-labelledby="enr-title">
+      <div class="container">
+        <div class="page-hero__panel glass glass--strong enr-hero" data-reveal>
+          <div class="enr-hero__grid">
+            <div class="enr-hero__text">
+              <ol class="breadcrumb" aria-label="Drobtinice"><li><a href="index.html">Domov</a></li><li><span aria-current="page">Vpis</span></li></ol>
+              <p class="eyebrow">Vpis · sezona <span data-season>2026/2027</span></p>
+              <h1 id="enr-title">Spletni vpis <span class="gradient-text">v štirih korakih.</span></h1>
+              <p class="lead">Izberite program, vpišite podatke plavalca in kontakt ter preverite povzetek. Vnosi se sproti shranjujejo v vašem brskalniku, zato lahko kadar koli nadaljujete, kjer ste ostali.</p>
+
+              <div class="page-hero__actions cluster enr-hero__actions" data-hero-actions>
+                <a class="btn btn--primary btn--lg" href="#vpis" data-start>Začni vpis <i data-icon="arrow-right" class="icon--move"></i></a>
+                <a class="btn btn--lg" href="#pomoc-pri-izbiri" data-open-reco><i data-icon="target"></i>Ne vem, kaj izbrati</a>
+              </div>
+
+              <div class="tile tile--raised enr-draft" data-draft role="region" aria-labelledby="enr-draft-title" hidden>
+                <span class="icon-bubble icon-bubble--sm" aria-hidden="true"><i data-icon="refresh"></i></span>
+                <div class="enr-draft__text">
+                  <p class="enr-draft__title" id="enr-draft-title">Nadaljujete, kjer ste ostali?</p>
+                  <p class="small muted enr-draft__meta" data-draft-meta>Na tej napravi je shranjen osnutek prijave.</p>
+                </div>
+                <div class="enr-draft__actions">
+                  <button type="button" class="btn btn--primary btn--sm" data-draft-continue>Nadaljuj <i data-icon="arrow-right" class="icon--move"></i></button>
+                  <button type="button" class="btn btn--sm btn--ghost" data-draft-discard><i data-icon="x"></i>Začni znova</button>
+                </div>
+              </div>
+            </div>
+
+            <div class="photo-card enr-hero__photo">
+              <img src="assets/img/photos/sola-ucenje-sm.jpg" srcset="assets/img/photos/sola-ucenje-sm.jpg 720w, assets/img/photos/sola-ucenje.jpg 1920w" sizes="(min-width: 980px) 440px, 100vw" alt="" width="720" height="480" decoding="async" fetchpriority="high">
+              <div class="photo-card__glass enr-hero__cap">
+                <p class="enr-hero__cap-title"><strong>Prvi trening je poskusni</strong><span class="small">Za vpis se odločite šele po treningu.</span></p>
+                <ul class="enr-hero__facts" role="list" aria-label="Na kratko">
+                  <li><span class="enr-hero__fact-v" data-fact="price">55 €</span><span class="enr-hero__fact-l">članarina od</span></li>
+                  <li><span class="enr-hero__fact-v" data-fact="sibling">10 %</span><span class="enr-hero__fact-l">popust za sorojence</span></li>
+                  <li><span class="enr-hero__fact-v" data-fact="age">4+</span><span class="enr-hero__fact-l">let za vpis</span></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <ol class="enr-overview" role="list" aria-label="Koraki vpisa">
+            <li class="enr-overview__item"><span class="enr-overview__n">01</span><span class="enr-overview__label">Program</span><span class="enr-overview__desc">Izberite skupino ali si pomagajte z izbirnikom.</span><span class="enr-overview__bar" aria-hidden="true"></span></li>
+            <li class="enr-overview__item"><span class="enr-overview__n">02</span><span class="enr-overview__label">Plavalec</span><span class="enr-overview__desc">Ime, datum rojstva in predznanje.</span><span class="enr-overview__bar" aria-hidden="true"></span></li>
+            <li class="enr-overview__item"><span class="enr-overview__n">03</span><span class="enr-overview__label">Kontakt</span><span class="enr-overview__desc">Starš ali skrbnik, e-pošta in telefon.</span><span class="enr-overview__bar" aria-hidden="true"></span></li>
+            <li class="enr-overview__item"><span class="enr-overview__n">04</span><span class="enr-overview__label">Pregled</span><span class="enr-overview__desc">Preverite povzetek, ceno in oddajte.</span><span class="enr-overview__bar" aria-hidden="true"></span></li>
+          </ol>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ PRIJAVNICA ============ -->
+    <section class="section--tight enr-main" id="vpis" aria-label="Spletna prijavnica">
+      <div class="container">
+        <noscript>
+          <div class="glass glass--strong enr-noscript">
+            <h2>Za spletni vpis omogočite JavaScript</h2>
+            <p class="muted">Prijavo lahko pošljete tudi po e-pošti na <a href="mailto:info@plavalniklub-branik.si">info@plavalniklub-branik.si</a> ali pokličete na <a href="tel:+38641682016">+386 41 682 016</a>. Vse skupine in cene so na strani <a href="programi.html">Programi</a>.</p>
+          </div>
+        </noscript>
+
+        <div class="enr-layout">
+          <div class="glass glass--strong enr-panel" data-panel>
+
+            <!-- step indicator -->
+            <nav class="enr-stepper-wrap" aria-label="Koraki prijave" data-stepper-wrap>
+              <ol class="enr-stepper" role="list" data-stepper>
+                <li><button type="button" class="enr-stepper__btn" data-goto="1"><span class="enr-stepper__n" aria-hidden="true"><span class="enr-stepper__num">1</span><i data-icon="check" class="enr-stepper__check"></i></span><span class="enr-stepper__text"><span class="visually-hidden">Korak 1: </span><span class="enr-stepper__label">Program</span><span class="enr-stepper__sub" data-step-sub="1"></span><span class="visually-hidden" data-step-state="1"></span></span></button></li>
+                <li><button type="button" class="enr-stepper__btn" data-goto="2"><span class="enr-stepper__n" aria-hidden="true"><span class="enr-stepper__num">2</span><i data-icon="check" class="enr-stepper__check"></i></span><span class="enr-stepper__text"><span class="visually-hidden">Korak 2: </span><span class="enr-stepper__label">Plavalec</span><span class="enr-stepper__sub" data-step-sub="2"></span><span class="visually-hidden" data-step-state="2"></span></span></button></li>
+                <li><button type="button" class="enr-stepper__btn" data-goto="3"><span class="enr-stepper__n" aria-hidden="true"><span class="enr-stepper__num">3</span><i data-icon="check" class="enr-stepper__check"></i></span><span class="enr-stepper__text"><span class="visually-hidden">Korak 3: </span><span class="enr-stepper__label">Kontakt</span><span class="enr-stepper__sub" data-step-sub="3"></span><span class="visually-hidden" data-step-state="3"></span></span></button></li>
+                <li><button type="button" class="enr-stepper__btn" data-goto="4"><span class="enr-stepper__n" aria-hidden="true"><span class="enr-stepper__num">4</span><i data-icon="check" class="enr-stepper__check"></i></span><span class="enr-stepper__text"><span class="visually-hidden">Korak 4: </span><span class="enr-stepper__label">Pregled</span><span class="enr-stepper__sub" data-step-sub="4"></span><span class="visually-hidden" data-step-state="4"></span></span></button></li>
+              </ol>
+              <div class="enr-stepper__progress" aria-hidden="true"><span data-stepper-progress></span></div>
+            </nav>
+
+            <form class="enr-form" id="enr-form" novalidate data-form>
+
+              <!-- ===== KORAK 1: PROGRAM ===== -->
+              <section class="enr-step" id="korak-1" data-step="1" aria-labelledby="enr-s1-title">
+                <header class="enr-step__head">
+                  <p class="enr-step__kicker">Korak 1 od 4</p>
+                  <h2 class="enr-step__title" id="enr-s1-title" tabindex="-1">Izberite program</h2>
+                  <p class="enr-step__desc muted">Skupine so razvrščene po starosti in znanju. Cena je mesečna članarina za prvega otroka.</p>
+                </header>
+
+                <div class="enr-reco" id="pomoc-pri-izbiri" data-reco>
+                  <button type="button" class="enr-reco__toggle" aria-expanded="false" aria-controls="enr-reco-panel" data-reco-toggle>
+                    <span class="icon-bubble icon-bubble--sm" aria-hidden="true"><i data-icon="help-circle"></i></span>
+                    <span class="enr-reco__toggle-text">
+                      <span class="enr-reco__toggle-title">Ne vem, kaj izbrati</span>
+                      <span class="enr-reco__toggle-sub">Predlagamo skupino glede na starost in znanje plavanja.</span>
+                    </span>
+                    <i data-icon="chevron-down" class="enr-reco__chev"></i>
+                  </button>
+                  <div class="enr-reco__panel" id="enr-reco-panel" data-reco-panel hidden>
+                    <div class="enr-reco__grid">
+                      <div class="enr-reco__q">
+                        <div class="enr-reco__q-head">
+                          <label class="label" for="enr-reco-age">Starost plavalca</label>
+                          <output class="enr-reco__age-out" for="enr-reco-age" data-reco-age-out>6 let</output>
+                        </div>
+                        <input class="enr-range" type="range" id="enr-reco-age" form="enr-reco-form" min="3" max="18" step="0.5" value="6" data-reco-age aria-describedby="enr-reco-age-hint">
+                        <div class="enr-range__scale small soft" id="enr-reco-age-hint" aria-hidden="true"><span>3</span><span>6</span><span>9</span><span>12</span><span>15</span><span>18+</span></div>
+                      </div>
+                      <fieldset class="enr-reco__q">
+                        <legend class="label">Znanje plavanja</legend>
+                        <div class="enr-pills" data-reco-skills></div>
+                      </fieldset>
+                    </div>
+                    <div class="enr-reco__result" data-reco-result aria-live="polite"></div>
+                  </div>
+                </div>
+
+                <div class="field enr-programs" data-programs-field>
+                  <div class="enr-programs__groups" data-programs></div>
+                </div>
+              </section>
+
+              <!-- ===== KORAK 2: PLAVALEC ===== -->
+              <section class="enr-step" id="korak-2" data-step="2" aria-labelledby="enr-s2-title" hidden>
+                <header class="enr-step__head">
+                  <p class="enr-step__kicker">Korak 2 od 4</p>
+                  <h2 class="enr-step__title" id="enr-s2-title" tabindex="-1">Podatki o plavalcu</h2>
+                  <p class="enr-step__desc muted">Iz datuma rojstva izračunamo starost in preverimo, ali izbrana skupina ustreza.</p>
+                </header>
+
+                <div class="enr-fields">
+                  <div class="field-row">
+                    <div class="field">
+                      <label class="label" for="enr-ime">Ime <span class="req" aria-hidden="true">*</span></label>
+                      <input class="input" id="enr-ime" name="ime" type="text" required minlength="2" maxlength="60" autocomplete="off" autocapitalize="words" placeholder="npr. Ana">
+                    </div>
+                    <div class="field">
+                      <label class="label" for="enr-priimek">Priimek <span class="req" aria-hidden="true">*</span></label>
+                      <input class="input" id="enr-priimek" name="priimek" type="text" required minlength="2" maxlength="60" autocomplete="off" autocapitalize="words" placeholder="npr. Novak">
+                    </div>
+                  </div>
+
+                  <div class="enr-birth">
+                    <div class="field">
+                      <label class="label" for="enr-rojstvo">Datum rojstva <span class="req" aria-hidden="true">*</span></label>
+                      <input class="input" id="enr-rojstvo" name="rojstvo" type="date" required data-birth aria-describedby="enr-rojstvo-hint">
+                      <p class="hint" id="enr-rojstvo-hint">Starost izračunamo samodejno.</p>
+                    </div>
+                    <div class="tile enr-age" data-age-tile aria-live="polite">
+                      <span class="enr-age__label">Starost</span>
+                      <span class="enr-age__value" data-age-value>–</span>
+                      <span class="enr-age__sub small muted" data-age-sub>Vnesite datum rojstva.</span>
+                    </div>
+                  </div>
+
+                  <div class="enr-agecheck" data-age-check role="status" aria-live="polite"></div>
+
+                  <fieldset class="field enr-group-inline">
+                    <legend class="label">Spol <span class="opt">(neobvezno)</span></legend>
+                    <div class="enr-pills">
+                      <label class="enr-pill"><input type="radio" name="spol" value="ženski"><span>Ženski</span></label>
+                      <label class="enr-pill"><input type="radio" name="spol" value="moški"><span>Moški</span></label>
+                      <label class="enr-pill"><input type="radio" name="spol" value="ne želim navesti"><span>Ne želim navesti</span></label>
+                    </div>
+                  </fieldset>
+
+                  <div class="field">
+                    <label class="label" for="enr-predznanje">Predznanje plavanja <span class="opt">(neobvezno)</span></label>
+                    <select class="select" id="enr-predznanje" name="predznanje" data-skill-select>
+                      <option value="">Izberite …</option>
+                      <option value="ne-plava">Ne zna plavati</option>
+                      <option value="pripomocki">Plava s pripomočki</option>
+                      <option value="10m">Samostojno preplava 10 m</option>
+                      <option value="25m">Preplava 25 m brez postanka</option>
+                      <option value="tehnike">Obvlada vse štiri tehnike</option>
+                      <option value="tekmovalno">Ima tekmovalne izkušnje</option>
+                    </select>
+                  </div>
+
+                  <div class="field">
+                    <label class="label" for="enr-zdravje">Zdravstvene posebnosti <span class="opt">(neobvezno)</span></label>
+                    <textarea class="textarea enr-textarea" id="enr-zdravje" name="zdravje" rows="3" maxlength="600" placeholder="npr. alergije, astma, epilepsija, posebne potrebe …" aria-describedby="enr-zdravje-hint enr-zdravje-count"></textarea>
+                    <div class="enr-hintrow">
+                      <p class="hint enr-hint-icon" id="enr-zdravje-hint"><i data-icon="lock" class="icon--sm"></i><span>Podatek vidi le trener. Tega polja ne shranjujemo v osnutek.</span></p>
+                      <p class="hint num" id="enr-zdravje-count" data-count>0 / 600</p>
+                    </div>
+                  </div>
+                </div>
+              </section>
+
+              <!-- ===== KORAK 3: KONTAKT ===== -->
+              <section class="enr-step" id="korak-3" data-step="3" aria-labelledby="enr-s3-title" hidden>
+                <header class="enr-step__head">
+                  <p class="enr-step__kicker">Korak 3 od 4</p>
+                  <h2 class="enr-step__title" id="enr-s3-title" tabindex="-1">Kontaktni podatki</h2>
+                  <p class="enr-step__desc muted" data-contact-desc>Na te podatke vam pošljemo potrditev vpisa in termin prvega treninga.</p>
+                </header>
+
+                <fieldset class="enr-fieldset">
+                  <legend class="enr-fieldset__title" data-contact-legend>Kontaktni podatki</legend>
+                  <div class="enr-fields">
+                    <div class="field" data-guardian hidden>
+                      <label class="label" for="enr-skrbnik">Ime in priimek starša ali skrbnika <span class="req" aria-hidden="true">*</span></label>
+                      <input class="input" id="enr-skrbnik" name="skrbnik" type="text" required minlength="3" maxlength="100" autocomplete="name" placeholder="npr. Maja Novak" disabled>
+                    </div>
+                    <div class="field-row">
+                      <div class="field">
+                        <label class="label" for="enr-email">E-pošta <span class="req" aria-hidden="true">*</span></label>
+                        <input class="input" id="enr-email" name="email" type="email" required maxlength="120" autocomplete="email" inputmode="email" placeholder="ime@domena.si">
+                      </div>
+                      <div class="field">
+                        <label class="label" for="enr-telefon">Telefon <span class="req" aria-hidden="true">*</span></label>
+                        <input class="input" id="enr-telefon" name="telefon" type="tel" required maxlength="22" autocomplete="tel" inputmode="tel" placeholder="041 123 456"
+                          pattern="(?:\+386|00386|0)[ \-\/.]?[1-9](?:[ \-\/.]?[0-9]){7}"
+                          data-pattern-msg="Vnesite slovensko telefonsko številko, npr. 041 123 456 ali +386 41 123 456." aria-describedby="enr-telefon-hint">
+                        <p class="hint" id="enr-telefon-hint">Mobilna ali stacionarna, npr. 041 123 456 ali +386 2 123 45 67.</p>
+                      </div>
+                    </div>
+                    <div class="field">
+                      <label class="label" for="enr-naslov">Naslov <span class="opt">(neobvezno)</span></label>
+                      <input class="input" id="enr-naslov" name="naslov" type="text" maxlength="120" autocomplete="street-address" placeholder="Ulica in hišna številka">
+                    </div>
+                    <div class="field-row enr-postrow">
+                      <div class="field">
+                        <label class="label" for="enr-posta">Poštna številka <span class="opt">(neobvezno)</span></label>
+                        <input class="input" id="enr-posta" name="posta" type="text" inputmode="numeric" maxlength="4" autocomplete="postal-code" placeholder="2000" pattern="[1-9][0-9]{3}" data-pattern-msg="Poštna številka ima štiri števke, npr. 2000.">
+                      </div>
+                      <div class="field">
+                        <label class="label" for="enr-kraj">Kraj <span class="opt">(neobvezno)</span></label>
+                        <input class="input" id="enr-kraj" name="kraj" type="text" maxlength="60" autocomplete="address-level2" placeholder="Maribor">
+                      </div>
+                    </div>
+                  </div>
+                </fieldset>
+
+                <div class="tile enr-sibling">
+                  <div class="field">
+                    <label class="check" for="enr-sorojenec">
+                      <input type="checkbox" id="enr-sorojenec" name="sorojenec" value="da" data-sibling>
+                      <span><strong class="enr-sibling__title">V klub je že vpisan brat ali sestra</strong><span class="small muted enr-sibling__hint" data-sibling-hint>Za drugega otroka velja popust pri mesečni članarini.</span></span>
+                    </label>
+                  </div>
+                </div>
+              </section>
+
+              <!-- ===== KORAK 4: PREGLED ===== -->
+              <section class="enr-step" id="korak-4" data-step="4" aria-labelledby="enr-s4-title" hidden>
+                <header class="enr-step__head">
+                  <p class="enr-step__kicker">Korak 4 od 4</p>
+                  <h2 class="enr-step__title" id="enr-s4-title" tabindex="-1">Preverite in oddajte</h2>
+                  <p class="enr-step__desc muted">Preverite podatke. S klikom na »Uredi« se vrnete na posamezen korak — vnosi ostanejo.</p>
+                </header>
+
+                <div class="enr-review" data-review></div>
+                <div class="enr-price" data-price></div>
+
+                <fieldset class="enr-consents">
+                  <legend class="enr-fieldset__title">Soglasja</legend>
+                  <div class="field">
+                    <label class="check" for="enr-pogoji">
+                      <input type="checkbox" id="enr-pogoji" name="pogoji" value="da" required>
+                      <span>Strinjam se s <button type="button" class="btn btn--link enr-inline-link" data-terms>pogoji vpisa</button>. <span class="req" aria-hidden="true">*</span></span>
+                    </label>
+                  </div>
+                  <div class="field">
+                    <label class="check" for="enr-zasebnost">
+                      <input type="checkbox" id="enr-zasebnost" name="zasebnost" value="da" required>
+                      <span>Seznanjen/a sem z <a href="zasebnost.html" target="_blank" rel="noopener">obdelavo osebnih podatkov<span class="visually-hidden"> (odpre se v novem zavihku)</span></a>. <span class="req" aria-hidden="true">*</span></span>
+                    </label>
+                  </div>
+                  <div class="field">
+                    <label class="check" for="enr-fotografije">
+                      <input type="checkbox" id="enr-fotografije" name="fotografije" value="da">
+                      <span>Dovoljujem objavo fotografij s treningov in tekem na spletni strani in družbenih omrežjih kluba. <span class="opt soft small">(neobvezno)</span></span>
+                    </label>
+                  </div>
+                </fieldset>
+
+                <div class="honeypot" aria-hidden="true">
+                  <label for="enr-website">Spletna stran (pustite prazno)</label>
+                  <input type="text" id="enr-website" name="website" tabindex="-1" autocomplete="off">
+                </div>
+              </section>
+
+              <!-- ===== navigation ===== -->
+              <div class="enr-nav" data-nav>
+                <button type="button" class="btn enr-nav__back" data-back hidden><i data-icon="arrow-left"></i>Nazaj</button>
+                <p class="enr-nav__save small soft" data-save-status><i data-icon="lock" class="icon--sm"></i><span>Osnutek se shranjuje samo na tej napravi.</span></p>
+                <button type="submit" class="btn btn--primary enr-nav__next" data-next><span data-next-label>Naprej: Plavalec</span><i data-icon="arrow-right" class="icon--move" data-next-icon></i></button>
+              </div>
+            </form>
+            <form id="enr-reco-form" hidden aria-hidden="true"></form>
+
+            <!-- ===== success ===== -->
+            <div class="enr-done" data-done hidden></div>
+          </div>
+
+          <!-- ===== live summary (desktop) ===== -->
+          <aside class="enr-aside" aria-labelledby="enr-sum-title">
+            <div class="enr-aside__sticky">
+              <div class="glass glass--strong enr-sum">
+                <h2 class="enr-sum__heading" id="enr-sum-title">Vaša prijava</h2>
+                <div data-summary></div>
+              </div>
+              <div class="tile tile--raised enr-help">
+                <p class="enr-help__title">Pomoč pri vpisu</p>
+                <p class="small muted">Pisarna na Pristanu, pon–pet <span data-office>16:00 – 19:00</span>.</p>
+                <ul class="enr-help__list" role="list">
+                  <li><a href="tel:+38641682016" data-club-phone><i data-icon="phone" class="icon--sm"></i><span>+386 41 682 016</span></a></li>
+                  <li><a href="mailto:info@plavalniklub-branik.si" data-club-mail><i data-icon="mail" class="icon--sm"></i><span>info@plavalniklub-branik.si</span></a></li>
+                  <li><a href="kontakt.html?zadeva=vpis#obrazec"><i data-icon="message-circle" class="icon--sm"></i><span>Vprašanje o vpisu</span></a></li>
+                </ul>
+              </div>
+            </div>
+          </aside>
+        </div>
+      </div>
+
+      <!-- ===== live summary (mobile bottom bar) ===== -->
+      <div class="enr-bar" data-bar>
+        <div class="enr-sheet glass glass--strong" id="enr-sheet" data-sheet role="region" aria-label="Povzetek prijave" hidden>
+          <div data-summary></div>
+        </div>
+        <button type="button" class="enr-bar__btn" aria-expanded="false" aria-controls="enr-sheet" data-bar-toggle>
+          <span class="enr-dot" data-bar-dot aria-hidden="true"></span>
+          <span class="enr-bar__text">
+            <span class="enr-bar__title" data-bar-title>Program še ni izbran</span>
+            <span class="enr-bar__meta" data-bar-meta>Korak 1 od 4</span>
+          </span>
+          <span class="enr-bar__step num" data-bar-step aria-hidden="true">1/4</span>
+          <i data-icon="chevron-up" class="enr-bar__chev"></i>
+          <span class="visually-hidden">Prikaži povzetek prijave</span>
+        </button>
+      </div>
+    </section>
+
+    <!-- ============ POGOSTA VPRAŠANJA ============ -->
+    <section class="section enr-faq-section" id="vprasanja" aria-labelledby="enr-faq-title">
+      <div class="container enr-faq">
+        <div class="enr-faq__head" data-reveal>
+          <p class="eyebrow">Pogosta vprašanja</p>
+          <h2 id="enr-faq-title">Preden <span class="gradient-text">oddate prijavo.</span></h2>
+          <p class="lead">Najpogostejša vprašanja staršev o vpisu, plačilu in prvem treningu.</p>
+          <div class="cluster mt-6">
+            <a class="btn" href="programi.html#faq">Vsa vprašanja <i data-icon="arrow-right" class="icon--move"></i></a>
+            <a class="btn btn--ghost" href="kontakt.html?zadeva=vpis#obrazec"><i data-icon="message-circle"></i>Pišite nam</a>
+          </div>
+        </div>
+        <div class="accordion enr-faq__list" data-faq data-reveal>
+          <noscript><p class="muted">Odgovore na pogosta vprašanja najdete na strani <a href="programi.html#faq">Programi</a>.</p></noscript>
+        </div>
+      </div>
+    </section>
+  </main>
+  <footer data-site-footer></footer>
+</body>
+</html>
