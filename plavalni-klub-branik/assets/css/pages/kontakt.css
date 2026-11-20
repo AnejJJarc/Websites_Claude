@@ -202,7 +202,9 @@
 .contact-place__text { display: grid; gap: .1rem; }
 .contact-place__text .small { opacity: .88; }
 .contact-place__go { flex: none; display: grid; place-items: center; width: 38px; height: 38px; border-radius: 50%; background: #fff; }
-.contact-place__go .icon, .contact-place__go .icon * { width: 17px; height: 17px; color: #111318; }
+.contact-place__go .icon { width: 17px; height: 17px; }
+/* beats the shared ".photo-card__glass *" white text rule (same specificity, later in the cascade) */
+.contact-place .contact-place__cap .contact-place__go, .contact-place .contact-place__cap .contact-place__go * { color: #111318; }
 
 .contact-last { padding: 1.15rem 1.2rem; border-radius: var(--radius-lg); display: grid; gap: .7rem; animation: fade-up .45s var(--ease); }
 .contact-last__head { display: flex; align-items: center; gap: .75rem; }

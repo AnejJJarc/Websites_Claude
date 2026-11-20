@@ -13,6 +13,9 @@ python3 -m http.server 8765
 ```
 
 Any static host works (GitHub Pages, Netlify, an Apache/Nginx folder). All paths are relative.
+Configure `404.html` as the server's error page (e.g. `ErrorDocument 404 /404.html` on Apache,
+`error_page 404 /404.html;` on Nginx; Netlify and GitHub Pages pick it up automatically when the site is
+served from this folder's root).
 
 ## Pages
 

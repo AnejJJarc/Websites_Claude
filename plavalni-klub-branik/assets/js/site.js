@@ -263,9 +263,10 @@
      ------------------------------------------------------------------ */
   PKB.theme = {
     get: function () { return root.getAttribute("data-theme") || "dark"; },
-    set: function (t) {
+    /** persist=false only applies the theme (boot); toggling/explicit choice stores it */
+    set: function (t, persist) {
       root.setAttribute("data-theme", t);
-      try { localStorage.setItem("pkb-theme", t); } catch (e) { /* ignore */ }
+      if (persist !== false) { try { localStorage.setItem("pkb-theme", t); } catch (e) { /* ignore */ } }
       var meta = qs('meta[name="theme-color"]');
       if (meta) meta.setAttribute("content", t === "light" ? "#e9ecef" : "#0e1013");
       qsa(".theme-toggle").forEach(function (b) {
@@ -1190,7 +1191,7 @@
     renderBackground();
     renderHeader();
     renderFooter();
-    PKB.theme.set(PKB.theme.get());
+    PKB.theme.set(PKB.theme.get(), false);
     qsa("[data-theme-toggle]").forEach(function (b) { b.addEventListener("click", PKB.theme.toggle); });
     PKB.hydrateIcons(doc);
     setupMicroInteractions();
