@@ -199,12 +199,13 @@
 ::view-transition-old(root), ::view-transition-new(root) { animation-duration: .35s; }
 
 /* ---------- 2. Reset & base ---------- */
+html.smooth-scroll { scroll-behavior: smooth; }
 *, *::before, *::after { box-sizing: border-box; }
 * { margin: 0; }
 html {
   -webkit-text-size-adjust: 100%;
   text-size-adjust: 100%;
-  scroll-behavior: smooth;
+  scroll-behavior: auto; /* smooth only after load (html.smooth-scroll) so deep links land instantly */
   scroll-padding-top: calc(var(--header-h) + 24px);
 }
 body {

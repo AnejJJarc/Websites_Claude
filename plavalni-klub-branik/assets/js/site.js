@@ -410,7 +410,7 @@
       host.classList.toggle("is-scrolled", y > 12);
       var goingDown = y > lastY + 4;
       var goingUp = y < lastY - 4;
-      if (goingDown && y > 420 && !host.contains(doc.activeElement)) host.classList.add("is-hidden");
+      if (goingDown && y > 420 && !qs(":focus-visible", host)) host.classList.add("is-hidden");
       else if (goingUp || y < 200) host.classList.remove("is-hidden");
       lastY = y;
       ticking = false;
@@ -1099,7 +1099,7 @@
       idx.push({ group: "Novice", title: n.title, sub: PKB.formatDate(n.date) + " · " + n.category, href: "novice.html?clanek=" + n.id, icon: "newspaper", keys: n.excerpt });
     });
     (D.competitions || []).forEach(function (c) {
-      idx.push({ group: "Tekmovanja", title: c.name, sub: PKB.formatDateRange(c.date, c.endDate) + " · " + c.city, href: "tekmovanja.html#" + c.id, icon: "trophy", keys: c.venue + " " + c.level });
+      idx.push({ group: "Tekmovanja", title: c.name, sub: PKB.formatDateRange(c.date, c.endDate) + " · " + c.city, href: "tekmovanja.html#" + c.id, icon: "trophy", keys: c.venue + " " + c.level + " " + c.city + " " + c.id.replace(/-/g, " ") });
     });
     (D.coaches || []).forEach(function (c) {
       idx.push({ group: "Trenerji", title: c.name, sub: c.role, href: "o-klubu.html#trener-" + c.id, icon: "user", keys: c.bio });
@@ -1110,7 +1110,12 @@
     idx.push({ group: "Hitra dejanja", title: "Preklopi svetli/temni način", sub: "Spremeni videz strani", action: "theme", icon: "moon", keys: "tema dark light temni svetli" });
     idx.push({ group: "Hitra dejanja", title: "Pokliči klub", sub: C.phone, href: C.phoneHref, icon: "phone", keys: "telefon klic" });
     idx.push({ group: "Hitra dejanja", title: "Kopiraj e-poštni naslov", sub: C.email, action: "copy-email", icon: "copy", keys: "email mail posta" });
-    idx.forEach(function (it) { it._t = PKB.normalize(it.title); it._k = PKB.normalize(it.sub + " " + it.keys); });
+    var groupRank = { "Strani": 0, "Programi": 1, "Tekmovanja": 2, "Trenerji": 3, "Novice": 4, "Pogosta vprašanja": 5, "Hitra dejanja": 6 };
+    idx.forEach(function (it, i) {
+      it._t = PKB.normalize(it.title).replace(/[-–—]/g, " ");
+      it._k = PKB.normalize(it.sub + " " + it.keys).replace(/[-–—]/g, " ");
+      it._rank = (groupRank[it.group] == null ? 9 : groupRank[it.group]) * 1000 + i;
+    });
     return idx;
   }
   function highlight(text, q) {
@@ -1135,20 +1140,26 @@
       if (!q) {
         return index.filter(function (it) { return it.group === "Strani" || it.group === "Hitra dejanja"; });
       }
-      var terms = q.split(/\s+/);
+      var terms = q.replace(/[-–—]/g, " ").split(/\s+/).filter(Boolean);
+      // Slovenian is inflected ("rakce", "božični"): fall back to a stem without the last 1–2 letters
+      var stem = function (t) { return t.length >= 5 ? t.slice(0, Math.max(4, t.length - 2)) : t; };
+      var wordStart = function (hay, t) { return hay.indexOf(t) === 0 || hay.indexOf(" " + t) > -1; };
       return index.map(function (it) {
         var score = 0;
         var all = true;
         terms.forEach(function (t) {
+          var st = stem(t);
           if (it._t.indexOf(t) === 0) score += 6;
-          else if (it._t.indexOf(" " + t) > -1) score += 4;
+          else if (wordStart(it._t, t)) score += 4;
           else if (it._t.indexOf(t) > -1) score += 3;
+          else if (st !== t && wordStart(it._t, st)) score += 2.5;
           else if (it._k.indexOf(t) > -1) score += 1;
+          else if (st !== t && wordStart(it._k, st)) score += 0.5;
           else all = false;
         });
         return { it: it, score: all ? score : 0 };
       }).filter(function (r) { return r.score > 0; })
-        .sort(function (a, b) { return b.score - a.score; })
+        .sort(function (a, b) { return b.score - a.score || a.it._rank - b.it._rank; })
         .slice(0, 14).map(function (r) { return r.it; });
     }
     function render() {
@@ -1290,6 +1301,8 @@
       if (mq.addEventListener) mq.addEventListener("change", onMq);
     }
     doc.dispatchEvent(new CustomEvent("pkb:ready"));
+    var enableSmooth = function () { setTimeout(function () { if (!PKB.prefersReducedMotion()) root.classList.add("smooth-scroll"); }, 600); };
+    if (doc.readyState === "complete") enableSmooth(); else window.addEventListener("load", enableSmooth, { once: true });
   }
 
   if (doc.readyState === "loading") doc.addEventListener("DOMContentLoaded", boot);
