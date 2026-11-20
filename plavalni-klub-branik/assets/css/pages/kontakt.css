@@ -230,7 +230,7 @@
 .contact-mapwrap__lead { margin-top: .65rem; max-width: 62ch; font-size: clamp(1rem, .25vw + .95rem, 1.1rem); }
 .contact-map {
   position: relative; overflow: hidden; isolation: isolate;
-  aspect-ratio: 16 / 7; min-height: 360px;
+  height: clamp(360px, 36vw, 520px); min-width: 0;
   border-radius: calc(var(--radius-xl) - 8px);
   background: var(--glass-tile); border: 1px solid var(--glass-border); box-shadow: var(--glass-edge);
   color: var(--heading);
@@ -282,8 +282,10 @@
 
 .contact-ways {
   list-style: none; padding: 0; margin: .6rem 0 0;
-  display: grid; gap: clamp(.6rem, 1.2vw, .85rem); grid-template-columns: repeat(auto-fit, minmax(min(100%, 230px), 1fr));
+  display: grid; gap: clamp(.6rem, 1.2vw, .85rem); grid-template-columns: minmax(0, 1fr);
 }
+@media (min-width: 560px) { .contact-ways { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (min-width: 1100px) { .contact-ways { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
 .contact-way { display: flex; flex-direction: column; gap: .55rem; padding: 1.1rem 1.15rem 1rem; border-radius: calc(var(--radius-xl) - 10px); }
 .contact-way__title { font-size: 1.02rem; margin-top: .2rem; }
 .contact-way p { line-height: 1.5; }
@@ -302,7 +304,9 @@
 .contact-faq__cta { display: grid; gap: .35rem; padding: 1.2rem 1.25rem; border-radius: var(--radius-lg); }
 .contact-faq__cta-title { font-family: var(--font-display); font-weight: 600; font-size: 1.05rem; color: var(--heading); letter-spacing: -.01em; }
 .contact-faq__cta-actions { margin-top: .6rem; --cluster-gap: .5rem; }
-.contact-faq__more { margin-top: 1.25rem; }
+.contact-faq > * { min-width: 0; }
+.contact-faq__more { margin-top: 1.25rem; white-space: normal; text-align: left; line-height: 1.35; }
+.contact-way__link { white-space: normal; text-align: left; }
 .contact-faq .accordion-item > summary { min-height: 56px; }
 .contact-faq .accordion-item > summary:focus-visible { box-shadow: inset 0 0 0 2px var(--heading); }
 .contact-faq__tag {
@@ -316,7 +320,7 @@
 
 /* ---------- Responsive tweaks ---------- */
 @media (max-width: 759.98px) {
-  .contact-map { aspect-ratio: auto; min-height: 0; display: flex; flex-direction: column; }
+  .contact-map { height: auto; display: flex; flex-direction: column; }
   .contact-map__art { position: relative; inset: auto; height: 240px; flex: none; }
   .contact-map__consent {
     position: relative; left: auto; bottom: auto; width: auto; margin: 0; border-radius: 0;
@@ -329,7 +333,8 @@
   .contact-form__buttons { width: 100%; }
   .contact-form__buttons .btn { flex: 1 1 auto; }
   .contact-success__actions .btn { flex: 1 1 100%; }
-  .contact-week { gap: .2rem; }
+  .contact-week { gap: .1rem; }
+  .contact-week__name { font-size: .68rem; padding: .28rem .3rem; letter-spacing: 0; }
   .contact-map__consent { flex-direction: column; }
 }
 

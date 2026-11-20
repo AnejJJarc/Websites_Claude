@@ -17,7 +17,7 @@
   /* ---------- requested path ---------- */
   var path = "";
   try { path = decodeURI(window.location.pathname); } catch (e) { path = window.location.pathname; }
-  var isDirect = /\/404(\.html)?$/i.test(path) && !window.location.search;
+  var isDirect = /\/404(\.html)?$/i.test(path);
   var pathEl = qs("[data-nf-path]");
   if (pathEl && !isDirect && path && path !== "/") {
     var shown = path + window.location.search;

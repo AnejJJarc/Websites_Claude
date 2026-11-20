@@ -583,7 +583,7 @@
   var modalCount = 0;
   /**
    * PKB.modal.open({ title, content: string|Node, footer: string|Node, size: "sm"|"lg"|"full",
-   *                  className, onClose, ariaLabel }) → { dialog, body, close }
+   *                  className, onClose, ariaLabel, initialFocus: selector|Element }) → { dialog, body, close }
    */
   PKB.modal = {
     open: function (opts) {
@@ -635,6 +635,10 @@
       if (typeof dlg.showModal === "function") dlg.showModal();
       else dlg.setAttribute("open", "");
       PKB.hydrateIcons(dlg);
+      if (opts.initialFocus) {
+        var target = typeof opts.initialFocus === "string" ? qs(opts.initialFocus, dlg) : opts.initialFocus;
+        if (target && target.focus) target.focus();
+      }
       return { dialog: dlg, body: body, close: close };
     }
   };
@@ -1168,8 +1172,9 @@
     });
     doc.addEventListener("keydown", function (e) {
       var typing = /^(INPUT|TEXTAREA|SELECT)$/.test((e.target || {}).tagName || "") || (e.target && e.target.isContentEditable);
-      if ((e.key === "k" || e.key === "K") && (e.ctrlKey || e.metaKey)) { e.preventDefault(); open(); }
-      else if (e.key === "/" && !typing && !dlg) { e.preventDefault(); open(); }
+      var otherDialog = !dlg && qs("dialog.modal[open]");
+      if ((e.key === "k" || e.key === "K") && (e.ctrlKey || e.metaKey)) { if (!otherDialog) { e.preventDefault(); open(); } }
+      else if (e.key === "/" && !typing && !dlg && !otherDialog) { e.preventDefault(); open(); }
     });
   }
 

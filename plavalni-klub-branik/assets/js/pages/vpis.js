@@ -811,7 +811,7 @@
     if (!el.saveStatus) return;
     if (mode === "paused") {
       el.saveStatus.classList.remove("is-saved");
-      el.saveStatus.innerHTML = icon("info", "icon--sm") + "<span>Shranjevanje je ustavljeno — zgoraj izberite, ali nadaljujete osnutek.</span>";
+      el.saveStatus.innerHTML = icon("info", "icon--sm") + "<span>Shranjevanje je ustavljeno — zgoraj izberite, ali nadaljujete shranjeni osnutek.</span>";
     } else if (mode instanceof Date) {
       el.saveStatus.classList.add("is-saved");
       el.saveStatus.innerHTML = icon("check", "icon--sm") + "<span>Osnutek shranjen ob " + hhmm(mode) + " (samo na tej napravi)</span>";
@@ -858,6 +858,15 @@
     state.draftPending = true;
     state.draftRec = rec;
     setSaveStatus("paused");
+  }
+  /** After load (scroll restoration, #vpis …): if the hero banner is out of view, move it to the top of the form panel. */
+  function placeDraftBanner() {
+    if (!state.draftPending || !el.draft || el.panel.contains(el.draft)) return;
+    var r = el.draft.getBoundingClientRect();
+    if (r.bottom > headerOffset() && r.top < window.innerHeight) return;
+    el.panel.insertBefore(el.draft, el.panel.firstChild);
+    el.draft.classList.add("enr-draft--panel");
+    if (el.heroActions) el.heroActions.hidden = false;
   }
   function hideDraftBanner() {
     if (el.draft) el.draft.hidden = true;
@@ -1403,4 +1412,8 @@
   }
   setSaveStatus(state.draftPending ? "paused" : null);
   updateBar();
+  if (state.draftPending) {
+    var place = function () { setTimeout(placeDraftBanner, 60); setTimeout(placeDraftBanner, 450); };
+    if (document.readyState === "complete") place(); else window.addEventListener("load", place, { once: true });
+  }
 })();

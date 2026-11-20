@@ -106,6 +106,11 @@
 .enr-draft__meta { margin-top: .1rem; }
 .enr-draft__actions { grid-column: 1 / -1; display: flex; flex-wrap: wrap; gap: .5rem; }
 @media (min-width: 560px) { .enr-draft__actions { grid-column: 2; } }
+.enr-draft--panel { margin: 0 0 clamp(1.25rem, 3vw, 1.75rem); max-width: none; background: var(--glass-tile-light); border-color: var(--glass-border-strong); }
+@media (min-width: 720px) {
+  .enr-draft--panel { grid-template-columns: auto minmax(0, 1fr) auto; }
+  .enr-draft--panel .enr-draft__actions { grid-column: auto; }
+}
 
 /* ==========================================================================
    LAYOUT
@@ -361,7 +366,7 @@
 .enr-rev { display: flex; flex-direction: column; gap: .65rem; padding: 1rem 1.1rem 1.05rem; min-width: 0; }
 .enr-rev--wide { grid-column: 1 / -1; }
 .enr-rev__head { display: flex; align-items: center; justify-content: space-between; gap: .75rem; }
-.enr-rev__edit { font-size: .86rem; min-height: 32px; padding: .2rem .1rem; text-decoration: underline; text-underline-offset: 3px; text-decoration-color: color-mix(in srgb, currentColor 40%, transparent); }
+.enr-rev__edit { font-size: .86rem; min-height: 40px; padding: .3rem .5rem; margin: -.4rem -.5rem; border-radius: 10px; text-decoration: underline; text-underline-offset: 3px; text-decoration-color: color-mix(in srgb, currentColor 40%, transparent); }
 .enr-rev__main { display: flex; align-items: center; gap: .55rem; font-family: var(--font-display); font-weight: 600; font-size: 1.15rem; letter-spacing: -.02em; color: var(--heading); line-height: 1.25; }
 .enr-rev__list { display: grid; gap: 0; margin: 0; }
 .enr-rev__list > div { display: grid; grid-template-columns: minmax(7rem, 38%) minmax(0, 1fr); gap: .75rem; padding: .45rem 0; border-top: 1px solid var(--divider); }
@@ -386,9 +391,10 @@
 .enr-price__note { grid-column: 1 / -1; display: flex; gap: .45rem; align-items: flex-start; padding-top: .75rem; border-top: 1px solid var(--divider); }
 .enr-price__note .icon { margin-top: .22em; flex: none; }
 
-.enr fieldset.enr-consents { margin-top: 1.6rem; padding-top: 1.4rem; border-top: 1px solid var(--divider); display: grid; gap: .9rem; }
+.enr fieldset.enr-consents { margin-top: 1.6rem; padding-top: 1.1rem; border-top: 1px solid var(--divider); display: grid; gap: .15rem; }
+.enr-consents .check { min-height: 40px; padding-block: .5rem; }
 /* a floated legend is laid out like a normal block (not on the fieldset border) */
-.enr-consents > legend { float: left; width: 100%; margin-bottom: .1rem; }
+.enr-consents > legend { float: left; width: 100%; margin-bottom: .35rem; }
 .enr-consents .check { font-size: .94rem; }
 .enr-consents .check .opt { font-weight: 400; }
 .enr-consents .req { color: var(--danger); }
