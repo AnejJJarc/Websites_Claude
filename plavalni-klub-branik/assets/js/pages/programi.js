@@ -1,5 +1,5 @@
 /* ==========================================================================
-   Programi (programi.html) — page script
+   Programi (programi.html) – page script
    Category filter + program cards with details, group finder (quiz),
    comparison table, pricing, equipment checklist and FAQ search.
    Runs after data.js and site.js (all deferred), so PKB is ready.
@@ -164,7 +164,7 @@
       '<div class="prog-help__main">' +
         '<span class="icon-bubble" aria-hidden="true">' + PKB.icon("help-circle") + "</span>" +
         '<p class="prog-help__title">Ne veste, kje začeti?</p>' +
-        '<p class="prog-help__text">Odgovorite na tri kratka vprašanja v izbirniku skupine ali nam pišite — pomagali vam bomo izbrati pravi program. Prvi trening je poskusni.</p>' +
+        '<p class="prog-help__text">Odgovorite na tri kratka vprašanja v izbirniku skupine ali nam pišite – pomagali vam bomo izbrati pravi program. Prvi trening je poskusni.</p>' +
         '<div class="cluster"><a class="btn btn--sm btn--primary" href="#izbirnik">Izbirnik skupine' + PKB.icon("arrow-right", "icon--move") + "</a>" +
         '<a class="btn btn--sm" href="kontakt.html?zadeva=vpis#obrazec">' + PKB.icon("mail") + "Pišite nam</a></div>" +
       "</div>" +
@@ -507,9 +507,9 @@
   function reasonList(r, a) {
     var p = r.best.p, c = catOf(p), items = [];
     var ageOk = r.best.flags.indexOf("age") === -1;
-    items.push("<strong>Starost " + esc(ageLabel(a.age)) + "</strong> — skupina je " + (ageOk ? "" : "sicer ") + "namenjena starosti " + esc(p.ages || "") + ".");
+    items.push("<strong>Starost " + esc(ageLabel(a.age)) + "</strong> – skupina je " + (ageOk ? "" : "sicer ") + "namenjena starosti " + esc(p.ages || "") + ".");
     var sk = skillBy(a.skill);
-    if (sk) items.push("<strong>" + esc(sk.title) + "</strong> — raven skupine je »" + esc(p.level || c.name) + "«.");
+    if (sk) items.push("<strong>" + esc(sk.title) + "</strong> – raven skupine je »" + esc(p.level || c.name) + "«.");
     var g = goalBy(a.goal);
     if (g) {
       var goalText;
@@ -520,7 +520,7 @@
       } else {
         goalText = String(c.desc || "").replace(/^./, function (ch) { return ch.toLowerCase(); });
       }
-      items.push("<strong>Cilj: " + esc(g.title.toLowerCase()) + "</strong> — " + esc(goalText));
+      items.push("<strong>Cilj: " + esc(g.title.toLowerCase()) + "</strong> – " + esc(goalText));
     }
     if (p.requirements) items.push("<strong>Pogoj za vključitev:</strong> " + esc(p.requirements));
     return '<ul class="list-check prog-rec__reasons">' + items.map(function (t) { return "<li><span>" + t + "</span></li>"; }).join("") + "</ul>";
@@ -554,7 +554,7 @@
         '<div class="prog-rec__body">' +
           '<p class="prog-rec__kicker">Še malo potrpljenja</p>' +
           '<h3 class="prog-rec__title" id="quiz-result-title">Vpis je mogoč od ' + esc(decimal(r.minAge)) + ". leta</h3>" +
-          '<p class="muted">' + (f ? "Ko bo otrok dopolnil " + esc(ageLabel(r.minAge)) + ", je prva skupina <strong>" + esc(f.name) + "</strong> — " + esc((f.summary || "").replace(/^./, function (ch) { return ch.toLowerCase(); })) : "Pišite nam za informacije o vpisu.") + "</p>" +
+          '<p class="muted">' + (f ? "Ko bo otrok dopolnil " + esc(ageLabel(r.minAge)) + ", je prva skupina <strong>" + esc(f.name) + "</strong> – " + esc((f.summary || "").replace(/^./, function (ch) { return ch.toLowerCase(); })) : "Pišite nam za informacije o vpisu.") + "</p>" +
           '<div class="prog-rec__actions">' +
             (f ? '<a class="btn btn--primary btn--sm" href="#' + esc(f.id) + '">Spoznajte skupino ' + esc(f.name) + PKB.icon("arrow-right", "icon--move") + "</a>" : "") +
             '<a class="btn btn--sm" href="kontakt.html?zadeva=vpis#obrazec">' + PKB.icon("mail") + "Pišite nam</a>" +
@@ -889,7 +889,7 @@
           '<p class="prog-price-tile__value"><span class="prog-price-tile__num prog-price-tile__num--text">' + esc(PKB.formatPrice(null)) + "</span></p>" +
           '<span class="stat-bar" aria-hidden="true"><span style="--value:100%"></span></span>' +
           '<p class="prog-price-tile__list">' + unpriced.map(function (p) { return esc(p.name); }).join(" · ") + "</p>" +
-          '<p class="prog-price-tile__meta">Velja ločen cenik — <a href="kontakt.html?zadeva=vpis#obrazec">pišite nam</a>.</p>' +
+          '<p class="prog-price-tile__meta">Velja ločen cenik – <a href="kontakt.html?zadeva=vpis#obrazec">pišite nam</a>.</p>' +
         "</article>");
       }
       host.innerHTML = tiles.length ? tiles.join("") : '<p class="muted">Cenik bo objavljen kmalu.</p>';
@@ -938,7 +938,7 @@
       }
       if (status) {
         if (n === 0) status.textContent = "Torba je še prazna.";
-        else if (n === total) status.textContent = "Vse je pripravljeno — se vidimo v vodi!";
+        else if (n === total) status.textContent = "Vse je pripravljeno – se vidimo v vodi!";
         else {
           var missing = inputs.filter(function (i) { return !i.checked; }).map(function (i) { return nameOf(i).toLowerCase(); });
           status.textContent = "Manjka še: " + missing.join(", ") + ".";
@@ -1124,7 +1124,7 @@
     }
   }
 
-  /* links to the current hash do not fire hashchange — handle them directly */
+  /* links to the current hash do not fire hashchange – handle them directly */
   doc.addEventListener("click", function (e) {
     var a = e.target.closest && e.target.closest('a[href^="#"]');
     if (!a || e.defaultPrevented || e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;

@@ -1,5 +1,5 @@
 /* ==========================================================================
-   Kontakt (kontakt.html) — page script. Prefix: contact-
+   Kontakt (kontakt.html) – page script. Prefix: contact-
    - live office status (data.club.officeHours, Slovenian public holidays)
    - copy / call / mail / maps actions, social links from data
    - contact form: ?zadeva preselect, topic hints, live counter, draft autosave,
@@ -253,7 +253,7 @@
     // note under the table
     var noteText;
     if (st.today.holiday && st.today.type === "closed" && HOLIDAY_ROW) noteText = PKB.icon("calendar", "icon--sm") + "<span>Danes je dela prost dan (" + esc(st.today.holiday) + "), zato je pisarna zaprta.</span>";
-    else if (!st.open && st.today.type === "appointment") noteText = PKB.icon("phone", "icon--sm") + "<span>" + esc(st.today.row.label) + ": " + esc(st.today.row.hours) + " — pokličite ali nam pišite.</span>";
+    else if (!st.open && st.today.type === "appointment") noteText = PKB.icon("phone", "icon--sm") + "<span>" + esc(st.today.row.label) + ": " + esc(st.today.row.hours) + " – pokličite ali nam pišite.</span>";
     else noteText = PKB.icon("map-pin", "icon--sm") + "<span>Pisarna je na " + esc(C.venue ? "lokaciji " + C.venue : "Pristanu") + (C.address ? ", " + esc(C.address) : "") + ".</span>";
     note.innerHTML = noteText;
 
@@ -462,7 +462,7 @@
     qs("[data-success-title]", success).textContent = "Hvala" + (firstName(rec.ime) ? ", " + firstName(rec.ime) : "") + "!";
     qs("[data-success-text]", success).innerHTML =
       "Vaše sporočilo z zadevo »" + esc(rec.zadevaLabel) + "« je oddano. Odgovor bomo poslali na <strong>" + esc(rec.eposta) + "</strong>. " +
-      "Če ga želite poslati tudi iz svojega e-poštnega programa, uporabite gumb »Pošlji po e-pošti« — besedilo je že pripravljeno.";
+      "Če ga želite poslati tudi iz svojega e-poštnega programa, uporabite gumb »Pošlji po e-pošti« – besedilo je že pripravljeno.";
     qs("[data-success-summary]", success).innerHTML = summaryHTML(rec);
     qs("[data-success-mailto]", success).setAttribute("href", mailtoHref(rec));
     form.hidden = true;
@@ -576,7 +576,7 @@
   var hideBtn = qs("[data-map-hide]");
   var loadBtn = qs("[data-map-load]");
   var remember = qs("[data-map-remember]");
-  var STATUS_OFF = PKB.icon("lock", "icon--sm") + "<span>Zemljevid ni naložen — brez piškotkov tretjih oseb.</span>";
+  var STATUS_OFF = PKB.icon("lock", "icon--sm") + "<span>Zemljevid ni naložen – brez piškotkov tretjih oseb.</span>";
   function loadMap(opts) {
     opts = opts || {};
     if (!map || map.classList.contains("is-loaded")) return;
@@ -598,7 +598,7 @@
     frameHost.hidden = false;
     map.classList.add("is-loaded");
     hideBtn.hidden = false;
-    mapStatus.innerHTML = PKB.icon("info", "icon--sm") + "<span>Zemljevid zagotavlja Google — veljajo njegovi pogoji in pravila o zasebnosti.</span>";
+    mapStatus.innerHTML = PKB.icon("info", "icon--sm") + "<span>Zemljevid zagotavlja Google – veljajo njegovi pogoji in pravila o zasebnosti.</span>";
     if (remember && remember.checked) PKB.storage.set(KEY_MAP, true);
     if (opts.focus) hideBtn.focus();
   }
@@ -708,7 +708,7 @@
   renderFaq();
 
   if (location.hash) {
-    // content above the anchor was rendered by JS — settle the scroll position once layout is final
+    // content above the anchor was rendered by JS – settle the scroll position once layout is final
     requestAnimationFrame(function () { handleHash(true); });
   }
 })();

@@ -1,5 +1,5 @@
 /* ==========================================================================
-   Galerija (galerija.html) — prefix "gal-"
+   Galerija (galerija.html) – prefix "gal-"
    Album filter (?album=…), JS-balanced masonry with FLIP transitions,
    lightbox (keyboard, swipe, zoom + pan, slideshow, thumbnail strip, #<id> deep links).
    ========================================================================== */
@@ -128,7 +128,7 @@
       var cover = newest.filter(function (it) { return it.album === a; })[0];
       return '<li class="gal-stat gal-stat--album">' +
         '<a class="gal-stat__link" href="galerija.html?album=' + encodeURIComponent(a) + '#fotografije" data-album-link="' + esc(a) + '"' +
-          ' aria-label="Album ' + esc(a) + ": " + n + " " + photosWord(n) + ' — prikaži">' +
+          ' aria-label="Album ' + esc(a) + ": " + n + " " + photosWord(n) + ' – prikaži">' +
           '<span class="gal-stat__value">' + n + "</span>" +
           '<span class="gal-stat__label">' +
             (cover ? '<span class="gal-stat__cover"><img src="' + esc(cover.thumb) + '" alt="" width="' + cover.tw + '" height="' + cover.th + '" loading="lazy" decoding="async"></span>' : "") +

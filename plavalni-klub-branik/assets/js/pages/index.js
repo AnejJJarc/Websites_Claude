@@ -1,5 +1,5 @@
 /* ==========================================================================
-   Domov (index.html) — live hero tiles, overview sections, progression stepper
+   Domov (index.html) – live hero tiles, overview sections, progression stepper
    Runs after data.js + site.js (all deferred): PKB and PKB.data are ready.
    ========================================================================== */
 (function () {
@@ -81,7 +81,7 @@
   }
 
   /* ------------------------------------------------------------------
-     2. "Danes na Pristanu" — live tile (refreshes every 30 s)
+     2. "Danes na Pristanu" – live tile (refreshes every 30 s)
      ------------------------------------------------------------------ */
   var todayBody = qs("[data-today-body]");
   var wideMQ = window.matchMedia ? window.matchMedia("(min-width: 1080px)") : null;
@@ -120,7 +120,7 @@
       todayBody.innerHTML =
         '<div class="home-today__empty" data-today-empty>' +
           '<span class="icon-bubble icon-bubble--sm">' + PKB.icon("sun") + "</span>" +
-          '<p class="home-today__empty-title">Danes ni treningov — lep dan!</p>' +
+          '<p class="home-today__empty-title">Danes ni treningov – lep dan!</p>' +
           (nx ? '<p class="small muted">Naslednji trening: ' + esc(nx.text) + ".</p>" : "") +
           '<a class="btn btn--sm" href="urnik.html">' + PKB.icon("calendar") + "Tedenski urnik</a>" +
         "</div>";
@@ -137,7 +137,7 @@
     var next = upcoming[0] || null;
 
     // up to 3–4 rows, by priority: running sessions, the next one, the latest finished one
-    // (context), later sessions, earlier finished ones — then shown in chronological order
+    // (context), later sessions, earlier finished ones – then shown in chronological order
     var MAX = wideMQ && wideMQ.matches ? 3 : 4;
     var done = items.filter(function (x) { return x.st === "done"; });
     var pick = [];
@@ -189,7 +189,7 @@
   }
 
   /* ------------------------------------------------------------------
-     3. Next competition — ticking countdown
+     3. Next competition – ticking countdown
      ------------------------------------------------------------------ */
   var nextBody = qs("[data-next-body]");
   var nextWhen = qs("[data-next-when]");
@@ -219,7 +219,7 @@
     if (status === "live") {
       nextBody.innerHTML = head +
         '<div class="home-next__live"><span class="badge badge-live">Poteka zdaj</span>' +
-        '<span class="small muted">Tekma je v teku — rezultate objavimo sproti.</span></div>' +
+        '<span class="small muted">Tekma je v teku – rezultate objavimo sproti.</span></div>' +
         '<div class="home-next__foot">' + badges +
           '<a class="btn btn--sm" href="tekmovanja.html?tekma=' + encodeURIComponent(c.id) + '#rezultati">Rezultati</a></div>';
       return;
@@ -345,7 +345,7 @@
   }
 
   /* ------------------------------------------------------------------
-     6. "Pot napredovanja" — keyboard-accessible stepper (tablist)
+     6. "Pot napredovanja" – keyboard-accessible stepper (tablist)
      ------------------------------------------------------------------ */
   function setupPath() {
     var tabsHost = qs("[data-path-tabs]");
@@ -692,7 +692,7 @@
       var landscape = (g.w || 3) >= (g.h || 2);
       var tw = landscape ? 720 : 560, th = Math.round(tw * (g.h || 2) / (g.w || 3));
       return '<li data-reveal="zoom" style="' + revealDelay(i, 70) + '">' +
-        '<a class="home-gal__link" href="galerija.html#' + encodeURIComponent(g.id) + '" aria-label="' + esc(g.title) + ' — odpri v galeriji">' +
+        '<a class="home-gal__link" href="galerija.html#' + encodeURIComponent(g.id) + '" aria-label="' + esc(g.title) + ' – odpri v galeriji">' +
           '<img src="' + esc(g.thumb || g.src) + '" alt="" loading="lazy" decoding="async" width="' + tw + '" height="' + th + '">' +
           '<span class="home-gal__cap" aria-hidden="true"><span>' + esc(g.title) + "</span>" + PKB.icon("maximize") + "</span>" +
         "</a></li>";

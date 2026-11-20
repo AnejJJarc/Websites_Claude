@@ -1,5 +1,5 @@
 /* ==========================================================================
-   Novice (novice.html) — page script. Prefix: news-
+   Novice (novice.html) – page script. Prefix: news-
    Featured story, searchable / filterable list with URL state, archive by
    month, upcoming events and an article reader (modal) with deep links.
    ========================================================================== */
@@ -337,7 +337,7 @@
     var featured = desc.filter(function (n) { return n.featured; });
     var f = featured[0] || desc[0];
     if (!f) {
-      el.feature.innerHTML = '<div class="news-feature news-feature--empty tile"><span class="icon-bubble">' + icon("newspaper") + '</span><p class="news-empty__title">Novice bodo kmalu objavljene.</p><p class="small muted">Spremljajte nas — prve objave sezone pripravljamo.</p></div>';
+      el.feature.innerHTML = '<div class="news-feature news-feature--empty tile"><span class="icon-bubble">' + icon("newspaper") + '</span><p class="news-empty__title">Novice bodo kmalu objavljene.</p><p class="small muted">Spremljajte nas – prve objave sezone pripravljamo.</p></div>';
       return;
     }
     var also = featured.filter(function (n) { return n.id !== f.id; })[0] || null;
@@ -480,7 +480,7 @@
   function emptyHTML() {
     var t = terms();
     var hint = t.length ?
-      "Preverite črkovanje ali poskusite s krajšim izrazom — iščemo po naslovih in celotnem besedilu novic." :
+      "Preverite črkovanje ali poskusite s krajšim izrazom – iščemo po naslovih in celotnem besedilu novic." :
       "V izbranem obdobju ali rubriki ni objav. Izberite drugo rubriko ali mesec v arhivu.";
     return '<div class="glass empty-state news-empty__box">' +
       '<span class="icon-bubble">' + icon(t.length ? "search" : "filter") + "</span>" +
@@ -1072,7 +1072,7 @@
     if (el.count) el.count.textContent = "Ni objav";
     if (el.list) { el.list.innerHTML = ""; el.list.hidden = true; }
     emptyEl.hidden = false;
-    emptyEl.innerHTML = '<div class="glass empty-state news-empty__box"><span class="icon-bubble">' + icon("newspaper") + '</span><p class="news-empty__title">Novice bodo kmalu objavljene.</p><p class="small muted news-empty__hint">Spremljajte nas — prve objave sezone pripravljamo.</p></div>';
+    emptyEl.innerHTML = '<div class="glass empty-state news-empty__box"><span class="icon-bubble">' + icon("newspaper") + '</span><p class="news-empty__title">Novice bodo kmalu objavljene.</p><p class="small muted news-empty__hint">Spremljajte nas – prve objave sezone pripravljamo.</p></div>';
     if (el.moreWrap) el.moreWrap.hidden = true;
     qsa(".news-toolbar__controls, .news-toolbar__chips", root).forEach(function (x) { x.hidden = true; });
     return;

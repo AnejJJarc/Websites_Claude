@@ -1,5 +1,5 @@
 /* ==========================================================================
-   PK Branik Maribor — shared site runtime
+   PK Branik Maribor – shared site runtime
    Loaded with `defer` after data.js and before the page script, so by the
    time a page script runs, window.PKB is fully initialised and the DOM is parsed.
    ========================================================================== */
@@ -119,7 +119,7 @@
     return isNaN(v) ? Infinity : v;
   };
   PKB.formatPrice = function (eur) {
-    if (eur == null) return "Po dogovoru";
+    if (eur == null) return "Po ceniku sekcije";
     try { return new Intl.NumberFormat("sl-SI", { style: "currency", currency: "EUR", maximumFractionDigits: eur % 1 ? 2 : 0 }).format(eur); }
     catch (e) { return eur + " €"; }
   };
@@ -271,7 +271,7 @@
       if (meta) meta.setAttribute("content", t === "light" ? "#e9ecef" : "#0e1013");
       qsa(".theme-toggle").forEach(function (b) {
         b.setAttribute("aria-label", t === "light" ? "Vklopi temni način" : "Vklopi svetli način");
-        b.setAttribute("aria-pressed", t === "light" ? "false" : "true");
+        b.removeAttribute("aria-pressed");
       });
       doc.dispatchEvent(new CustomEvent("pkb:themechange", { detail: { theme: t } }));
     },
@@ -307,7 +307,7 @@
   var currentPage = (doc.body && doc.body.getAttribute("data-page")) || "";
   var C = D.club || {};
 
-  /* Monochrome mark that follows the theme (currentColor) — frosted badge with a "B" and a wave */
+  /* Monochrome mark that follows the theme (currentColor) – frosted badge with a "B" and a wave */
   function logoSVG() {
     return '<svg class="brand-mark" viewBox="0 0 48 48" aria-hidden="true" focusable="false">' +
       '<rect x="1.5" y="1.5" width="45" height="45" rx="14" fill="currentColor" fill-opacity=".1" stroke="currentColor" stroke-opacity=".32"/>' +
@@ -327,12 +327,12 @@
     }).join("");
     host.innerHTML =
       '<div class="nav-shell">' +
-        '<a class="brand" href="index.html" aria-label="PK Branik Maribor — domov">' + logoSVG() +
-          '<span class="brand-text"><span class="brand-name">PK Branik</span><span class="brand-sub">Maribor</span></span></a>' +
+        '<a class="brand" href="index.html" aria-label="PK Branik Maribor – domov">' + logoSVG() +
+          '<span class="brand-text"><span class="brand-name">PK Branik</span> <span class="brand-sub">Maribor</span></span></a>' +
         '<nav class="nav-primary" aria-label="Glavna navigacija"><ul class="nav-links" role="list">' + links + "</ul></nav>" +
         '<div class="nav-actions">' +
           '<button type="button" class="btn btn--icon search-btn" data-search-open aria-label="Iskanje po strani" aria-keyshortcuts="Control+K">' +
-            PKB.icon("search") + '<span class="search-btn__label">Iskanje</span><kbd class="search-btn__kbd">Ctrl K</kbd></button>' +
+            PKB.icon("search") + '<span class="search-btn__label">Iskanje</span><kbd class="search-btn__kbd" aria-hidden="true">Ctrl K</kbd></button>' +
           '<button type="button" class="btn btn--icon theme-toggle" data-theme-toggle>' +
             PKB.icon("moon", "icon-moon") + PKB.icon("sun", "icon-sun") + "</button>" +
           '<a class="btn btn--primary btn--sm nav-cta" href="' + CTA.href + '"' + (currentPage === "vpis" ? ' aria-current="page"' : "") + ">" + CTA.label + PKB.icon("arrow-right", "icon--move") + "</a>" +
@@ -344,15 +344,15 @@
     var overlay = doc.createElement("div");
     overlay.className = "nav-overlay";
     overlay.setAttribute("data-drawer-close", "");
-    var drawer = doc.createElement("aside");
+    var drawer = doc.createElement("div");
     drawer.className = "nav-drawer";
     drawer.id = "nav-drawer";
     drawer.setAttribute("role", "dialog");
     drawer.setAttribute("aria-modal", "true");
     drawer.setAttribute("aria-label", "Meni");
     drawer.innerHTML =
-      '<div class="nav-drawer__head"><a class="brand" href="index.html" aria-label="PK Branik Maribor — domov">' + logoSVG() +
-        '<span class="brand-text"><span class="brand-name">PK Branik</span><span class="brand-sub">Maribor</span></span></a>' +
+      '<div class="nav-drawer__head"><a class="brand" href="index.html" aria-label="PK Branik Maribor – domov">' + logoSVG() +
+        '<span class="brand-text"><span class="brand-name">PK Branik</span> <span class="brand-sub">Maribor</span></span></a>' +
         '<button type="button" class="btn btn--icon" data-drawer-close aria-label="Zapri meni">' + PKB.icon("x") + "</button></div>" +
       '<nav aria-label="Mobilna navigacija"><ul class="nav-drawer__links" role="list">' +
         NAV.concat([CTA]).map(function (n) {
@@ -446,8 +446,8 @@
       '<div class="container"><div class="footer-panel glass glass--lg">' +
         '<div class="footer-grid">' +
           "<div>" +
-            '<a class="brand" href="index.html" aria-label="PK Branik Maribor — domov">' + logoSVG() +
-              '<span class="brand-text"><span class="brand-name">PK Branik</span><span class="brand-sub">Maribor</span></span></a>' +
+            '<a class="brand" href="index.html" aria-label="PK Branik Maribor – domov">' + logoSVG() +
+              '<span class="brand-text"><span class="brand-name">PK Branik</span> <span class="brand-sub">Maribor</span></span></a>' +
             '<p class="muted small mt-4" style="max-width:34ch">' + PKB.escapeHTML(C.official || C.name) + ". Plavalna šola, tekmovalno plavanje in rekreacija na Kopališču Pristan.</p>" +
             '<div class="footer-social">' + socialHTML + "</div>" +
           "</div>" +
@@ -470,7 +470,7 @@
           "</div>" +
           "<div>" +
             '<h2 class="footer-title">Klubske novice</h2>' +
-            '<p class="muted small">Enkrat na mesec: rezultati, vpisi in dogodki. Brez nadlegovanja.</p>' +
+            '<p class="muted small">Enkrat na mesec: rezultati, vpisi in dogodki. Brez neželene pošte.</p>' +
             '<form class="newsletter-form" novalidate data-newsletter>' +
               '<div class="field">' +
                 '<label class="visually-hidden" for="nl-email">E-poštni naslov</label>' +
@@ -492,11 +492,12 @@
       PKB.initForm(nl, {
         onSubmit: function (form) {
           var email = form.email.value.trim();
-          var list = PKB.storage.get("newsletter", []);
-          if (list.indexOf(email) === -1) list.push(email);
-          PKB.storage.set("newsletter", list);
+          // No newsletter backend yet: prepare an e-mail to the club so the sign-up actually reaches someone.
+          var subject = "Prijava na klubske novice";
+          var body = "Pozdravljeni,\n\nprosim, uvrstite naslov " + email + " na seznam prejemnikov klubskih novic PK Branik.\n\nHvala!";
           form.reset();
-          PKB.toast({ type: "success", title: "Hvala za prijavo!", message: "Na " + email + " vam bomo pošiljali klubske novice." });
+          PKB.toast({ type: "success", title: "Skoraj končano", message: "Odprli smo e-poštno sporočilo za prijavo. Pošljite ga in uvrstili vas bomo na seznam." });
+          window.location.href = "mailto:" + (C.email || "") + "?subject=" + encodeURIComponent(subject) + "&body=" + encodeURIComponent(body);
         }
       });
     }
@@ -830,7 +831,7 @@
     PKB.download(filename || "pk-branik.ics", lines.join("\r\n"), "text/calendar;charset=utf-8");
     PKB.toast({ type: "success", title: "Koledar je pripravljen", message: "Datoteko .ics odprite, da termine dodate v svoj koledar." });
   };
-  /** Turn a weekly schedule entry into an ICS event recurring until the end of the season (15 June). */
+  /** Turn a weekly schedule entry into an ICS event recurring until the end of the school year (24 June). */
   PKB.sessionToEvent = function (session) {
     var p = PKB.programById(session.program) || { name: session.program };
     var today = PKB.today();
@@ -841,11 +842,11 @@
     var end = new Date(date.getFullYear(), date.getMonth(), date.getDate(), Math.floor(em / 60), em % 60);
     var seasonEndYear = today.getMonth() >= 6 ? today.getFullYear() + 1 : today.getFullYear();
     return {
-      title: "PK Branik — " + p.name,
+      title: "PK Branik – " + p.name,
       start: start, end: end,
       location: (C.venue || "") + " (" + session.pool + "), " + (C.address || "") + ", " + (C.postal || ""),
       description: "Trening skupine " + p.name + " (" + session.pool + "). Plavalni klub Branik Maribor.",
-      rrule: "FREQ=WEEKLY;UNTIL=" + seasonEndYear + "0615T235959Z"
+      rrule: "FREQ=WEEKLY;UNTIL=" + seasonEndYear + "0624T235959Z"
     };
   };
 
@@ -1030,7 +1031,7 @@
   }
 
   /* ------------------------------------------------------------------
-     12. Site search (command palette) — Ctrl/⌘+K or "/"
+     12. Site search (command palette) – Ctrl/⌘+K or "/"
      ------------------------------------------------------------------ */
   function buildIndex() {
     var idx = [];
@@ -1073,7 +1074,7 @@
 
   function setupSearch() {
     var index = null;
-    var dlg = null, input, list, items = [], active = 0;
+    var dlg = null, input, list, empty, items = [], active = 0;
 
     function search(qRaw) {
       var q = PKB.normalize(qRaw.trim());
@@ -1101,16 +1102,23 @@
       items = search(q);
       var qn = PKB.normalize(q.trim()).split(/\s+/)[0] || "";
       if (!items.length) {
-        list.innerHTML = '<li class="cmdk__empty" role="presentation">Ni zadetkov za »' + PKB.escapeHTML(q) + '«.<br><span class="small soft">Poskusite z drugo besedo, npr. »urnik« ali »vpis«.</span></li>';
-        input.setAttribute("aria-activedescendant", "");
+        list.innerHTML = "";
+        list.hidden = true;
+        empty.hidden = false;
+        empty.innerHTML = 'Ni zadetkov za »' + PKB.escapeHTML(q) + '«.<br><span class="small soft">Poskusite z drugo besedo, npr. »urnik« ali »vpis«.</span>';
+        input.setAttribute("aria-expanded", "false");
+        input.removeAttribute("aria-activedescendant");
         return;
       }
+      list.hidden = false;
+      empty.hidden = true;
+      input.setAttribute("aria-expanded", "true");
       var html = "", lastGroup = null;
       items.forEach(function (it, i) {
         if (it.group !== lastGroup) { html += '<li class="cmdk__group" role="presentation">' + PKB.escapeHTML(it.group) + "</li>"; lastGroup = it.group; }
         html += '<li class="cmdk__item" role="option" id="cmdk-opt-' + i + '" aria-selected="' + (i === active) + '" data-i="' + i + '">' +
-          '<a href="' + (it.href || "#") + '" tabindex="-1"><span class="icon-bubble">' + PKB.icon(it.icon) + "</span>" +
-          '<span class="cmdk__item-text"><span class="cmdk__item-title">' + highlight(it.title, qn) + '</span><span class="cmdk__item-sub">' + PKB.escapeHTML(it.sub || "") + "</span></span></a></li>";
+          '<div class="cmdk__link"><span class="icon-bubble" aria-hidden="true">' + PKB.icon(it.icon) + "</span>" +
+          '<span class="cmdk__item-text"><span class="cmdk__item-title">' + highlight(it.title, qn) + '</span><span class="cmdk__item-sub">' + PKB.escapeHTML(it.sub || "") + "</span></span></div></li>";
       });
       list.innerHTML = html;
       input.setAttribute("aria-activedescendant", "cmdk-opt-" + active);
@@ -1146,11 +1154,13 @@
           '<input class="cmdk__input" type="text" enterkeyhint="go" placeholder="Iščite strani, programe, novice …" aria-label="Iskanje po strani" role="combobox" aria-expanded="true" aria-controls="cmdk-list" aria-autocomplete="list" autocomplete="off" spellcheck="false">' +
           '<button type="button" class="btn btn--icon btn--sm" data-modal-close aria-label="Zapri iskanje">' + PKB.icon("x") + "</button></div>" +
         '<ul class="cmdk__results" id="cmdk-list" role="listbox" aria-label="Rezultati iskanja"></ul>' +
+        '<div class="cmdk__empty" role="status" hidden></div>' +
         '<div class="cmdk__foot"><span><kbd>↑</kbd><kbd>↓</kbd> premik</span><span><kbd>Enter</kbd> odpri</span><span><kbd>Esc</kbd> zapri</span></div>';
       var m = PKB.modal.open({ content: wrap, className: "cmdk", ariaLabel: "Iskanje po strani", showHead: false, onClose: function () { dlg = null; } });
       dlg = m.dialog;
       input = qs(".cmdk__input", wrap);
       list = qs(".cmdk__results", wrap);
+      empty = qs(".cmdk__empty", wrap);
       active = 0;
       render();
       input.focus();

@@ -1,5 +1,5 @@
 /* ==========================================================================
-   Tekmovanja (tekmovanja.html) — odštevanje do naslednje tekme, koledar tekem
+   Tekmovanja (tekmovanja.html) – odštevanje do naslednje tekme, koledar tekem
    s filtri, mesečni mini koledar, rezultati (filtri, razvrščanje, CSV),
    klubski rekordi in globoke povezave (#<id tekme>, ?tekma=<id>#rezultati).
    ========================================================================== */

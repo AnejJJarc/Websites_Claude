@@ -1,5 +1,5 @@
 /* ==========================================================================
-   404 (404.html) — page script. Prefix: nf-
+   404 (404.html) – page script. Prefix: nf-
    - shows the requested path and a "did you mean …?" suggestion (edit distance)
    - search button opens the site palette (pre-filled with the best guess)
    - "Nazaj" = history.back() with a fallback to index.html

@@ -1,7 +1,7 @@
 /* ==========================================================================
-   Urnik (urnik.html) — tedenski urnik treningov
+   Urnik (urnik.html) – tedenski urnik treningov
    Pogledi: Teden (časovna mreža), Seznam (po dnevih), Dan (zavihki).
-   Filtri: skupine, kategorije, lokacija, »Samo danes« — shranjeni v PKB.storage,
+   Filtri: skupine, kategorije, lokacija, »Samo danes« – shranjeni v PKB.storage,
    ?skupina=<id> izbere skupino (in prepiše shranjene filtre).
    Testni parametri: ?danes=YYYY-MM-DD (PKB.today) in ?ura=HH:MM (trenutni čas).
    ========================================================================== */
@@ -50,7 +50,7 @@
   function shortDate(d) { return d.getDate() + ". " + (d.getMonth() + 1) + "."; }
 
   /* ------------------------------------------------------------------
-     Data (validated copies — never mutate PKB.data)
+     Data (validated copies – never mutate PKB.data)
      ------------------------------------------------------------------ */
   var PROGRAMS = (D.programs || []).filter(function (p) { return p && p.id && p.name; });
   var PMAP = {}, ORDER = {};
@@ -120,7 +120,7 @@
     var sk = PKB.params().get("skupina");
     if (sk) {
       sk = sk.trim().toLowerCase();
-      /* a link to a group overrides the stored filters — unless it is the page's own URL
+      /* a link to a group overrides the stored filters – unless it is the page's own URL
          (state already shows exactly that group), so a reload keeps the pool / "Samo danes" choice */
       var same = state.programs.length === 1 && state.programs[0] === sk;
       if (PMAP[sk] && SCHED_PROGRAMS.indexOf(PMAP[sk]) > -1 && !same) {
@@ -194,7 +194,7 @@
   function names(items) { return items.map(function (s) { return s.prog.name; }).join(", "); }
 
   /* ------------------------------------------------------------------
-     Hero — today's day + "zdaj" status + stats
+     Hero – today's day + "zdaj" status + stats
      ------------------------------------------------------------------ */
   var H = {
     day: qs("[data-now-day]"), date: qs("[data-now-date]"), clock: qs("[data-now-clock]"),
@@ -202,7 +202,7 @@
     progLabel: qs("[data-now-progress-label]"), progCount: qs("[data-now-progress-count]"), progBar: qs("[data-now-progress]"),
     goLabel: qs("[data-goto-label]")
   };
-  /* the hero button opens today's day view — or the next training day when today is free */
+  /* the hero button opens today's day view – or the next training day when today is free */
   function targetDay() {
     if (SESSIONS.some(function (s) { return s.day === clock.wd; })) return { day: clock.wd, label: "Današnji termini" };
     var nx = nextAfterToday(SESSIONS);
@@ -239,7 +239,7 @@
       var nx = nextAfterToday(SESSIONS);
       html = '<p class="sched-now__label">Naslednji trening</p>' +
         (nx ? '<p class="sched-now__big">' + esc(cap(whenLabel(nx))) + "</p>" + nowListHTML(nx.items, "range") : '<p class="small muted">Urnik je trenutno prazen.</p>');
-      rel = st.todays.length ? "Današnji treningi so končani." : (clock.wd === 7 ? "Nedelja je prosta — ob nedeljah ni rednih treningov." : "Danes ni treningov.");
+      rel = st.todays.length ? "Današnji treningi so končani." : (clock.wd === 7 ? "Nedelja je prosta – ob nedeljah ni rednih treningov." : "Danes ni treningov.");
     }
     if (H.status && html !== lastStatusHTML) { H.status.innerHTML = html; lastStatusHTML = html; }
     if (H.rel) H.rel.textContent = rel;
@@ -398,7 +398,7 @@
     var s = L.s, p = s.prog, live = liveOf(s, st);
     var top = pct(s.sm), height = (pct(s.em) - pct(s.sm)).toFixed(4);
     var label = p.name + ", " + timeRange(s) + ", " + s.pool + ", " + DAYS[s.day - 1].toLowerCase() +
-      (live === "now" ? " — poteka zdaj" : live === "next" ? " — naslednji trening" : "");
+      (live === "now" ? " – poteka zdaj" : live === "next" ? " – naslednji trening" : "");
     var flip = s.day >= 6 && L.lane + L.span === L.lanes && L.lanes > 1;
     return '<button type="button" class="sched-block' + (live ? " is-" + live : "") + (flip ? " is-flip" : "") + '" data-session="' + s.id + '" data-key="b' + s.id + '"' +
       ' style="top:' + top + "%;height:" + height + "%;--lane:" + L.lane + ";--lanes:" + L.lanes + ";--span:" + L.span + ";--c:" + safeColor(p.color) + '"' +
@@ -593,7 +593,7 @@
     }
   }
 
-  /* On narrow screens the week grid scrolls inside its container — bring today's column into view. */
+  /* On narrow screens the week grid scrolls inside its container – bring today's column into view. */
   function scrollWeekToToday() {
     var sc = qs(".sched-week-scroll", host);
     var col = qs(".sched-week__col.is-today", host);
@@ -760,7 +760,7 @@
     parts.push(state.pool || "vse lokacije");
     if (state.today) parts.push("samo " + DAYS[clock.wd - 1].toLowerCase());
     if (state.view === "dan") parts.push("dan: " + DAYS[state.day - 1].toLowerCase());
-    meta.textContent = parts.join(" · ") + " — " + num(filtered().length, F_TERMIN) + " · Natisnjeno " + PKB.formatDate(clock.iso) + ". Urnik se lahko med počitnicami in prazniki spremeni.";
+    meta.textContent = parts.join(" · ") + " – " + num(filtered().length, F_TERMIN) + " · Natisnjeno " + PKB.formatDate(clock.iso) + ". Urnik se lahko med počitnicami in prazniki spremeni.";
   }
 
   /* ------------------------------------------------------------------
@@ -795,7 +795,7 @@
     state.pool = "";
     state.today = false;
     commit();
-    PKB.toast({ type: "info", message: "Filtri so počiščeni — prikazani so vsi termini." , timeout: 3000 });
+    PKB.toast({ type: "info", message: "Filtri so počiščeni – prikazani so vsi termini." , timeout: 3000 });
   }
   function scrollToBoard() {
     var target = qs("#termini");
@@ -908,7 +908,7 @@
       if (t) t.focus({ preventScroll: true });
     });
 
-    /* live clock — every 15 s check whether the minute (or the day) changed */
+    /* live clock – every 15 s check whether the minute (or the day) changed */
     var statusSig = signature();
     function tick() {
       var prev = clock;

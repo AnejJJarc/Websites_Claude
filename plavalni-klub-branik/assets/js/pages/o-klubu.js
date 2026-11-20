@@ -1,5 +1,5 @@
 /* ==========================================================================
-   O klubu (o-klubu.html) — page script
+   O klubu (o-klubu.html) – page script
    Scrollspy quick nav, values, interactive timeline, olympians, interactive
    pool schematic (Kopališče Pristan), coach cards with filter + dialog with
    deep links (#trener-<id>), partner block. Runs after site.js (defer).

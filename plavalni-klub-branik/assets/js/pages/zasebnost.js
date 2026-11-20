@@ -1,5 +1,5 @@
 /* ==========================================================================
-   Zasebnost (zasebnost.html) — page script. Prefix: priv-
+   Zasebnost (zasebnost.html) – page script. Prefix: priv-
    - club data from data.js, print button
    - sticky table of contents with scrollspy + reading progress (mobile: collapsible)
    - "on this device": lists pkb:* / pkb-theme entries in local/session storage,
@@ -168,7 +168,7 @@
       size: "sm",
       className: "priv-modal",
       initialFocus: ".modal__foot [data-modal-close]",
-      content: '<p class="muted">Iz brskalnika na tej napravi bomo izbrisali ' + n + " " + zapisAcc(n) + " te spletne strani. Podatki, ki ste jih klubu že poslali, s tem niso izbrisani — za to nam pišite.</p>" +
+      content: '<p class="muted">Iz brskalnika na tej napravi bomo izbrisali ' + n + " " + zapisAcc(n) + " te spletne strani. Podatki, ki ste jih klubu že poslali, s tem niso izbrisani – za to nam pišite.</p>" +
         '<ul class="priv-modal-list" role="list">' + entries.map(function (e) {
           return "<li><span>" + esc(e.name) + "</span><span>" + fmtSize(e.size) + "</span></li>";
         }).join("") + "</ul>",

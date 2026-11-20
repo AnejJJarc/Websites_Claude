@@ -1,5 +1,5 @@
 /* ==========================================================================
-   Vpis (vpis.html) — multi-step enrolment form. Prefix: enr-
+   Vpis (vpis.html) – multi-step enrolment form. Prefix: enr-
    Steps: 1 Program · 2 Plavalec · 3 Kontakt · 4 Pregled
    - ?program=<id> preselects a programme; #korak-N deep-links a step
    - draft autosave in PKB.storage ("vpis-osnutek"), restore banner
@@ -494,7 +494,7 @@
     if (a.exact < minAll) text += "Vpis v plavalno šolo je mogoč od " + PKB.formatNumber(minAll, minAll % 1 ? 1 : 0) + ". leta naprej. ";
     else if (alt) text += "Predlagamo skupino <strong>" + esc(alt.name) + "</strong> (" + esc(alt.ages || "") + "). ";
     else text += "Najprimernejšo skupino bo ob poskusnem treningu predlagal trener. ";
-    text += "Vpis lahko kljub temu nadaljujete — trener bo ob prvem treningu preveril znanje.";
+    text += "Vpis lahko kljub temu nadaljujete – trener bo ob prvem treningu preveril znanje.";
     return '<div class="enr-note enr-note--warn"><span class="enr-note__icon" aria-hidden="true">' + icon("alert-triangle") + "</span><div>" +
       '<p class="enr-note__title">Starost ne ustreza izbrani skupini</p>' +
       '<p class="enr-note__text">' + text + "</p>" +
@@ -529,7 +529,7 @@
     var pi = priceInfo(p, true);
     var t;
     if (!siblingRate) t = "Popust za brata ali sestro velja po veljavnem ceniku.";
-    else if (pi && pi.monthly != null) t = "Popust " + pctText() + " pri mesečni članarini — za skupino " + p.name + " " + fmtPrice(pi.total) + " namesto " + fmtPrice(pi.monthly) + ".";
+    else if (pi && pi.monthly != null) t = "Popust " + pctText() + " pri mesečni članarini – za skupino " + p.name + " " + fmtPrice(pi.total) + " namesto " + fmtPrice(pi.monthly) + ".";
     else t = "Za drugega otroka velja " + pctText() + " popust pri mesečni članarini (po ceniku).";
     el.siblingHint.textContent = t;
   }
@@ -811,7 +811,7 @@
     if (!el.saveStatus) return;
     if (mode === "paused") {
       el.saveStatus.classList.remove("is-saved");
-      el.saveStatus.innerHTML = icon("info", "icon--sm") + "<span>Shranjevanje je ustavljeno — zgoraj izberite, ali nadaljujete shranjeni osnutek.</span>";
+      el.saveStatus.innerHTML = icon("info", "icon--sm") + "<span>Shranjevanje je ustavljeno – zgoraj izberite, ali nadaljujete shranjeni osnutek.</span>";
     } else if (mode instanceof Date) {
       el.saveStatus.classList.add("is-saved");
       el.saveStatus.innerHTML = icon("check", "icon--sm") + "<span>Osnutek shranjen ob " + hhmm(mode) + " (samo na tej napravi)</span>";
@@ -982,7 +982,7 @@
   function renderReco() {
     if (!el.recoResult) return;
     if (state.recoSkill == null) {
-      el.recoResult.innerHTML = '<p class="small muted enr-reco__prompt">' + icon("info", "icon--sm") + "<span>Izberite še znanje plavanja — predlog se prikaže takoj.</span></p>";
+      el.recoResult.innerHTML = '<p class="small muted enr-reco__prompt">' + icon("info", "icon--sm") + "<span>Izberite še znanje plavanja – predlog se prikaže takoj.</span></p>";
       markRecommended(null);
       return;
     }
@@ -993,7 +993,7 @@
     var meta = [p.ages, num(p.perWeek) ? p.perWeek + "× na teden" : "", num(p.price) ? fmtPrice(p.price) + " / mes." : "cena po dogovoru"].filter(Boolean).join(" · ");
     var note = "";
     if (r.tooYoung) note = "Vpis v plavalno šolo je mogoč od " + PKB.formatNumber(r.minAge, r.minAge % 1 ? 1 : 0) + ". leta. Ko bo otrok dovolj star, priporočamo to skupino.";
-    else if (r.outOfAge) note = "Starost je zunaj priporočenega razpona skupine — trener bo ob poskusnem treningu predlagal najprimernejšo.";
+    else if (r.outOfAge) note = "Starost je zunaj priporočenega razpona skupine – trener bo ob poskusnem treningu predlagal najprimernejšo.";
     else if (p.category === "odrasli" && state.recoSkill >= 4) note = "Za tekmovalno plavanje odraslih se dogovorite s trenerjem.";
     el.recoResult.innerHTML =
       '<div class="enr-reco__card" style="--c:' + esc(p.color || "") + '">' +
@@ -1054,7 +1054,7 @@
      ------------------------------------------------------------------ */
   function openTerms() {
     var items = [
-      "Prvi trening je poskusni — za vpis se odločite po njem.",
+      "Prvi trening je poskusni – za vpis se odločite po njem.",
       enrollFee != null ? "Ob prvem vpisu se poravna vpisnina po veljavnem ceniku (" + fmtPrice(enrollFee) + ")." : "Ob prvem vpisu se poravna vpisnina po veljavnem ceniku.",
       pricing.paymentNote || "",
       pricing.note || "",
@@ -1160,7 +1160,7 @@
         '<h2 class="enr-done__title" tabindex="-1" data-done-title>Hvala, ' + esc(greet) + '! <span class="gradient-text">Še zadnji korak.</span></h2></div>' +
       "</div>" +
       '<p class="lead enr-done__lead">Prijava v skupino <strong>' + esc(p.name) + "</strong> (plavalec: <strong>" + esc(full) + "</strong>) je pripravljena. " +
-        (mailto ? "Da jo prejmemo, jo pošljite po e-pošti — sporočilo z vsemi podatki je že sestavljeno." : "Pokličite nas in navedite referenčno številko.") + "</p>" +
+        (mailto ? "Da jo prejmemo, jo pošljite po e-pošti – sporočilo z vsemi podatki je že sestavljeno." : "Pokličite nas in navedite referenčno številko.") + "</p>" +
       '<div class="tile tile--raised enr-ref">' +
         '<div><span class="enr-ref__label">Referenčna številka</span><span class="enr-ref__code num" data-ref>' + esc(s.ref) + "</span></div>" +
         '<div class="enr-ref__actions"><button type="button" class="btn btn--sm" data-copy-ref>' + icon("copy") + "Kopiraj</button></div>" +
@@ -1205,7 +1205,7 @@
     var ns = nextSession(s.program.id);
     if (!ns) { PKB.toast({ type: "error", message: "Za to skupino termin še ni objavljen." }); return; }
     PKB.downloadICS([{
-      title: "PK Branik — prvi trening: " + s.program.name,
+      title: "PK Branik – prvi trening: " + s.program.name,
       start: ns.start,
       end: ns.end,
       location: [(club.venue || "") + (ns.s.pool ? " (" + ns.s.pool + ")" : ""), club.address, club.postal].filter(Boolean).join(", "),

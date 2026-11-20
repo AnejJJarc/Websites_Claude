@@ -1,17 +1,20 @@
 /* ==========================================================================
-   PK Branik Maribor — shared site data (single source of truth)
+   PK Branik Maribor – shared site data (single source of truth)
    --------------------------------------------------------------------------
-   Preverjeno iz javnih virov (stanje 2024/2025 — pred objavo ponovno preveri):
+   Preverjeno iz javnih virov (stanje 2024/2025 – pred objavo ponovno preveri):
      - naslov Koroška cesta 33, 2000 Maribor (Kopališče Pristan), tel. +386 41 682 016,
        e-pošta info@plavalniklub-branik.si
-     - skupine plavalne šole Morske zvezdice, Rakci, Želvice; vpis od 4. leta;
+     - uradno ime »Plavalni klub Branik Vitaminklinik Maribor« (PK Branik Vitaminklinik)
+     - skupine plavalne šole Morske zvezdice, Rakci, Želvice (opisi s klubske strani);
+       cenik 2024 navaja še skupine Tjulnji, Delfini, Prehodna; vpis od 4. leta;
        šola poteka od sredine septembra do konca šolskega leta
      - cenik od 1. 9. 2024: Zvezdice 55 €, Rakci 60 €, ostale skupine 70 € / mesec (prvi otrok)
-     - olimpijca kluba: Matjaž Kozelj (OI 1988, 1992), Metka Sparavec (OI 1996)
+     - olimpijca kluba: Matjaž Kozelj (OI 1988, 1992; rojen v Mariboru), Metka Sparavec (OI 1996;
+       bron na 50 m hrbtno na EP 1999 po Wikipediji – preveri)
      - olimpijski bazen 50 × 25 m na Pristanu (2003)
    VSE OSTALO (trenerji, novice, rezultati, rekordi, tekme, točni termini) so
    VZORČNI PODATKI za prikaz delovanja strani in jih je treba zamenjati.
-   Fotografije so začasne (Unsplash/Pexels) — glej assets/img/photos/CREDITS.md.
+   Fotografije so začasne (Unsplash/Pexels) – glej assets/img/photos/CREDITS.md.
    ========================================================================== */
 window.PKB_DATA = {
   /* Fotografija v ozadju posamezne strani (body[data-photo] jo lahko prepiše) */
@@ -52,7 +55,7 @@ window.PKB_DATA = {
     mapsUrl: "https://www.google.com/maps/search/?api=1&query=Kopali%C5%A1%C4%8De%20Pristan%2C%20Koro%C5%A1ka%20cesta%2033%2C%202000%20Maribor",
     mapEmbed: "https://maps.google.com/maps?q=Kopali%C5%A1%C4%8De%20Pristan%2C%20Koro%C5%A1ka%20cesta%2033%2C%20Maribor&z=16&output=embed",
     officeHours: [
-      { days: "Ponedeljek – petek", hours: "16:00 – 19:00", note: "pisarna na Pristanu" },
+      { days: "Ponedeljek–petek", hours: "16:00–19:00", note: "pisarna na Pristanu" },
       { days: "Sobota", hours: "po dogovoru", note: "" },
       { days: "Nedelja in prazniki", hours: "zaprto", note: "" }
     ]
@@ -63,7 +66,7 @@ window.PKB_DATA = {
     { value: 2, suffix: "", label: "olimpijca v zgodovini kluba", icon: "medal" },
     { value: 50, suffix: " m", label: "olimpijski bazen na Pristanu", icon: "waves" },
     { value: 6, suffix: "", label: "skupin plavalne šole", icon: "users" },
-    { value: 4, suffix: "+", label: "leta — starost za vpis", icon: "smile" }
+    { value: 4, suffix: " leta", label: "najnižja starost za vpis v plavalno šolo", icon: "smile" }
   ],
 
   /* Kategorije programov */
@@ -80,7 +83,7 @@ window.PKB_DATA = {
       ages: "od 4 let", minAge: 4, maxAge: 6, level: "Privajanje na vodo", skill: 0,
       perWeek: 1, duration: 60, pool: "Mali bazen", price: 55,
       image: "assets/img/photos/sola-lebdenje-sm.jpg",
-      summary: "Prvi koraki v vodi — skozi igro do sproščenosti in varnosti.",
+      summary: "Prvi koraki v vodi – skozi igro do sproščenosti in varnosti.",
       desc: "Skupina za najmlajše, ki se z vodo šele spoznavajo. Vadba poteka v malem bazenu, kjer otroci stojijo na dnu, zato je okolje varno in prijazno. Skozi igro izgubijo strah, se naučijo potapljati obraz, izdihovati v vodo in drseti.",
       goals: ["Sproščenost in občutek varnosti v vodi", "Potapljanje obraza in izdihovanje v vodo", "Drsenje na prsih in hrbtu s pripomočki", "Priprava na prehod v skupino Rakci"],
       requirements: "Brez predznanja. Otrok mora biti star vsaj 4 leta."
@@ -92,12 +95,12 @@ window.PKB_DATA = {
       image: "assets/img/photos/sola-ucenje-sm.jpg",
       summary: "Za neplavalce: vodna odpornost, potapljanje in prvi zavesljaji kravla.",
       desc: "Skupina za otroke, ki še ne znajo plavati. Utrjujemo vodno odpornost, potapljanje obraza in pravilno dihanje ter naredimo prve zavesljaje kravla. Cilj skupine je samostojno preplavati krajšo razdaljo.",
-      goals: ["Samostojno potapljanje in pobiranje predmetov z dna", "Pravilno dihanje — izdih v vodo", "Prvi zavesljaji kravla in noge kravla z desko", "Samostojno preplavana krajša razdalja"],
+      goals: ["Samostojno potapljanje in pobiranje predmetov z dna", "Pravilno dihanje – izdih v vodo", "Prvi zavesljaji kravla in noge kravla z desko", "Samostojno preplavana krajša razdalja"],
       requirements: "Neplavalci, starejši od 4,5 leta."
     },
     {
       id: "zelvice", name: "Želvice", category: "sola", icon: "waves", color: "#a8d0c0",
-      ages: "6–9 let", minAge: 5.5, maxAge: 9, level: "Osnove treh tehnik", skill: 2,
+      ages: "6–9 let", minAge: 6, maxAge: 9, level: "Osnove treh tehnik", skill: 2,
       perWeek: 3, duration: 75, pool: "25 m bazen", price: 70,
       image: "assets/img/photos/sola-otroci-sm.jpg",
       summary: "Kravl, hrbtno in prsno plavanje z usklajenim dihanjem.",
@@ -112,7 +115,7 @@ window.PKB_DATA = {
       image: "assets/img/photos/sola-plavanje-sm.jpg",
       summary: "Izpopolnjevanje tehnik, prvi delfinovi zavesljaji, starti in obrati.",
       desc: "Nadaljevalna skupina, v kateri izpopolnjujemo kravl, hrbtno in prsno tehniko ter spoznamo osnove delfinove tehnike. Učimo se startov, obratov in plavanja daljših razdalj.",
-      goals: ["Tehnično pravilne tri tehnike", "Osnove delfinove tehnike", "Start s pomola in osnovni obrati", "Neprekinjeno plavanje 100 m"],
+      goals: ["Tehnično pravilne tri tehnike", "Osnove delfinove tehnike", "Start z roba bazena in osnovni obrati", "Neprekinjeno plavanje 100 m"],
       requirements: "Opravljene zahteve skupine Želvice."
     },
     {
@@ -122,7 +125,7 @@ window.PKB_DATA = {
       image: "assets/img/photos/delfin-plavalka-sm.jpg",
       summary: "Vse štiri tehnike, vzdržljivost in prvi interni mitingi.",
       desc: "Skupina za otroke, ki obvladajo vse tri osnovne tehnike in želijo napredovati. Poudarek je na delfinovi tehniki, mešanem plavanju, obratih in vzdržljivosti. Otroci prvič nastopijo na internih mitingih.",
-      goals: ["Vse štiri tehnike in mešano plavanje", "Kolebni obrat pri kravlu", "Start s štartnega bloka", "Nastop na internem mitingu"],
+      goals: ["Vse štiri tehnike in mešano plavanje", "Kolebni obrat pri kravlu", "Start s startnega bloka", "Nastop na internem mitingu"],
       requirements: "Opravljene zahteve skupine Tjulnji ali ocena trenerja."
     },
     {
@@ -148,7 +151,7 @@ window.PKB_DATA = {
     {
       id: "starejsi", name: "Starejši dečki in deklice", category: "tekmovalno", icon: "timer", color: "#e6c39c",
       ages: "12–14 let", minAge: 12, maxAge: 15, level: "Tekmovalna skupina", skill: 7,
-      perWeek: 7, duration: 120, pool: "50 m bazen", price: null,
+      perWeek: 8, duration: 120, pool: "50 m bazen", price: null,
       image: "assets/img/photos/start-hrbtno-sm.jpg",
       summary: "Več vode, jutranji treningi in specializacija po disciplinah.",
       desc: "Skupina z večjim obsegom treninga, jutranjimi termini in sistematično kondicijsko pripravo. Plavalci začnejo s specializacijo po tehnikah in razdaljah ter ciljajo na norme za državna prvenstva.",
@@ -160,7 +163,7 @@ window.PKB_DATA = {
       ages: "15+ let", minAge: 15, maxAge: 99, level: "Vrhunska skupina", skill: 8,
       perWeek: 9, duration: 120, pool: "50 m bazen", price: null,
       image: "assets/img/photos/tekma-delfin-sm.jpg",
-      summary: "Najvišja tekmovalna raven — državna in mednarodna tekmovanja.",
+      summary: "Najvišja tekmovalna raven – državna in mednarodna tekmovanja.",
       desc: "Program za najstarejše tekmovalne kategorije: do devet treningov v vodi na teden, kondicijski trening, priprave in nastopi na državnih ter mednarodnih tekmovanjih. Plavalci trenirajo po individualnih načrtih.",
       goals: ["Individualni letni načrt treninga", "Nastopi na DP in mednarodnih mitingih", "Kondicijski in preventivni program", "Priprave doma in v tujini"],
       requirements: "Napredovanje iz mlajših tekmovalnih skupin ali dogovor s trenerjem."
@@ -182,7 +185,7 @@ window.PKB_DATA = {
     validFrom: "2024-09-01",
     enrollmentFee: 25,          // TODO: preveri vpisnino v veljavnem ceniku
     siblingDiscount: 0.1,       // TODO: preveri popust za drugega otroka
-    note: "Mesečna članarina za prvega otroka. Za tekmovalne skupine in odrasle velja ločen cenik — pišite nam.",
+    note: "Mesečna članarina za prvega otroka. Za tekmovalne skupine in odrasle velja ločen cenik – pišite nam.",
     paymentNote: "Članarina se poravna mesečno do 15. v mesecu na TRR kluba."
   },
 
@@ -194,7 +197,7 @@ window.PKB_DATA = {
     { id: "suho", name: "Suha vadba", desc: "Kondicijska vadba v telovadnici ob bazenu." }
   ],
 
-  /* Tedenski urnik — day: 1 = ponedeljek … 7 = nedelja.
+  /* Tedenski urnik – day: 1 = ponedeljek … 7 = nedelja.
      Zvezdice (pet 16:15–17:15), Rakci (pon, sre) in Želvice (pon/sre 18:00–19:15, pet 17:00–18:15)
      so povzeti po klubski strani; ostali termini so vzorčni. */
   schedule: [
@@ -254,7 +257,7 @@ window.PKB_DATA = {
   days: ["Ponedeljek", "Torek", "Sreda", "Četrtek", "Petek", "Sobota", "Nedelja"],
   daysShort: ["Pon", "Tor", "Sre", "Čet", "Pet", "Sob", "Ned"],
 
-  /* VZORČNI podatki — trenerska ekipa */
+  /* VZORČNI podatki – trenerska ekipa */
   coaches: [
     { id: "maja", name: "Maja Kovač", role: "Vodja plavalne šole", programs: ["zvezdice", "rakci", "zelvice"], years: 14, colors: ["#06b6d4", "#3b82f6"],
       bio: "Vodi plavalno šolo in skrbi, da vsak otrok v vodi najprej začuti varnost in veselje. Posebej rada dela z najmlajšimi.",
@@ -263,7 +266,7 @@ window.PKB_DATA = {
       bio: "Nekdanji državni reprezentant, ki načrtuje sezono tekmovalnih skupin in vodi priprave. Prisega na tehniko pred obsegom.",
       quals: ["Licenca trenerja plavanja", "Univerzitetni diplomirani kineziolog", "Mednarodni seminarji LEN"] },
     { id: "nina", name: "Nina Horvat", role: "Trenerka mlajših kategorij", programs: ["mlajsi", "prehodna"], years: 9, colors: ["#14b8a6", "#22d3ee"],
-      bio: "Mladim plavalcem pomaga pri prvih korakih v tekmovalnem plavanju — z ogromno potrpežljivosti in natančnim delom na tehniki.",
+      bio: "Mladim plavalcem pomaga pri prvih korakih v tekmovalnem plavanju – z ogromno potrpežljivosti in natančnim delom na tehniki.",
       quals: ["Licenca trenerja plavanja", "Profesorica športne vzgoje"] },
     { id: "jure", name: "Jure Krajnc", role: "Kondicijski trener", programs: ["kadeti", "starejsi", "prehodna"], years: 11, colors: ["#f59e0b", "#ef4444"],
       bio: "Skrbi za moč, gibljivost in preventivo poškodb. Njegova suha vadba je trda, a plavalci pravijo, da se splača.",
@@ -276,13 +279,13 @@ window.PKB_DATA = {
       quals: ["Licenca trenerja plavanja", "Trener triatlona"] }
   ],
 
-  /* Zgodovina — prva dva vnosa in olimpijski mejniki so preverjeni, ostalo vzorčno */
+  /* Zgodovina – prva dva vnosa in olimpijski mejniki so preverjeni, ostalo vzorčno */
   history: [
     { year: "1988", title: "Prvi olimpijec kluba", text: "Matjaž Kozelj, plavalec delfinove tehnike, nastopi na olimpijskih igrah v Seulu.", icon: "medal", verified: true },
-    { year: "1992", title: "Barcelona, prvič za Slovenijo", text: "Kozelj nastopi na OI v Barceloni v disciplinah 100 m in 200 m delfin — na prvih igrah samostojne Slovenije.", icon: "flag", verified: true },
+    { year: "1992", title: "Barcelona, prvič za Slovenijo", text: "Kozelj nastopi na OI v Barceloni v disciplinah 100 m in 200 m delfin – na prvih poletnih olimpijskih igrah samostojne Slovenije.", icon: "flag", verified: true },
     { year: "1996", title: "Metka Sparavec v Atlanti", text: "Branikova plavalka Metka Sparavec nastopi na olimpijskih igrah v Atlanti.", icon: "star", verified: true },
     { year: "1999", title: "Evropski bron", text: "Metka Sparavec osvoji bronasto medaljo na 50 m hrbtno na evropskem prvenstvu v Istanbulu.", icon: "trophy", verified: true },
-    { year: "2003", title: "Olimpijski bazen na Pristanu", text: "Kopališče Pristan dobi sodoben olimpijski bazen dimenzij 50 × 25 m — nov dom za trening kluba.", icon: "waves", verified: true },
+    { year: "2003", title: "Olimpijski bazen na Pristanu", text: "Kopališče Pristan dobi sodoben olimpijski bazen dimenzij 50 × 25 m – nov dom za trening kluba.", icon: "waves", verified: true },
     { year: "2024", title: "Prenovljen program plavalne šole", text: "Šola dobi jasno pot napredovanja: od Morskih zvezdic do Prehodne skupine.", icon: "graduation", verified: false },
     { year: "2026", title: "Nova sezona, nova spletna stran", text: "Sezono 2026/2027 začnemo z več kot 40 tedenskimi termini vadbe.", icon: "sparkles", verified: false }
   ],
@@ -294,9 +297,9 @@ window.PKB_DATA = {
 
   values: [
     { title: "Varnost na prvem mestu", text: "Majhne skupine, usposobljeni trenerji in postopno napredovanje.", icon: "shield" },
-    { title: "Veselje do vode", text: "Učimo skozi igro — motivacija je ključ do napredka.", icon: "smile" },
+    { title: "Veselje do vode", text: "Učimo skozi igro – motivacija je ključ do napredka.", icon: "smile" },
     { title: "Pot do vrha", text: "Jasna pot od plavalne šole do tekmovalnega plavanja.", icon: "target" },
-    { title: "Klubska skupnost", text: "Tabori, prireditve in navijanje na tribuni — smo ena ekipa.", icon: "users" }
+    { title: "Klubska skupnost", text: "Tabori, prireditve in navijanje na tribuni – smo ena ekipa.", icon: "users" }
   ],
 
   newsCategories: ["Tekmovanja", "Plavalna šola", "Klub", "Dogodki"],
@@ -309,7 +312,7 @@ window.PKB_DATA = {
       title: "Odlični nastopi na jesenskem mitingu v Kranju",
       excerpt: "Branikovci so se z mitinga vrnili z dvanajstimi medaljami in kopico osebnih rekordov.",
       body: [
-        "Na jesenskem mitingu v Kranju je nastopilo 23 plavalk in plavalcev PK Branik, ki so skupaj osvojili dvanajst medalj — štiri zlate, šest srebrnih in dve bronasti.",
+        "Na jesenskem mitingu v Kranju je nastopilo 23 plavalk in plavalcev PK Branik, ki so skupaj osvojili dvanajst medalj – štiri zlate, šest srebrnih in dve bronasti.",
         "Najbolj so blesteli starejši dečki in deklice, ki so na 50-metrskem bazenu izboljšali kar 31 osebnih rekordov. Lara Vidmar je zmagala na 200 m mešano, Luka Žagar pa je bil najhitrejši na 100 m delfin.",
         "»Miting je pokazal, da je jesenski trening na pravi poti. Zdaj se osredotočamo na zimsko državno prvenstvo,« je po tekmi povedal glavni trener Rok Novak.",
         "Vsem plavalcem čestitamo, staršem pa hvala za podporo na tribuni!"
@@ -319,12 +322,12 @@ window.PKB_DATA = {
       id: "bozicni-miting-2026", date: "2026-11-03", category: "Dogodki", author: "PK Branik", readMins: 2,
       image: "assets/img/photos/startni-bloki-hala-sm.jpg", featured: true,
       title: "Vabilo na Božično-novoletni miting PK Branik",
-      excerpt: "13. decembra na Pristanu gostimo tradicionalni miting za vse starostne kategorije.",
+      excerpt: "12. decembra na Pristanu gostimo tradicionalni miting za vse starostne kategorije.",
       body: [
-        "Vabimo vas na Božično-novoletni miting PK Branik, ki bo v soboto, 13. decembra 2026, na Kopališču Pristan.",
+        "Vabimo vas na Božično-novoletni miting PK Branik, ki bo v soboto, 12. decembra 2026, na Kopališču Pristan.",
         "Miting je namenjen plavalcem vseh tekmovalnih kategorij, posebej pa vabimo tudi otroke iz plavalne šole, ki bodo nastopili v zabavnih štafetah.",
         "Prijave klubov zbiramo do 5. decembra. Razpis in program sta na voljo v pisarni kluba in na zahtevo po e-pošti.",
-        "Pridite navijat — za najmlajše bo poskrbel tudi Božiček!"
+        "Pridite navijat – za najmlajše bo poskrbel tudi Božiček!"
       ]
     },
     {
@@ -346,7 +349,7 @@ window.PKB_DATA = {
       body: [
         "Oktobrski dan odprtih vrat je na Pristan privabil več kot sto otrok s starši. Otroci so se preizkusili v igrah v malem bazenu, starejši pa so pod vodstvom trenerjev preplavali prve dolžine.",
         "Starši so dobili odgovore na vprašanja o skupinah, urniku in napredovanju, trenerji pa so pomagali pri izbiri primerne skupine.",
-        "Hvala vsem, ki ste nas obiskali — se vidimo v vodi!"
+        "Hvala vsem, ki ste nas obiskali – se vidimo v vodi!"
       ]
     },
     {
@@ -356,7 +359,7 @@ window.PKB_DATA = {
       excerpt: "Ana Kos je na 100 m hrbtno postavila nov klubski rekord v kategoriji starejših deklic.",
       body: [
         "Na jesenskem mitingu v Celju je Ana Kos na 100 m hrbtno s časom 1:06,84 postavila nov klubski rekord v kategoriji starejših deklic.",
-        "Dobro so nastopili tudi mlajši dečki in deklice, ki so osvojili sedem medalj in se veselili prvih uradnih norm.",
+        "Dobro so nastopili tudi mlajši dečki in deklice, ki so osvojili štiri medalje in se veselili prvih uradnih norm.",
         "Rezultati so objavljeni na strani Tekmovanja."
       ]
     },
@@ -368,14 +371,14 @@ window.PKB_DATA = {
       body: [
         "Tekmovalne skupine so začetek sezone obeležile s pripravljalnim vikendom na Pohorju.",
         "Program je vključeval jutranji tek, pohod na vrh, vadbo moči in gibljivosti ter večerne delavnice o prehrani in regeneraciji.",
-        "Najpomembnejše pa je bilo druženje — nova sezona se začenja z močno in povezano ekipo."
+        "Najpomembnejše pa je bilo druženje – nova sezona se začenja z močno in povezano ekipo."
       ]
     },
     {
       id: "zacetek-plavalne-sole", date: "2026-09-15", category: "Plavalna šola", author: "Maja Kovač", readMins: 2,
       image: "assets/img/photos/sola-plavanje-sm.jpg",
       title: "Začela se je plavalna šola 2026/2027",
-      excerpt: "Sredi septembra smo odprli novo sezono plavalne šole — v vodi je že več kot 200 otrok.",
+      excerpt: "Sredi septembra smo odprli novo sezono plavalne šole – v vodi je že več kot 200 otrok.",
       body: [
         "Plavalna šola PK Branik poteka od sredine septembra do konca šolskega leta. Letos smo v vodo pospremili več kot 200 otrok v šestih skupinah.",
         "Prvi tedni so namenjeni spoznavanju in razvrščanju v skupine. Če trener oceni, da bi bila za otroka primernejša druga skupina, vas bomo obvestili.",
@@ -386,7 +389,7 @@ window.PKB_DATA = {
       id: "nov-urnik", date: "2026-09-02", category: "Klub", author: "PK Branik", readMins: 1,
       image: "assets/img/photos/proga-vrv-sm.jpg",
       title: "Objavljen urnik treningov za sezono 2026/2027",
-      excerpt: "Na voljo je nov tedenski urnik vseh skupin — z možnostjo izvoza v vaš koledar.",
+      excerpt: "Na voljo je nov tedenski urnik vseh skupin – z možnostjo izvoza v vaš koledar.",
       body: [
         "Objavili smo urnik treningov za novo sezono. Urnik je pregleden po dnevih in skupinah, posamezne termine pa lahko izvozite neposredno v svoj koledar.",
         "Morebitne spremembe med sezono bomo sproti objavljali med novicami."
@@ -400,7 +403,7 @@ window.PKB_DATA = {
       body: [
         "Konec avgusta je 40 mladih plavalcev preživelo teden na poletnem taboru ob morju.",
         "Dopoldne so trenirali tehniko v bazenu, popoldne pa plavali na odprtem morju, igrali vaterpolo in se učili reševanja iz vode.",
-        "Tabor bomo ponovili tudi prihodnje poletje — prijave bodo odprte spomladi."
+        "Tabor bomo ponovili tudi prihodnje poletje – prijave bodo odprte spomladi."
       ]
     },
     {
@@ -418,15 +421,15 @@ window.PKB_DATA = {
 
   /* VZORČNI koledar tekmovanj (status: upcoming | past) */
   competitions: [
-    { id: "miting-celje-2026", name: "Jesenski miting Celje", date: "2026-10-11", endDate: null, city: "Celje", venue: "Kopališče Golovec", course: "25 m", level: "Miting", status: "past", categories: ["mlajsi", "starejsi"] },
+    { id: "miting-celje-2026", name: "Jesenski miting Celje", date: "2026-10-10", endDate: null, city: "Celje", venue: "Kopališče Golovec", course: "50 m", level: "Miting", status: "past", categories: ["mlajsi", "starejsi"] },
     { id: "miting-kranj-2026", name: "Jesenski miting Kranj", date: "2026-11-07", endDate: "2026-11-08", city: "Kranj", venue: "Olimpijski bazen Kranj", course: "50 m", level: "Miting", status: "past", categories: ["mlajsi", "starejsi", "kadeti"] },
     { id: "zdp-mlajsi-2026", name: "Zimsko DP mlajših kategorij", date: "2026-11-28", endDate: "2026-11-29", city: "Kranj", venue: "Olimpijski bazen Kranj", course: "25 m", level: "Državno prvenstvo", status: "upcoming", categories: ["mlajsi", "starejsi"] },
-    { id: "bozicni-miting-2026", name: "Božično-novoletni miting PK Branik", date: "2026-12-13", endDate: null, city: "Maribor", venue: "Kopališče Pristan", course: "25 m", level: "Miting", status: "upcoming", host: true, categories: ["prehodna", "mlajsi", "starejsi", "kadeti"] },
+    { id: "bozicni-miting-2026", name: "Božično-novoletni miting PK Branik", date: "2026-12-12", endDate: null, city: "Maribor", venue: "Kopališče Pristan", course: "25 m", level: "Miting", status: "upcoming", host: true, categories: ["prehodna", "mlajsi", "starejsi", "kadeti"] },
     { id: "zdp-absolutno-2026", name: "Zimsko absolutno DP", date: "2026-12-18", endDate: "2026-12-20", city: "Ljubljana", venue: "Kopališče Tivoli", course: "25 m", level: "Državno prvenstvo", status: "upcoming", categories: ["kadeti"] },
-    { id: "pokal-1-2027", name: "Pokal Slovenije — 1. kolo", date: "2027-01-24", endDate: null, city: "Radovljica", venue: "Kopališče Radovljica", course: "25 m", level: "Pokal", status: "upcoming", categories: ["starejsi", "kadeti"] },
+    { id: "pokal-1-2027", name: "Pokal Slovenije – 1. kolo", date: "2027-01-24", endDate: null, city: "Radovljica", venue: "Kopališče Radovljica", course: "25 m", level: "Pokal", status: "upcoming", categories: ["starejsi", "kadeti"] },
     { id: "miting-mb-2027", name: "Pomladni miting Maribor", date: "2027-03-13", endDate: "2027-03-14", city: "Maribor", venue: "Kopališče Pristan", course: "50 m", level: "Miting", status: "upcoming", host: true, categories: ["mlajsi", "starejsi", "kadeti"] },
     { id: "dp-kadeti-2027", name: "DP kadetov in mladincev", date: "2027-04-17", endDate: "2027-04-18", city: "Kranj", venue: "Olimpijski bazen Kranj", course: "50 m", level: "Državno prvenstvo", status: "upcoming", categories: ["kadeti"] },
-    { id: "mali-branik-2027", name: "Mali Branik — miting plavalne šole", date: "2027-05-22", endDate: null, city: "Maribor", venue: "Kopališče Pristan", course: "25 m", level: "Interni miting", status: "upcoming", host: true, categories: ["zelvice", "tjulnji", "delfini", "prehodna"] },
+    { id: "mali-branik-2027", name: "Mali Branik – miting plavalne šole", date: "2027-05-22", endDate: null, city: "Maribor", venue: "Kopališče Pristan", course: "25 m", level: "Interni miting", status: "upcoming", host: true, categories: ["zelvice", "tjulnji", "delfini", "prehodna"] },
     { id: "ldp-mlajsi-2027", name: "Poletno DP mlajših kategorij", date: "2027-06-19", endDate: "2027-06-20", city: "Kranj", venue: "Olimpijski bazen Kranj", course: "50 m", level: "Državno prvenstvo", status: "upcoming", categories: ["mlajsi", "starejsi"] }
   ],
 
@@ -439,17 +442,17 @@ window.PKB_DATA = {
     { competition: "miting-kranj-2026", athlete: "Zala Mlakar", gender: "Ž", year: 2009, category: "kadeti", event: "100 m prsno", time: "1:14,37", place: 2, pb: true },
     { competition: "miting-kranj-2026", athlete: "Nik Kralj", gender: "M", year: 2014, category: "mlajsi", event: "50 m prosto", time: "30,12", place: 1, pb: true },
     { competition: "miting-kranj-2026", athlete: "Ema Turk", gender: "Ž", year: 2014, category: "mlajsi", event: "50 m hrbtno", time: "36,85", place: 2, pb: true },
-    { competition: "miting-kranj-2026", athlete: "Jan Bezjak", gender: "M", year: 2011, category: "starejsi", event: "400 m prosto", time: "4:32,10", place: 2, pb: false },
-    { competition: "miting-kranj-2026", athlete: "Mia Petek", gender: "Ž", year: 2013, category: "mlajsi", event: "100 m prosto", time: "1:09,44", place: 3, pb: true },
+    { competition: "miting-kranj-2026", athlete: "Jan Bezjak", gender: "M", year: 2012, category: "starejsi", event: "400 m prosto", time: "4:32,10", place: 2, pb: false },
+    { competition: "miting-kranj-2026", athlete: "Mia Petek", gender: "Ž", year: 2014, category: "mlajsi", event: "100 m prosto", time: "1:09,44", place: 3, pb: true },
     { competition: "miting-kranj-2026", athlete: "Žan Lesjak", gender: "M", year: 2008, category: "kadeti", event: "50 m delfin", time: "25,71", place: 2, pb: false },
     { competition: "miting-kranj-2026", athlete: "Lara Vidmar", gender: "Ž", year: 2012, category: "starejsi", event: "100 m prsno", time: "1:18,02", place: 3, pb: true },
     { competition: "miting-kranj-2026", athlete: "Tim Golob", gender: "M", year: 2010, category: "kadeti", event: "100 m prosto", time: "54,83", place: 2, pb: false },
     { competition: "miting-celje-2026", athlete: "Ana Kos", gender: "Ž", year: 2012, category: "starejsi", event: "100 m hrbtno", time: "1:06,84", place: 1, pb: true },
     { competition: "miting-celje-2026", athlete: "Nik Kralj", gender: "M", year: 2014, category: "mlajsi", event: "100 m prosto", time: "1:07,90", place: 1, pb: true },
     { competition: "miting-celje-2026", athlete: "Ema Turk", gender: "Ž", year: 2014, category: "mlajsi", event: "100 m hrbtno", time: "1:19,33", place: 1, pb: true },
-    { competition: "miting-celje-2026", athlete: "Mia Petek", gender: "Ž", year: 2013, category: "mlajsi", event: "50 m prosto", time: "31,48", place: 2, pb: true },
+    { competition: "miting-celje-2026", athlete: "Mia Petek", gender: "Ž", year: 2014, category: "mlajsi", event: "50 m prosto", time: "31,48", place: 2, pb: true },
     { competition: "miting-celje-2026", athlete: "Luka Žagar", gender: "M", year: 2012, category: "starejsi", event: "200 m delfin", time: "2:28,76", place: 2, pb: true },
-    { competition: "miting-celje-2026", athlete: "Jan Bezjak", gender: "M", year: 2011, category: "starejsi", event: "200 m prosto", time: "2:09,15", place: 3, pb: false },
+    { competition: "miting-celje-2026", athlete: "Jan Bezjak", gender: "M", year: 2012, category: "starejsi", event: "200 m prosto", time: "2:09,15", place: 3, pb: false },
     { competition: "miting-celje-2026", athlete: "Lara Vidmar", gender: "Ž", year: 2012, category: "starejsi", event: "400 m mešano", time: "5:24,60", place: 2, pb: true },
     { competition: "miting-celje-2026", athlete: "Gal Kovačič", gender: "M", year: 2014, category: "mlajsi", event: "50 m prsno", time: "41,22", place: 3, pb: true }
   ],
@@ -458,7 +461,7 @@ window.PKB_DATA = {
   records: [
     { event: "50 m prosto", gender: "M", athlete: "Žan Lesjak", time: "23,94", year: 2026 },
     { event: "100 m prosto", gender: "M", athlete: "Tim Golob", time: "52,61", year: 2026 },
-    { event: "200 m prosto", gender: "M", athlete: "Tim Golob", time: "1:55,02", year: 2025 },
+    { event: "200 m prosto", gender: "M", athlete: "Matic Fras", time: "1:55,02", year: 2019 },
     { event: "100 m hrbtno", gender: "M", athlete: "Blaž Rajh", time: "58,47", year: 2021 },
     { event: "100 m prsno", gender: "M", athlete: "Matic Fras", time: "1:03,90", year: 2019 },
     { event: "100 m delfin", gender: "M", athlete: "Žan Lesjak", time: "55,12", year: 2025 },
@@ -467,14 +470,14 @@ window.PKB_DATA = {
     { event: "100 m prosto", gender: "Ž", athlete: "Nika Ornik", time: "57,31", year: 2022 },
     { event: "200 m prosto", gender: "Ž", athlete: "Zala Mlakar", time: "2:06,44", year: 2026 },
     { event: "100 m hrbtno", gender: "Ž", athlete: "Ana Kos", time: "1:06,84", year: 2026 },
-    { event: "100 m prsno", gender: "Ž", athlete: "Zala Mlakar", time: "1:13,88", year: 2026 },
+    { event: "100 m prsno", gender: "Ž", athlete: "Zala Mlakar", time: "1:14,37", year: 2026 },
     { event: "100 m delfin", gender: "Ž", athlete: "Petra Vogrin", time: "1:02,75", year: 2020 },
-    { event: "200 m mešano", gender: "Ž", athlete: "Lara Vidmar", time: "2:29,90", year: 2026 }
+    { event: "200 m mešano", gender: "Ž", athlete: "Lara Vidmar", time: "2:31,48", year: 2026 }
   ],
 
   albums: ["Treningi", "Tekmovanja", "Plavalna šola", "Klub"],
 
-  /* Galerija — začasne fotografije iz fotobank Unsplash/Pexels (glej assets/img/photos/CREDITS.md).
+  /* Galerija – začasne fotografije iz fotobank Unsplash/Pexels (glej assets/img/photos/CREDITS.md).
      Zamenjaj s fotografijami kluba. src = velika slika (lightbox), thumb = pomanjšana (mreža). */
   gallery: [
     { id: "g1", src: "assets/img/photos/delfin-trening.jpg", thumb: "assets/img/photos/delfin-trening-sm.jpg", w: 1920, h: 1280, album: "Treningi", title: "Jutranji trening delfinove tehnike", date: "2026-10-06" },
@@ -505,12 +508,12 @@ window.PKB_DATA = {
   faq: [
     { q: "Od katere starosti lahko otrok začne?", a: "V plavalno šolo vpisujemo otroke, stare 4 leta in več. Najmlajši začnejo v skupini Morske zvezdice, ki poteka v malem bazenu.", topic: "vpis" },
     { q: "Kdaj poteka plavalna šola?", a: "Plavalna šola poteka od sredine septembra do konca šolskega leta. Vpis je mogoč tudi med letom, če so v skupini prosta mesta.", topic: "vpis" },
-    { q: "Kako vem, v katero skupino sodi moj otrok?", a: "Uporabite izbirnik skupine na strani Programi ali pa otroka pripeljite na poskusni trening — trener bo ocenil znanje in predlagal skupino.", topic: "programi" },
-    { q: "Ali je prvi trening brezplačen?", a: "Da, prvi trening je poskusni. Šele nato se odločite za vpis.", topic: "vpis" },
+    { q: "Kako vem, v katero skupino sodi moj otrok?", a: "Uporabite izbirnik skupine na strani Programi ali pa otroka pripeljite na poskusni trening – trener bo ocenil znanje in predlagal skupino.", topic: "programi" },
+    { q: "Ali lahko otrok najprej poskusi?", a: "Da, prvi trening je poskusni: otrok spozna skupino in trenerja, za vpis pa se odločite po njem.", topic: "vpis" },
     { q: "Kaj potrebuje otrok za trening?", a: "Kopalke, plavalno kapo, plavalna očala, brisačo in natikače. Dolgi lasje naj bodo speti pod kapo.", topic: "programi" },
     { q: "Kako poteka plačilo članarine?", a: "Članarina se plačuje mesečno na TRR kluba. Ob prvem vpisu se poravna še vpisnina po veljavnem ceniku.", topic: "vpis" },
     { q: "Ali lahko starši spremljamo trening?", a: "Starši lahko trening spremljajo s tribune. Prosimo, da v garderobe in ob bazen ne vstopate, da otroci ostanejo osredotočeni.", topic: "programi" },
-    { q: "Kje poteka vadba?", a: "Vsa vadba poteka na Kopališču Pristan, Koroška cesta 33, Maribor — v malem, 25-metrskem ali 50-metrskem bazenu, odvisno od skupine.", topic: "kontakt" },
-    { q: "Ali nudite tudi plavanje za odrasle?", a: "Da, za odrasle izvajamo tečaj plavanja in vodeno rekreacijo. Za proste termine nam pišite.", topic: "programi" }
+    { q: "Kje poteka vadba?", a: "Vsa vadba poteka na Kopališču Pristan, Koroška cesta 33, Maribor – v malem, 25-metrskem ali 50-metrskem bazenu, odvisno od skupine.", topic: "kontakt" },
+    { q: "Ali imate tudi plavanje za odrasle?", a: "Da, za odrasle izvajamo tečaj plavanja in vodeno rekreacijo. Za proste termine nam pišite.", topic: "programi" }
   ]
 };
