@@ -1,0 +1,618 @@
+<!doctype html>
+<html lang="sl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Esteros — multi-chain lending pool</title>
+<meta name="description" content="Esteros je multi-chain lending pool: lasten Aave-style DeFi protokol. Pregled projekta in vlog za ekipo.">
+<meta name="theme-color" content="#050b14">
+<script>document.documentElement.classList.add('js')</script>
+<style>
+:root{
+  --bg:#050b14;
+  --ink:#eef5ff;
+  --muted:rgba(226,238,255,.72);
+  --line:rgba(255,255,255,.16);
+  --aqua:#5eead4;
+  --sky:#7dd3fc;
+  --violet:#a78bfa;
+  --ok:#4ade80;
+  --warn:#fbbf24;
+  --bad:#fb7185;
+  --ease:cubic-bezier(.2,.8,.2,1);
+  --r:28px;
+  --sans:-apple-system,BlinkMacSystemFont,"SF Pro Display","Segoe UI",Inter,Roboto,"Helvetica Neue",Arial,sans-serif;
+  --mono:ui-monospace,"SF Mono",SFMono-Regular,Menlo,Consolas,monospace;
+}
+*,*::before,*::after{box-sizing:border-box}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%;overflow-x:hidden;overflow-x:clip}
+body{
+  margin:0;background:var(--bg);color:var(--ink);
+  font:400 1rem/1.6 var(--sans);
+  -webkit-font-smoothing:antialiased;
+  overflow-x:hidden;overflow-x:clip;
+}
+h1,h2,h3,p,ul,ol{margin:0}
+ul,ol{padding:0;list-style:none}
+a{color:inherit}
+:focus-visible{outline:2px solid var(--sky);outline-offset:3px;border-radius:8px}
+.wrap{width:min(1120px,100% - 40px);margin-inline:auto}
+section{padding-block:clamp(72px,12vw,140px);scroll-margin-top:72px}
+
+/* ---------- liquid background ---------- */
+.bg{position:fixed;inset:0;z-index:-1;overflow:hidden;pointer-events:none;
+  background:radial-gradient(120% 80% at 50% 0%,#0b1d33 0%,var(--bg) 60%)}
+.blob{position:absolute;width:70vmax;aspect-ratio:1;border-radius:50%;opacity:.55;will-change:transform}
+.blob.a{left:-25vmax;top:-20vmax;background:radial-gradient(closest-side,rgba(45,212,191,.75),transparent);animation:drift-a 26s ease-in-out infinite alternate}
+.blob.b{right:-30vmax;top:10vmax;background:radial-gradient(closest-side,rgba(59,130,246,.7),transparent);animation:drift-b 32s ease-in-out infinite alternate}
+.blob.c{left:10vmax;bottom:-40vmax;background:radial-gradient(closest-side,rgba(139,92,246,.6),transparent);animation:drift-c 38s ease-in-out infinite alternate}
+@keyframes drift-a{to{transform:translate3d(22vmax,16vmax,0) scale(1.15)}}
+@keyframes drift-b{to{transform:translate3d(-26vmax,20vmax,0) scale(.85)}}
+@keyframes drift-c{to{transform:translate3d(18vmax,-24vmax,0) scale(1.2)}}
+
+/* ---------- glass ---------- */
+.glass{
+  position:relative;isolation:isolate;border-radius:var(--r);
+  background:linear-gradient(140deg,rgba(255,255,255,.15),rgba(255,255,255,.04) 42%,rgba(255,255,255,.08));
+  -webkit-backdrop-filter:blur(22px) saturate(180%);backdrop-filter:blur(22px) saturate(180%);
+  border:1px solid rgba(255,255,255,.18);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.42),inset 0 -1px 0 rgba(255,255,255,.07),
+    inset 0 0 28px rgba(255,255,255,.05),0 28px 60px -28px rgba(0,0,0,.75);
+}
+.glass::after{
+  content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;
+  background:radial-gradient(380px circle at var(--mx,50%) var(--my,0%),rgba(255,255,255,.2),transparent 48%);
+  opacity:0;transition:opacity .5s var(--ease);
+}
+.glass:hover::after{opacity:1}
+.glass>*{position:relative;z-index:1}
+@supports not ((backdrop-filter:blur(1px)) or (-webkit-backdrop-filter:blur(1px))){
+  .glass{background:rgba(18,32,54,.92)}
+}
+
+/* ---------- reveal + tilt ---------- */
+[data-reveal],.tilt{
+  transition:opacity .9s var(--ease) var(--d,0s),translate .9s var(--ease) var(--d,0s),
+    scale .9s var(--ease) var(--d,0s),rotate .9s var(--ease) var(--d,0s),transform .4s var(--ease);
+}
+.js [data-reveal]{opacity:0;translate:0 36px;scale:.96}
+.js .cards [data-reveal]{rotate:x 24deg;transform-origin:50% 100%}
+.js [data-reveal].in{opacity:1;translate:0 0;scale:1;rotate:x 0deg}
+.tilt{transform:perspective(900px) rotateX(calc(var(--py,0)*-7deg)) rotateY(calc(var(--px,0)*9deg))}
+.tilt .lift{transition:transform .4s var(--ease);transform:translate(calc(var(--px,0)*8px),calc(var(--py,0)*8px))}
+
+/* ---------- type ---------- */
+.eyebrow{display:inline-block;font:500 .78rem/1 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--aqua);margin-bottom:18px}
+h2{font-size:clamp(1.9rem,5.4vw,3.2rem);line-height:1.08;letter-spacing:-.03em;font-weight:700;text-wrap:balance}
+.lede{color:var(--muted);font-size:clamp(1rem,2.2vw,1.15rem);max-width:60ch;margin-top:16px;text-wrap:pretty}
+.head{margin-bottom:clamp(32px,6vw,56px)}
+.grad{background:linear-gradient(100deg,#fff 5%,#b8f3ea 35%,#9cc9ff 62%,#cdbcff 90%);background-size:200% 100%;
+  -webkit-background-clip:text;background-clip:text;color:transparent;animation:shimmer 9s ease-in-out infinite alternate}
+@keyframes shimmer{to{background-position:100% 0}}
+
+/* ---------- nav ---------- */
+.nav{position:fixed;top:12px;left:50%;translate:-50% 0;z-index:50;width:min(1120px,100% - 24px);
+  display:flex;align-items:center;justify-content:space-between;gap:12px;padding:8px 8px 8px 18px;border-radius:999px;
+  transition:background .4s var(--ease),box-shadow .4s var(--ease)}
+.nav.scrolled{background:linear-gradient(140deg,rgba(12,24,42,.6),rgba(12,24,42,.4))}
+.brand{display:flex;align-items:center;gap:10px;font-weight:700;letter-spacing:-.02em;text-decoration:none}
+.brand i{width:18px;height:18px;border-radius:50%;
+  background:radial-gradient(circle at 30% 28%,#fff,var(--aqua) 45%,#3b82f6 85%);
+  box-shadow:0 0 14px rgba(94,234,212,.7),inset 0 -2px 4px rgba(0,0,0,.25)}
+.nav ul{display:none;gap:4px}
+.nav ul a{display:block;padding:8px 14px;border-radius:999px;text-decoration:none;font-size:.92rem;color:var(--muted);transition:color .3s,background .3s}
+.nav ul a:hover{color:var(--ink);background:rgba(255,255,255,.1)}
+@media (min-width:820px){.nav ul{display:flex}}
+
+/* ---------- buttons ---------- */
+.btn{position:relative;overflow:hidden;display:inline-flex;align-items:center;justify-content:center;gap:.5em;
+  padding:.85em 1.4em;border-radius:999px;font-weight:600;text-decoration:none;color:var(--ink);
+  border:1px solid rgba(255,255,255,.24);background:rgba(255,255,255,.08);
+  -webkit-backdrop-filter:blur(14px) saturate(170%);backdrop-filter:blur(14px) saturate(170%);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.4),0 12px 30px -14px rgba(0,0,0,.7);
+  transition:transform .4s var(--ease),box-shadow .4s var(--ease)}
+.btn::after{content:"";position:absolute;inset:0;background:linear-gradient(105deg,transparent 35%,rgba(255,255,255,.55) 50%,transparent 65%);
+  translate:-120% 0;transition:translate .9s var(--ease)}
+.btn:hover{transform:translateY(-2px) scale(1.03)}
+.btn:hover::after{translate:120% 0}
+.btn:active{transform:scale(.97)}
+.btn.primary{color:#04121f;border-color:rgba(255,255,255,.55);
+  background:linear-gradient(120deg,#5eead4,#7dd3fc 55%,#a78bfa);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.7),0 14px 36px -12px rgba(94,234,212,.6)}
+.btn.small{padding:.6em 1.1em;font-size:.9rem}
+
+/* ---------- hero ---------- */
+.hero{min-height:100svh;display:grid;align-items:center;padding-block:120px 60px}
+.hero .wrap{display:grid;gap:40px;align-items:center}
+.hero h1{font-size:clamp(3.6rem,17vw,9rem);line-height:.92;letter-spacing:-.055em;font-weight:800;padding-bottom:.06em}
+.hero .one{font-size:clamp(1.25rem,3.6vw,1.75rem);line-height:1.25;letter-spacing:-.02em;font-weight:600;margin-top:22px;max-width:22ch;text-wrap:balance}
+.hero .sub{color:var(--muted);margin-top:14px;max-width:46ch;text-wrap:pretty}
+.cta{display:flex;flex-wrap:wrap;gap:12px;margin-top:30px}
+@media (min-width:900px){.hero .wrap{grid-template-columns:1.05fr .95fr}}
+
+.scene{position:relative;width:min(84vw,500px);aspect-ratio:1;margin-inline:auto}
+.scene-float{position:absolute;inset:0;animation:float 7s ease-in-out infinite}
+.scene-tilt{position:absolute;inset:0;will-change:transform}
+@keyframes float{50%{transform:translateY(-14px)}}
+.ring{position:absolute;left:50%;top:50%;border-radius:50%;border:1px solid rgba(255,255,255,.26);z-index:1}
+.ring.front{z-index:3;clip-path:inset(50% -2px -2px -2px);border-color:rgba(255,255,255,.5)}
+.ring.a{width:94%;height:31.96%;transform:translate(-50%,-50%) rotate(-16deg)}
+.ring.b{width:72%;height:21.6%;transform:translate(-50%,-50%) rotate(24deg)}
+.orb{position:absolute;left:50%;top:50%;translate:-50% -50%;width:46%;aspect-ratio:1;border-radius:50%;z-index:2;overflow:hidden;
+  background:radial-gradient(circle at 32% 24%,rgba(255,255,255,.34),rgba(255,255,255,.06) 42%,rgba(255,255,255,.02) 62%),rgba(8,22,42,.4);
+  -webkit-backdrop-filter:blur(8px) saturate(160%);backdrop-filter:blur(8px) saturate(160%);
+  box-shadow:inset 0 0 0 1px rgba(255,255,255,.3),inset 0 14px 30px rgba(255,255,255,.2),inset 0 -24px 40px rgba(59,130,246,.3),
+    0 30px 90px -10px rgba(45,212,191,.55)}
+.orb i{position:absolute;left:-50%;top:50%;width:200%;aspect-ratio:1;border-radius:42%;
+  background:linear-gradient(180deg,rgba(94,234,212,.9),rgba(59,130,246,.8) 45%);animation:spin 9s linear infinite}
+.orb i+i{top:46%;border-radius:38%;opacity:.45;background:linear-gradient(180deg,rgba(167,139,250,.9),rgba(59,130,246,.6) 45%);animation-duration:14s;animation-direction:reverse}
+.orb::after{content:"";position:absolute;inset:0;border-radius:50%;
+  background:radial-gradient(ellipse 42% 26% at 34% 20%,rgba(255,255,255,.75),transparent 70%),
+    radial-gradient(ellipse 60% 30% at 60% 96%,rgba(255,255,255,.22),transparent 70%)}
+.orb b{position:absolute;left:0;right:0;top:27%;text-align:center;z-index:1;font:600 clamp(.6rem,1.9vw,.78rem)/1 var(--mono);letter-spacing:.2em;color:rgba(255,255,255,.85)}
+@keyframes spin{to{transform:rotate(360deg)}}
+.chip{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);white-space:nowrap;
+  padding:.5em .9em;border-radius:999px;font:600 clamp(.68rem,2.2vw,.82rem)/1 var(--mono);
+  background:linear-gradient(140deg,rgba(255,255,255,.3),rgba(255,255,255,.1));border:1px solid rgba(255,255,255,.4);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.55),0 10px 24px -10px rgba(0,0,0,.6);will-change:transform}
+
+/* ---------- cards ---------- */
+.cards{display:grid;gap:16px;perspective:1400px}
+@media (min-width:620px){.cards{grid-template-columns:repeat(2,1fr)}}
+@media (min-width:1000px){.cards.four{grid-template-columns:repeat(4,1fr)}}
+.card{padding:26px 24px 28px;height:100%}
+.card h3{font-size:1.25rem;letter-spacing:-.02em;margin:18px 0 8px}
+.card p{color:var(--muted);font-size:.98rem}
+.ico{display:grid;place-items:center;width:52px;height:52px;border-radius:18px;
+  background:linear-gradient(140deg,rgba(94,234,212,.35),rgba(125,211,252,.12));border:1px solid rgba(255,255,255,.3);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.5),0 10px 24px -10px rgba(94,234,212,.6)}
+.ico svg{width:24px;height:24px;fill:none;stroke:#fff;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+
+/* ---------- flow ---------- */
+.flows{display:grid;gap:16px}
+.flowbox{padding:24px 20px}
+.flowbox h3{font:600 .8rem/1 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--sky);margin-bottom:18px}
+.flow{display:flex;flex-direction:column}
+.step{display:flex;align-items:center;gap:12px;padding:12px 16px;border-radius:18px;font-weight:600;font-size:.98rem;
+  background:rgba(255,255,255,.07);border:1px solid var(--line);box-shadow:inset 0 1px 0 rgba(255,255,255,.2)}
+.step span{display:grid;place-items:center;flex:none;width:26px;height:26px;border-radius:50%;font:600 .75rem/1 var(--mono);
+  background:rgba(94,234,212,.2);border:1px solid rgba(94,234,212,.5);color:var(--aqua)}
+.step.danger{background:rgba(251,113,133,.12);border-color:rgba(251,113,133,.45)}
+.step.danger span{background:rgba(251,113,133,.2);border-color:rgba(251,113,133,.6);color:var(--bad)}
+.pipe{flex:none;width:2px;height:22px;margin-left:28px;
+  background:repeating-linear-gradient(180deg,var(--aqua) 0 6px,transparent 6px 14px);animation:flow-y .9s linear infinite}
+@keyframes flow-y{to{background-position:0 14px}}
+@keyframes flow-x{to{background-position:14px 0}}
+@media (min-width:860px){
+  .flowbox{padding:28px}
+  .flow{flex-direction:row;align-items:center}
+  .pipe{flex:1 1 20px;min-width:20px;width:auto;height:2px;margin:0 6px;
+    background:repeating-linear-gradient(90deg,var(--aqua) 0 6px,transparent 6px 14px);animation-name:flow-x}
+}
+
+/* ---------- health factor demo ---------- */
+.hf{margin-top:16px;padding:26px 22px;display:grid;gap:24px}
+.hf h3{font-size:1.25rem;letter-spacing:-.02em}
+.hf .hint{color:var(--muted);font-size:.95rem;margin-top:6px}
+.hf label{display:flex;justify-content:space-between;gap:12px;font-size:.92rem;color:var(--muted);margin-bottom:12px}
+.hf label b{color:var(--ink);font:600 .95rem/1.4 var(--mono)}
+input[type=range]{-webkit-appearance:none;appearance:none;width:100%;height:28px;background:none;margin:0;cursor:pointer}
+input[type=range]::-webkit-slider-runnable-track{height:10px;border-radius:999px;background:rgba(255,255,255,.14);border:1px solid var(--line);box-shadow:inset 0 2px 4px rgba(0,0,0,.4)}
+input[type=range]::-moz-range-track{height:10px;border-radius:999px;background:rgba(255,255,255,.14);border:1px solid var(--line)}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:28px;height:28px;margin-top:-10px;border-radius:50%;border:1px solid rgba(255,255,255,.8);
+  background:radial-gradient(circle at 32% 28%,#fff,var(--aqua) 55%,#3b82f6);box-shadow:0 6px 18px rgba(94,234,212,.6)}
+input[type=range]::-moz-range-thumb{width:26px;height:26px;border-radius:50%;border:1px solid rgba(255,255,255,.8);
+  background:radial-gradient(circle at 32% 28%,#fff,var(--aqua) 55%,#3b82f6);box-shadow:0 6px 18px rgba(94,234,212,.6)}
+.hf dl{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:18px 0 0}
+.hf dl div{padding:12px;border-radius:16px;background:rgba(255,255,255,.06);border:1px solid var(--line)}
+.hf dt{font-size:.74rem;color:var(--muted);line-height:1.3}
+.hf dd{margin:4px 0 0;font:600 clamp(.85rem,3.2vw,1.05rem)/1.2 var(--mono)}
+.hf .read{text-align:center;--c:var(--ok)}
+.hf .read small{display:block;font:500 .75rem/1 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+.hf output{display:block;font:800 clamp(3.4rem,14vw,5rem)/1 var(--sans);letter-spacing:-.04em;margin:10px 0 12px;color:var(--c);
+  text-shadow:0 0 40px color-mix(in srgb,var(--c) 60%,transparent);transition:color .4s var(--ease)}
+.pill{display:inline-block;padding:.45em 1em;border-radius:999px;font-weight:600;font-size:.88rem;color:var(--c);
+  background:color-mix(in srgb,var(--c) 14%,transparent);border:1px solid color-mix(in srgb,var(--c) 50%,transparent);transition:all .4s var(--ease)}
+.gauge{position:relative;height:10px;margin-top:22px;border-radius:999px;
+  background:linear-gradient(90deg,var(--bad) 0 45%,var(--warn) 55% 70%,var(--ok) 85%);opacity:.9}
+.gauge i{position:absolute;top:-6px;left:var(--p,80%);width:4px;height:22px;margin-left:-2px;border-radius:4px;background:#fff;
+  box-shadow:0 0 12px #fff;transition:left .5s var(--ease)}
+.gauge::after{content:"HF = 1";position:absolute;left:50%;top:16px;translate:-50% 0;font:500 .7rem/1 var(--mono);color:var(--muted)}
+.gauge::before{content:"";position:absolute;left:50%;top:-4px;width:1px;height:18px;background:rgba(255,255,255,.6)}
+.hf .note{grid-column:1/-1;font:400 .8rem/1.5 var(--mono);color:var(--muted)}
+@media (min-width:860px){.hf{grid-template-columns:1.2fr .8fr;padding:32px;align-items:center}}
+
+/* ---------- build / stack ---------- */
+.build{display:grid;gap:28px;align-items:center}
+@media (min-width:900px){.build{grid-template-columns:.85fr 1.15fr;gap:48px}}
+.stack{height:clamp(300px,74vw,400px);display:grid;place-items:center;perspective:1300px}
+.stack-in{position:relative;width:min(50vw,220px);aspect-ratio:1;margin-top:70px;transform-style:preserve-3d;
+  transform:rotateX(58deg) rotateZ(-45deg);animation:sway 12s ease-in-out infinite alternate}
+@keyframes sway{to{transform:rotateX(54deg) rotateZ(-28deg)}}
+.plate{position:absolute;inset:0;border-radius:28px;display:flex;align-items:flex-end;padding:14px 16px;
+  font:600 .72rem/1 var(--mono);letter-spacing:.08em;text-transform:uppercase;color:transparent;
+  background:linear-gradient(135deg,rgba(255,255,255,.22),rgba(255,255,255,.05) 60%);border:1px solid rgba(255,255,255,.4);
+  box-shadow:inset 0 0 30px rgba(255,255,255,.08);
+  transform:translateZ(calc(var(--i)*var(--gap,0px)));
+  transition:transform .9s var(--ease),background .5s var(--ease),box-shadow .5s var(--ease),border-color .5s,color .5s}
+.stack.in .plate{--gap:clamp(26px,7vw,38px)}
+.plate.on{transform:translateZ(calc(var(--i)*var(--gap,0px) + 22px));border-color:#fff;color:#fff;
+  background:linear-gradient(135deg,rgba(94,234,212,.75),rgba(125,211,252,.4) 55%,rgba(167,139,250,.45));
+  box-shadow:inset 0 0 30px rgba(255,255,255,.3),0 0 60px rgba(94,234,212,.6)}
+.layers{display:grid;gap:10px}
+.layer{display:grid;grid-template-columns:auto 1fr;gap:4px 16px;padding:18px 20px;border-radius:22px;cursor:default;
+  transition:background .5s var(--ease),border-color .5s var(--ease),translate .5s var(--ease),opacity .9s var(--ease) var(--d,0s),scale .9s var(--ease) var(--d,0s)}
+.layer.on{background:linear-gradient(140deg,rgba(94,234,212,.24),rgba(255,255,255,.05) 55%);border-color:rgba(94,234,212,.55);translate:6px 0}
+.layer em{grid-row:span 2;font:600 .8rem/1.7 var(--mono);font-style:normal;color:var(--aqua)}
+.layer h3{font-size:1.08rem;letter-spacing:-.01em}
+.layer p{color:var(--muted);font-size:.93rem}
+code{font:500 .86em var(--mono);padding:.1em .4em;border-radius:6px;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.12);white-space:nowrap}
+
+/* ---------- roles ---------- */
+.role{padding:28px 24px;display:flex;flex-direction:column;height:100%}
+.role .tag{align-self:flex-start;font:600 .72rem/1 var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--aqua);
+  padding:.55em .9em;border-radius:999px;background:rgba(94,234,212,.12);border:1px solid rgba(94,234,212,.4)}
+.role h3{font-size:clamp(1.6rem,4.6vw,2.1rem);letter-spacing:-.03em;line-height:1.1;margin:18px 0 8px}
+.role>p{color:var(--muted)}
+.role h4{margin:22px 0 10px;font:600 .75rem/1 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+.role li{position:relative;padding-left:22px;margin-bottom:8px;font-size:.98rem}
+.role li::before{content:"";position:absolute;left:2px;top:.62em;width:8px;height:8px;border-radius:50%;
+  background:radial-gradient(circle at 30% 30%,#fff,var(--aqua));box-shadow:0 0 8px rgba(94,234,212,.8)}
+.pay{margin-top:auto;padding-top:22px}
+.pay div{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:14px 18px;border-radius:18px;
+  background:rgba(255,255,255,.07);border:1px solid var(--line)}
+.pay span{font-size:.9rem;color:var(--muted)}
+.pay b{font-size:1.05rem}
+@media (min-width:860px){.role{padding:36px 32px}}
+
+/* ---------- goal ---------- */
+.goal{padding:clamp(40px,9vw,88px) clamp(24px,6vw,72px);text-align:center;border-radius:clamp(28px,5vw,44px)}
+.goal p{font-size:clamp(1.7rem,5.6vw,3.4rem);line-height:1.12;letter-spacing:-.035em;font-weight:700;text-wrap:balance}
+
+/* ---------- footer ---------- */
+footer{padding:40px 0 56px;border-top:1px solid rgba(255,255,255,.1)}
+footer .wrap{display:grid;gap:18px}
+footer p{color:var(--muted);font-size:.92rem;max-width:62ch}
+footer strong{color:var(--ink)}
+@media (min-width:760px){footer .wrap{grid-template-columns:auto 1fr 1.4fr;gap:40px;align-items:start}}
+
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  *,*::before,*::after{animation:none!important;transition:none!important}
+  .js [data-reveal]{opacity:1;translate:none;scale:1;rotate:none}
+  .plate{--gap:clamp(26px,7vw,38px)}
+}
+</style>
+</head>
+<body>
+
+<div class="bg" aria-hidden="true"><div class="blob a"></div><div class="blob b"></div><div class="blob c"></div></div>
+
+<header>
+  <nav class="nav glass" aria-label="Glavna navigacija">
+    <a class="brand" href="#top"><i></i>Esteros</a>
+    <ul>
+      <li><a href="#kaj">Kaj je</a></li>
+      <li><a href="#kako">Kako deluje</a></li>
+      <li><a href="#razvoj">Kaj razvijamo</a></li>
+      <li><a href="#ekipa">Ekipa</a></li>
+      <li><a href="#cilj">Cilj</a></li>
+    </ul>
+    <a class="btn primary small" href="#ekipa">Vloge</a>
+  </nav>
+</header>
+
+<main id="top">
+
+  <!-- 1. HERO -->
+  <section class="hero">
+    <div class="wrap">
+      <div>
+        <span class="eyebrow" data-reveal>Multi-chain lending pool</span>
+        <h1 class="grad" data-reveal style="--d:.05s">Esteros</h1>
+        <p class="one" data-reveal style="--d:.12s">Lasten Aave-style lending protokol, ki teče na več verigah hkrati.</p>
+        <p class="sub" data-reveal style="--d:.18s">Deponiraš kripto in služiš obresti. Proti collateralu si izposodiš sredstva. En codebase, per-chain config: najprej BSC in Arbitrum.</p>
+        <div class="cta" data-reveal style="--d:.24s">
+          <a class="btn primary" href="#ekipa">Poglej vloge</a>
+          <a class="btn" href="#kako">Kako deluje</a>
+        </div>
+      </div>
+
+      <div class="scene" aria-hidden="true" data-reveal style="--d:.2s">
+        <div class="scene-float"><div class="scene-tilt">
+          <span class="ring a"></span><span class="ring b"></span>
+          <div class="orb"><i></i><i></i><b>POOL</b></div>
+          <span class="ring a front"></span><span class="ring b front"></span>
+          <span class="chip" data-orbit="a" data-phase="0">BSC</span>
+          <span class="chip" data-orbit="a" data-phase=".33">Arbitrum</span>
+          <span class="chip" data-orbit="a" data-phase=".66">+ več verig</span>
+          <span class="chip" data-orbit="b" data-phase=".15">aToken</span>
+          <span class="chip" data-orbit="b" data-phase=".65">debtToken</span>
+        </div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 2. KAJ JE ESTEROS -->
+  <section id="kaj">
+    <div class="wrap">
+      <div class="head">
+        <span class="eyebrow" data-reveal>01 · Kaj je Esteros</span>
+        <h2 data-reveal>Lending pool v štirih točkah</h2>
+      </div>
+      <ul class="cards four" data-stagger>
+        <li data-reveal><article class="card glass tilt">
+          <div class="ico lift"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v11m0 0l-4-4m4 4l4-4M4 17v2a2 2 0 002 2h12a2 2 0 002-2v-2"/></svg></div>
+          <h3>Deposit</h3>
+          <p>Uporabnik deponira kripto in zanj dobi <code>aToken</code>, ki sproti nabira obresti.</p>
+        </article></li>
+        <li data-reveal><article class="card glass tilt">
+          <div class="ico lift"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 14V3m0 0L8 7m4-4l4 4M4 17v2a2 2 0 002 2h12a2 2 0 002-2v-2"/></svg></div>
+          <h3>Borrow</h3>
+          <p>Proti collateralu si izposodi sredstva in na dolg plačuje obresti.</p>
+        </article></li>
+        <li data-reveal><article class="card glass tilt">
+          <div class="ico lift"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3s6 6.2 6 10.5a6 6 0 01-12 0C6 9.2 12 3 12 3z"/></svg></div>
+          <h3>Likvidacije</h3>
+          <p>Če health factor pade pod 1, pozicijo likvidirajo likvidatorji.</p>
+        </article></li>
+        <li data-reveal><article class="card glass tilt">
+          <div class="ico lift"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="5" cy="12" r="2.5"/><circle cx="19" cy="6" r="2.5"/><circle cx="19" cy="18" r="2.5"/><path d="M7.3 10.9l9.4-3.8M7.3 13.1l9.4 3.8"/></svg></div>
+          <h3>Multi-chain</h3>
+          <p>Teče na več verigah hkrati: BSC, Arbitrum, kasneje še več.</p>
+        </article></li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- 3. KAKO DELUJE -->
+  <section id="kako">
+    <div class="wrap">
+      <div class="head">
+        <span class="eyebrow" data-reveal>02 · Kako deluje</span>
+        <h2 data-reveal>Dva tokova, en pool</h2>
+        <p class="lede" data-reveal>Deponenti polnijo pool in služijo obresti. Posojilojemalci iz njega črpajo in obresti plačujejo.</p>
+      </div>
+
+      <div class="flows">
+        <div class="flowbox glass" data-reveal>
+          <h3>Deposit → obresti</h3>
+          <ol class="flow">
+            <li class="step"><span>1</span>Deponiraš kripto</li>
+            <li class="pipe" aria-hidden="true"></li>
+            <li class="step"><span>2</span>Dobiš aToken</li>
+            <li class="pipe" aria-hidden="true"></li>
+            <li class="step"><span>3</span>Obresti se nabirajo</li>
+          </ol>
+        </div>
+        <div class="flowbox glass" data-reveal>
+          <h3>Borrow → likvidacija</h3>
+          <ol class="flow">
+            <li class="step"><span>1</span>Zastaviš collateral</li>
+            <li class="pipe" aria-hidden="true"></li>
+            <li class="step"><span>2</span>Si izposodiš</li>
+            <li class="pipe" aria-hidden="true"></li>
+            <li class="step"><span>3</span>Plačuješ obresti</li>
+            <li class="pipe" aria-hidden="true"></li>
+            <li class="step danger"><span>!</span>HF &lt; 1: likvidacija</li>
+          </ol>
+        </div>
+      </div>
+
+      <div class="hf glass" data-reveal>
+        <div>
+          <h3>Poskusi: kaj naredi padec cene?</h3>
+          <p class="hint">Premakni drsnik in opazuj health factor pozicije.</p>
+          <div style="margin-top:22px">
+            <label for="price">Sprememba cene collaterala <b id="priceOut">0 %</b></label>
+            <input id="price" type="range" min="-60" max="20" step="1" value="0">
+          </div>
+          <dl>
+            <div><dt>Collateral</dt><dd id="colOut">10.000 $</dd></div>
+            <div><dt>Prag likvidacije</dt><dd>80 %</dd></div>
+            <div><dt>Dolg</dt><dd>5.000 $</dd></div>
+          </dl>
+        </div>
+        <div class="read" id="hfRead">
+          <small>Health factor</small>
+          <output id="hfOut" for="price">1,60</output>
+          <span class="pill" id="hfPill">Varno</span>
+          <div class="gauge" aria-hidden="true"><i></i></div>
+        </div>
+        <p class="note">HF = (collateral × prag likvidacije) / dolg. Številke so ilustrativne, niso parametri protokola.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 4. KAJ RAZVIJAMO -->
+  <section id="razvoj">
+    <div class="wrap">
+      <div class="head">
+        <span class="eyebrow" data-reveal>03 · Kaj razvijamo</span>
+        <h2 data-reveal>Pet plasti, en sistem</h2>
+      </div>
+      <div class="build">
+        <div class="stack" id="stack" aria-hidden="true" data-reveal>
+          <div class="stack-in">
+            <div class="plate" style="--i:0">Pogodbe</div>
+            <div class="plate" style="--i:1">Multi-chain</div>
+            <div class="plate" style="--i:2">Frontend</div>
+            <div class="plate" style="--i:3">Bot</div>
+            <div class="plate" style="--i:4">Varnost</div>
+          </div>
+        </div>
+        <ol class="layers" id="layers" data-stagger>
+          <li class="layer glass" data-reveal><em>01</em><h3>Solidity pogodbe</h3>
+            <p>Pool, <code>aToken</code>, <code>debtToken</code>, oracle router in liquidation engine.</p></li>
+          <li class="layer glass" data-reveal><em>02</em><h3>Multi-chain deployment</h3>
+            <p>En codebase, per-chain config za vsako verigo.</p></li>
+          <li class="layer glass" data-reveal><em>03</em><h3>Frontend</h3>
+            <p>Next.js + wagmi/viem za deposit, borrow in prikaz health factorja.</p></li>
+          <li class="layer glass" data-reveal><em>04</em><h3>Likvidacijski bot + monitoring</h3>
+            <p>Bot zapira pozicije pod HF 1, monitoring spremlja stanje poola.</p></li>
+          <li class="layer glass" data-reveal><em>05</em><h3>Varnost</h3>
+            <p>Revizije, bug bounty in Aave Watcher: učenje iz napak konkurence.</p></li>
+        </ol>
+      </div>
+    </div>
+  </section>
+
+  <!-- 5. EKIPA / VLOGE -->
+  <section id="ekipa">
+    <div class="wrap">
+      <div class="head">
+        <span class="eyebrow" data-reveal>04 · Ekipa / vloge</span>
+        <h2 data-reveal>Dve vlogi, ki ju iščemo</h2>
+      </div>
+      <ul class="cards" data-stagger>
+        <li data-reveal><article class="role glass tilt">
+          <span class="tag">Varnost · research</span>
+          <h3>Aave Watcher</h3>
+          <p>Spremlja Aave, da se mi učimo iz njihovih napak, ne iz svojih.</p>
+          <h4>Kaj dela</h4>
+          <ul>
+            <li>Spremlja incidente, post-mortem poročila, governance predloge in spremembe parametrov na Aave.</li>
+            <li>Vsako napako zapiše: kaj se je zgodilo, zakaj, in ali se lahko zgodi tudi nam.</li>
+            <li>Ugotovitve pretvori v konkretne predloge za naše pogodbe, oracle in risk parametre.</li>
+          </ul>
+          <div class="pay"><div><span>Plačilo</span><b>Po dogovoru</b></div></div>
+        </article></li>
+        <li data-reveal><article class="role glass tilt">
+          <span class="tag">Operativa · testiranje</span>
+          <h3>Pool Support</h3>
+          <p>Skrbi, da pool na vsaki verigi deluje tako, kot mora.</p>
+          <h4>Kaj dela</h4>
+          <ul>
+            <li>Testira deposit, borrow in likvidacijske tokove na vsaki verigi.</li>
+            <li>Spremlja monitoring poola in likvidacijskega bota ter javlja odstopanja.</li>
+            <li>Pomaga pri per-chain konfiguraciji in dokumentaciji.</li>
+          </ul>
+          <div class="pay"><div><span>Plačilo</span><b>Po dogovoru</b></div></div>
+        </article></li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- 6. CILJ -->
+  <section id="cilj">
+    <div class="wrap">
+      <div class="goal glass" data-reveal>
+        <span class="eyebrow">05 · Cilj</span>
+        <p>Varen, poceni, multi-chain lending, ki se <span class="grad">uči iz napak Aave</span> in jih ne ponavlja.</p>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<!-- 7. FOOTER -->
+<footer>
+  <div class="wrap">
+    <a class="brand" href="#top"><i></i>Esteros</a>
+    <p><strong>Kontakt:</strong> piši v DM.</p>
+    <p><strong>Disclaimer:</strong> interna predstavitev projekta. Nič na tej strani ni finančni nasvet.</p>
+  </div>
+</footer>
+
+<script>
+(() => {
+  const $ = (s, r = document) => r.querySelector(s);
+  const $$ = (s, r = document) => [...r.querySelectorAll(s)];
+  const calm = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const fine = matchMedia('(hover: hover) and (pointer: fine)').matches;
+
+  // Stagger + scroll reveal
+  $$('[data-stagger]').forEach(g => [...g.children].forEach((c, i) => c.style.setProperty('--d', i * 0.09 + 's')));
+  const io = new IntersectionObserver(es => es.forEach(e => {
+    if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
+  }), { threshold: 0.12, rootMargin: '0px 0px -6% 0px' });
+  $$('[data-reveal]').forEach(el => io.observe(el));
+
+  // Nav state
+  const nav = $('.nav');
+  const onScroll = () => nav.classList.toggle('scrolled', scrollY > 24);
+  addEventListener('scroll', onScroll, { passive: true }); onScroll();
+
+  // Glass sheen + 3D tilt (mouse only)
+  if (fine) $$('.glass').forEach(el => {
+    const tilt = el.classList.contains('tilt') && !calm;
+    el.addEventListener('pointermove', e => {
+      const r = el.getBoundingClientRect();
+      const x = (e.clientX - r.left) / r.width, y = (e.clientY - r.top) / r.height;
+      el.style.setProperty('--mx', x * 100 + '%');
+      el.style.setProperty('--my', y * 100 + '%');
+      if (tilt) { el.style.setProperty('--px', (x - .5) * 2); el.style.setProperty('--py', (y - .5) * 2); }
+    });
+    el.addEventListener('pointerleave', () => { el.style.setProperty('--px', 0); el.style.setProperty('--py', 0); });
+  });
+
+  // Hero scene: chips orbit the pool, scene leans toward the pointer
+  const scene = $('.scene'), tiltEl = $('.scene-tilt'), chips = $$('.chip');
+  const rad = d => d * Math.PI / 180;
+  const ORBIT = { a: { r: .47, k: .34, rot: rad(-16), sp: .3 }, b: { r: .36, k: .3, rot: rad(24), sp: -.42 } };
+  let W = scene.clientWidth, tx = 0, ty = 0, cx = 0, cy = 0, live = false;
+  new ResizeObserver(() => { W = scene.clientWidth; if (!live) draw(0); }).observe(scene);
+  function draw(t) {
+    const s = t / 1000;
+    for (const c of chips) {
+      const o = ORBIT[c.dataset.orbit], a = c.dataset.phase * Math.PI * 2 + s * o.sp;
+      const x = Math.cos(a) * o.r * W, d = Math.sin(a), y = d * o.r * W * o.k;
+      const X = x * Math.cos(o.rot) - y * Math.sin(o.rot), Y = x * Math.sin(o.rot) + y * Math.cos(o.rot);
+      c.style.transform = `translate(-50%,-50%) translate(${X.toFixed(1)}px,${Y.toFixed(1)}px) scale(${(1 + .14 * d).toFixed(3)})`;
+      c.style.zIndex = d > 0 ? 4 : 1;
+      c.style.opacity = (.55 + .45 * (d + 1) / 2).toFixed(2);
+    }
+    cx += (tx + Math.sin(s * .5) * .25 - cx) * .06;
+    cy += (ty + Math.cos(s * .4) * .15 - cy) * .06;
+    tiltEl.style.transform = `perspective(1000px) rotateX(${(-cy * 10).toFixed(2)}deg) rotateY(${(cx * 14).toFixed(2)}deg)`;
+  }
+  const loop = t => { if (!live) return; draw(t); requestAnimationFrame(loop); };
+  if (calm) draw(0);
+  else {
+    new IntersectionObserver(([e]) => {
+      const was = live; live = e.isIntersecting;
+      if (live && !was) requestAnimationFrame(loop);
+    }).observe(scene);
+    if (fine) $('.hero').addEventListener('pointermove', e => {
+      tx = (e.clientX / innerWidth - .5) * 2; ty = (e.clientY / innerHeight - .5) * 2;
+    });
+  }
+
+  // Health factor demo
+  const price = $('#price'), read = $('#hfRead'), gauge = $('.gauge i');
+  const DEBT = 5000, COLLATERAL = 10000, THRESHOLD = .8;
+  const money = n => String(Math.round(n)).replace(/\B(?=(\d{3})+$)/g, '.') + ' $';
+  function hf() {
+    const pct = +price.value, col = COLLATERAL * (1 + pct / 100), h = col * THRESHOLD / DEBT;
+    $('#priceOut').textContent = (pct > 0 ? '+' : pct < 0 ? '−' : '') + Math.abs(pct) + ' %';
+    $('#colOut').textContent = money(col);
+    $('#hfOut').textContent = h.toFixed(2).replace('.', ',');
+    const [c, label] = h < 1 ? ['var(--bad)', 'Likvidacija'] : h < 1.25 ? ['var(--warn)', 'Tvegano'] : ['var(--ok)', 'Varno'];
+    read.style.setProperty('--c', c);
+    $('#hfPill').textContent = label;
+    gauge.style.setProperty('--p', Math.max(2, Math.min(98, h / 2 * 100)) + '%');
+  }
+  price.addEventListener('input', hf); hf();
+
+  // Stack: hover or tap a layer to lift its plate; cycles on its own while visible
+  const layers = $$('#layers .layer'), plates = $$('#stack .plate');
+  let cur = -1, timer = null, held = false;
+  const pick = i => {
+    cur = i;
+    layers.forEach((l, n) => l.classList.toggle('on', n === i));
+    plates.forEach((p, n) => p.classList.toggle('on', n === i));
+  };
+  layers.forEach((l, i) => {
+    l.addEventListener('pointerenter', () => { held = true; pick(i); });
+    l.addEventListener('pointerleave', () => { held = false; });
+    l.addEventListener('click', () => pick(i));
+  });
+  pick(0);
+  if (!calm) new IntersectionObserver(([e]) => {
+    clearInterval(timer);
+    if (e.isIntersecting) timer = setInterval(() => { if (!held) pick((cur + 1) % layers.length); }, 2600);
+  }, { threshold: .2 }).observe($('.build'));
+})();
+</script>
+</body>
+</html>
