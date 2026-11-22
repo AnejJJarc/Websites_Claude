@@ -41,6 +41,8 @@ section{position:relative;padding-block:clamp(76px,11vw,148px);scroll-margin-top
 section,footer{overflow-x:clip}
 .skip{position:fixed;left:12px;top:-60px;z-index:99;padding:12px 18px;border-radius:999px;background:var(--blush);color:var(--noir);font-weight:700;text-decoration:none}
 .skip:focus{top:12px}
+.hero:focus{outline:none}
+.sr{position:absolute;width:1px;height:1px;margin:-1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap;-webkit-user-select:none;user-select:none}
 .defs{position:absolute;width:0;height:0;overflow:hidden}
 
 /* ============ petal backdrop ============ */
@@ -99,7 +101,7 @@ section,footer{overflow-x:clip}
   transition:opacity var(--t2) var(--out) var(--d,0s),translate var(--t3) var(--spring) var(--d,0s),rotate var(--t3) var(--spring) var(--d,0s),
     scale var(--t3) var(--spring) var(--d,0s),transform var(--tt) var(--te)}
 .js [data-reveal]:not(.in){opacity:0;translate:0 44px}
-.js [data-reveal="flip"]:not(.in){translate:0 70px;rotate:x -34deg;scale:.94}
+.js [data-reveal="flip"]:not(.in){translate:0 70px;rotate:x -20deg;scale:.94}
 .js [data-reveal="left"]:not(.in){translate:-56px 20px;rotate:y 24deg}
 .js [data-reveal="right"]:not(.in){translate:56px 20px;rotate:y -24deg}
 .js [data-reveal="zoom"]:not(.in){translate:0 30px;scale:.88}
@@ -179,7 +181,7 @@ code{font:500 .86em ui-monospace,"SF Mono",SFMono-Regular,Menlo,Consolas,monospa
 
 /* ============ hero ============ */
 .hero{min-height:100vh;min-height:100svh;display:grid;align-items:center;padding-block:84px 48px}
-.hero-grid{display:grid;justify-items:center}
+.hero-grid{display:grid;justify-items:center;grid-template-columns:minmax(0,1fr)}
 .scene{position:relative;z-index:0;width:min(74vw,320px);aspect-ratio:1;margin-bottom:-58px}
 .scene-tilt{position:absolute;inset:0;will-change:transform}
 .halo{position:absolute;inset:-20%;border-radius:50%;background:radial-gradient(closest-side,rgba(163,69,81,.5),rgba(99,16,32,.26) 46%,transparent 72%)}
@@ -204,7 +206,7 @@ code{font:500 .86em ui-monospace,"SF Mono",SFMono-Regular,Menlo,Consolas,monospa
 .orb .spec{position:absolute;inset:0;border-radius:50%;will-change:transform;
   background:radial-gradient(ellipse 40% 24% at 33% 19%,rgba(255,244,246,.85),transparent 70%),radial-gradient(ellipse 58% 26% at 62% 97%,rgba(248,194,207,.26),transparent 70%)}
 .orb::after{content:"";position:absolute;inset:0;border-radius:50%;box-shadow:inset 2px 3px 2px -1px rgba(255,240,244,.6),inset -4px -5px 8px -3px rgba(248,194,207,.3)}
-.orb b{position:absolute;left:0;right:0;top:29%;text-align:center;z-index:1;font:700 clamp(.56rem,1.7vw,.74rem)/1 var(--sans);letter-spacing:.3em;text-indent:.3em;color:rgba(255,255,255,.9)}
+.orb b{position:absolute;left:0;right:0;top:39%;text-shadow:0 1px 6px rgba(14,3,4,.9);text-align:center;z-index:1;font:700 clamp(.56rem,1.7vw,.74rem)/1 var(--sans);letter-spacing:.3em;text-indent:.3em;color:rgba(255,255,255,.9)}
 .ripple{position:absolute;left:50%;top:50%;width:48%;aspect-ratio:1;margin:-24% 0 0 -24%;border-radius:50%;border:1px solid var(--rim);opacity:0;z-index:1;pointer-events:none}
 .js [data-reveal="scene"]:not(.in) .orb{scale:.3;opacity:0}
 .js [data-reveal="scene"]:not(.in) .ring{scale:.2;opacity:0}
@@ -219,7 +221,7 @@ code{font:500 .86em ui-monospace,"SF Mono",SFMono-Regular,Menlo,Consolas,monospa
 .js [data-reveal="card"]:not(.in){translate:0 60px;rotate:x 12deg;scale:.95}
 [data-reveal="card"]{rotate:x 0deg;transform-origin:50% 100%;--d:.12s}
 .hero-card .eyebrow{margin-bottom:14px;--d:.3s}
-.hero h1{font-size:clamp(3.3rem,19vw,8.2rem);line-height:.9;letter-spacing:-.055em;font-weight:800;padding-bottom:.08em;--d:.36s}
+.hero h1{font-size:clamp(3.3rem,19vw,8.2rem);white-space:nowrap;line-height:.9;letter-spacing:-.055em;font-weight:800;padding-bottom:.08em;--d:.36s}
 .hero h1 .ch{display:inline-block;transform-origin:50% 100%;transform:perspective(520px) rotateX(0deg);transition:opacity var(--t2) var(--out) var(--cd),transform var(--t4) var(--bounce) var(--cd)}
 .js .hero-card:not(.in) h1 .ch{opacity:0;transform:perspective(520px) translateY(.45em) rotateX(-82deg)}
 .hero-card>.rule{margin:18px 0 20px;--d:.6s}
@@ -239,22 +241,33 @@ code{font:500 .86em ui-monospace,"SF Mono",SFMono-Regular,Menlo,Consolas,monospa
 @media (max-width:420px){.cta{gap:8px}.cta .btn{padding:0 1em;font-size:.92rem}}
 @media (min-width:600px){.cta .btn{flex:0 0 auto}}
 @media (min-width:600px){.hero-card{padding:40px 40px 38px}.swatches{--sw:40px}.scene{width:min(60vw,400px);margin-bottom:-70px}}
+@media (max-height:560px) and (max-width:979px){.scene{width:min(42vh,220px);margin-bottom:-34px}.chip{font-size:.58rem;padding:.42em .7em}}
 @media (min-width:980px){
   .hero{padding-block:110px 60px}
   .hero-grid{grid-template-columns:minmax(0,1.14fr) minmax(0,.86fr);align-items:center;justify-items:stretch}
-  .scene{order:2;justify-self:end;width:min(46vw,600px);margin:0 -44px 0 -200px}
+  .scene{order:2;justify-self:end;width:min(37vw,540px);margin:0 clamp(-90px,(1200px - 100vw)*.37,14px) 0 0}
   .hero-card{max-width:none;padding:54px 56px 52px}
   .hero h1{font-size:clamp(5rem,9.2vw,8rem)}
   .hero-card>.rule{margin:26px 0 28px}
   .swatches{--sw:50px}
   .cta{margin-top:32px}
 }
+@supports (height:100svh){
+@media (max-width:599px){
+  .hero{--q:clamp(0px,(700px - 100svh)*.2,12px);padding-block:calc(84px - var(--q)*.67) calc(48px - var(--q)*1.67)}
+  .scene{--sz:min(74vw,320px,max(min(54vw,31svh),128svh - 704px));width:var(--sz);margin-bottom:max(-58px,var(--sz)*-.22)}
+  .hero-card{padding:calc(28px - var(--q)*.5) calc(24px - var(--q)*.17) calc(26px - var(--q)*.5)}
+  .hero-card .eyebrow{margin-bottom:calc(14px - var(--q)*.33)}
+  .hero-card>.rule{margin:calc(18px - var(--q)*.5) 0 calc(20px - var(--q)*.5)}
+  .hero .sub{margin-top:calc(12px - var(--q)*.33)}
+  .cta{margin-top:calc(24px - var(--q)*.67)}
+}}
 
 /* ============ cards + bento ============ */
-.cards{display:grid;gap:14px;perspective:1400px}
+.cards{display:grid;gap:14px}
 @media (min-width:600px){.cards{grid-template-columns:repeat(2,1fr);gap:16px}}
-.cards>li,.bento>li{display:flex}
-.bento{display:grid;gap:14px;perspective:1600px}
+.cards>li,.bento>li{display:flex;perspective:1400px}
+.bento{display:grid;gap:14px;grid-template-columns:minmax(0,1fr)}
 .cell{display:flex;flex-direction:column;gap:20px;width:100%;padding:14px 14px 24px}
 .txt{padding:0 10px}
 .cell .n{display:block;font:300 .9rem/1 var(--sans);letter-spacing:.1em;font-variant-numeric:tabular-nums;color:var(--blush)}
@@ -262,7 +275,7 @@ code{font:500 .86em ui-monospace,"SF Mono",SFMono-Regular,Menlo,Consolas,monospa
 .cell p{color:var(--muted);font-size:.98rem;max-width:38ch;text-wrap:pretty}
 .fig{position:relative;min-height:116px;border-radius:15px;overflow:hidden;display:flex;align-items:center;justify-content:center;padding:18px;
   background:rgba(14,3,4,.42);border:1px solid var(--line);font:700 .72rem/1 var(--sans);letter-spacing:.06em;color:#fff}
-.tok{position:relative;flex:none;display:grid;place-items:center;min-width:66px;height:38px;padding:0 14px;border-radius:999px;white-space:nowrap;
+.tok{position:relative;flex:none;display:grid;place-items:center;min-width:56px;height:38px;padding:0 12px;border-radius:999px;white-space:nowrap;
   border:1px solid var(--line2);background:rgba(99,16,32,.5)}
 .tok.hot{background:linear-gradient(180deg,#fdeef0,#eebabe);border-color:#fff;color:var(--noir)}
 .tok.dash{border-style:dashed;background:none;color:var(--soft)}
@@ -290,6 +303,8 @@ code{font:500 .86em ui-monospace,"SF Mono",SFMono-Regular,Menlo,Consolas,monospa
 .f-liq p b{color:#fff;font-weight:700}
 .f-liq p span:last-child{text-align:right}
 @media (min-width:680px){.bento{grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}}
+@media (max-width:679px){.bento>li{--d:0s!important}}
+@media (max-width:599px){.cards .role{--d:0s!important}}
 @media (min-width:1020px){
   .bento{grid-template-columns:repeat(12,minmax(0,1fr))}
   .bento>li{grid-column:span 5}
@@ -297,7 +312,7 @@ code{font:500 .86em ui-monospace,"SF Mono",SFMono-Regular,Menlo,Consolas,monospa
   .cell{padding:18px 18px 28px}
   .fig{min-height:150px}
   .wide .cell{flex-direction:row-reverse;align-items:stretch;gap:26px;padding:18px}
-  .wide .fig{flex:1.05;min-height:212px}
+  .wide .fig{flex:1.05;min-height:212px;padding-inline:12px}
   .wide .txt{flex:1;align-self:flex-end;padding:0 0 10px 10px}
 }
 
@@ -421,7 +436,7 @@ input[type=range]:focus-visible{outline-offset:0}
 }
 
 /* ============ build / 3D stack ============ */
-.build{display:grid;gap:4px;align-items:center}
+.build{display:grid;gap:4px;align-items:center;perspective:1400px}
 @media (min-width:920px){.build{grid-template-columns:.88fr 1.12fr;gap:48px}}
 .stack{position:relative;height:clamp(310px,82vw,460px);display:grid;place-items:center;perspective:1300px}
 .stack-x,.stack-s,.stack-z{transform-style:preserve-3d}
@@ -495,6 +510,7 @@ input[type=range]:focus-visible{outline-offset:0}
 /* ============ footer ============ */
 footer{position:relative;padding:36px 0 22px;border-top:1px solid var(--line);background:linear-gradient(180deg,rgba(14,3,4,.72),rgba(14,3,4,.92))}
 .foot{display:grid;gap:14px}
+.foot .brand{justify-self:start}
 .wordmark{display:block;width:100%;height:auto;margin-top:clamp(30px,6vw,64px);overflow:visible}
 .wordmark text{font:800 300px var(--sans);letter-spacing:-.05em;fill:url(#gw);stroke:rgba(248,194,207,.36);stroke-width:1.2}
 footer p{color:var(--muted);font-size:.92rem;max-width:62ch}
@@ -531,7 +547,7 @@ footer strong{color:var(--ink);font:700 .72rem/1.5 var(--sans);letter-spacing:.1
 </style>
 </head>
 <body>
-<a class="skip" href="#kaj">Preskoči na vsebino</a>
+<a class="skip" href="#uvod">Preskoči na vsebino</a>
 
 <svg class="defs" aria-hidden="true" focusable="false">
   <defs>
@@ -613,7 +629,7 @@ footer strong{color:var(--ink);font:700 .72rem/1.5 var(--sans);letter-spacing:.1
 <main id="top">
 
   <!-- 1. HERO -->
-  <section class="hero" data-live>
+  <section class="hero" id="uvod" tabindex="-1" data-live>
     <div class="wrap hero-grid">
       <div class="scene" aria-hidden="true" data-reveal="scene">
         <div class="scene-tilt">
@@ -756,7 +772,7 @@ footer strong{color:var(--ink);font:700 .72rem/1.5 var(--sans);letter-spacing:.1
             <i class="needle"></i><i class="hub"></i>
           </div>
           <small>Health factor</small>
-          <output id="hfOut" for="price">1,60</output>
+          <output id="hfOut" for="price" aria-live="off">1,60</output>
           <span class="pill" id="hfPill">Varno</span>
         </div>
         <p class="note">HF = (collateral × prag likvidacije) / dolg. Številke so ilustrativne, niso parametri protokola.</p>
@@ -842,7 +858,7 @@ footer strong{color:var(--ink);font:700 .72rem/1.5 var(--sans);letter-spacing:.1
     <div class="wrap">
       <div class="goal glass" data-reveal="zoom" data-live>
         <span class="orbit" aria-hidden="true"></span><span class="orbit" aria-hidden="true"></span>
-        <p class="eyebrow"><b>05</b> Cilj</p>
+        <h2 class="eyebrow"><b>05</b> Cilj</h2>
         <p class="big">Varen, poceni, multi-chain lending, ki se <span class="hl">uči iz napak Aave</span> in jih ne ponavlja.</p>
       </div>
     </div>
@@ -926,7 +942,10 @@ footer strong{color:var(--ink);font:700 .72rem/1.5 var(--sans);letter-spacing:.1
       });
       c.replaceWith(f);
     });
+    const full = big.textContent.replace(/\s+/g, ' ').trim();
     walk(big);
+    $$('.w', big).forEach(w => w.setAttribute('aria-hidden', 'true'));
+    const sr = D.createElement('span'); sr.className = 'sr'; sr.textContent = full; big.prepend(sr);
   }
 
   /* ---- nav: scrolled tint + springy section marker ---- */
@@ -1007,7 +1026,10 @@ footer strong{color:var(--ink);font:700 .72rem/1.5 var(--sans);letter-spacing:.1
   if ('ResizeObserver' in window) new ResizeObserver(() => { W = scene.clientWidth; heroH = hero.offsetHeight; if (calm) draw(0); }).observe(scene);
   if (calm || !hasIO) draw(0);
   else {
-    new IntersectionObserver(([e]) => { const was = heroLive; heroLive = e.isIntersecting; bg.classList.toggle('live', heroLive); if (heroLive && !was) run(draw); }).observe(hero);
+    let heroOn = false, sceneOn = false;
+    const sync = () => { const was = heroLive; heroLive = heroOn && sceneOn; if (heroLive && !was) run(draw); };
+    new IntersectionObserver(([e]) => { heroOn = e.isIntersecting; bg.classList.toggle('live', heroOn); sync(); }).observe(hero);
+    new IntersectionObserver(([e]) => { sceneOn = e.isIntersecting; sync(); }, { rootMargin: Math.round(W * .6 + 90) + 'px 0px' }).observe(scene);
     hero.addEventListener('pointermove', e => { px = (e.clientX / innerWidth - .5) * 2; py = (e.clientY / innerHeight - .5) * 2; });
     const rest = () => { px = py = 0; };
     hero.addEventListener('pointerleave', rest); hero.addEventListener('pointercancel', rest);
@@ -1098,10 +1120,15 @@ footer strong{color:var(--ink);font:700 .72rem/1.5 var(--sans);letter-spacing:.1
   };
   if (!hasIO || calm) { reveals.forEach(el => { el.classList.add('in'); settle(el); }); if (!calm) lives.forEach(el => el.classList.add('live')); }
   else {
-    const io = new IntersectionObserver(es => es.forEach(e => {
-      if (e.isIntersecting) { e.target.classList.add('in'); settle(e.target); io.unobserve(e.target); }
-    }), { threshold: .14 });
-    reveals.forEach(el => io.observe(el));
+    const docTop = el => { let y = 0; for (let e = el; e; e = e.offsetParent) y += e.offsetTop; return y; };
+    reveals.forEach(el => {
+      if (el.closest('.hero')) return;
+      const push = Math.max(0, el.getBoundingClientRect().top + scrollY - docTop(el));   // how far the hidden state shifts the box
+      const io = new IntersectionObserver(([e]) => { if (e.isIntersecting) { el.classList.add('in'); settle(el); io.disconnect(); } },
+        { rootMargin: '0px 0px ' + Math.round(push - 56) + 'px 0px' });
+      io.observe(el);
+    });
+    requestAnimationFrame(() => $$('.hero [data-reveal]').forEach(el => { el.classList.add('in'); settle(el); }));
     const lio = new IntersectionObserver(es => es.forEach(e => e.target.classList.toggle('live', e.isIntersecting)), { rootMargin: '40px 0px' });
     lives.forEach(el => lio.observe(el));
   }
